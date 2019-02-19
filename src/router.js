@@ -1,25 +1,60 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-
+import homeQuestion from '@/components/homeQuestion'
+import homeAnswer from '@/components/homeAnswer'
+import editFrom from '@/views/editFrom'
+import questionnaire from '@/views/questionnaire'
+import answer_list from '@/components/answer_list'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
-  ]
+    // mode: 'history',
+    // base: process.env.BASE_URL,
+    routes: [
+        {
+            path: '/homeQuestion',
+            name: 'homeQuestion',
+            component: homeQuestion
+        },
+        {
+            path: '/editFrom',
+            name: 'editFrom',
+            component: editFrom
+        },
+        {
+            path: '/homeAnswer',
+            name: 'homeAnswer',
+            component: homeAnswer
+        },
+        {
+            path: '/answer_list',
+            name: 'answer_list',
+            component: answer_list
+        },
+        {
+            path: '/paper',
+            name: 'questionnaire',
+            component: questionnaire
+        },
+        {
+            path: '/checkpaper',
+            name: 'questionnaire',
+            component: questionnaire
+        },
+        {
+            path: '/answerpaper',
+            name: 'questionnaire',
+            component: questionnaire
+        },
+        {
+            path: '/checkpaper',
+            name: 'questionnaire',
+            component: questionnaire
+        },
+        {
+            path: '/questionnaire',
+            name: 'questionnaire',
+            component: questionnaire
+        },
+    ]
 })
