@@ -14,27 +14,27 @@ let webpackConfig  = {
         ]
     },
     chainWebpack: config => {
-        config.resolve.alias.set('@', resolve('src'))
+        config.resolve.alias.set('@', resolve('/src'))
     },
     devServer: {
         disableHostCheck: true,
         // 设置代理
         proxy: {
-            //         '/': {
-//             target: 'http://zq.schat.weile.com:80/',
-//             changeOrigin: true,
-//             pathRewrite: {
-//                 '^/': '/'
-//             }
-//         },
-            '/': {
-                ws: false,
-                target: 'http://zq.oss.admin.com:80/',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/': '/'
-                }
-            },
+                    '/': {
+            target: 'localhost:3000/',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/': '/'
+            }
+        },
+            // '/': {
+            //     ws: false,
+            //     target: 'http://zq.oss.admin.com:80/',
+            //     changeOrigin: true,
+            //     pathRewrite: {
+            //         '^/': '/'
+            //     }
+            // },
         }
     },
 

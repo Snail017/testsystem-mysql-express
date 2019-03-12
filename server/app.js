@@ -3,7 +3,7 @@
  * node启动文件
  */
 
-// const userApi = require('./api/userApi')
+const userApi = require('./api/userApi')
 const fs = require('fs')
 const path = require('path')
 const bodyParser = require('body-parser')

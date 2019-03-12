@@ -1,5 +1,5 @@
-import confirm from './components/confirm'
-import msg from './components/msg'
+import confirm from '@/lib/components/confirm'
+import msg from '@/lib/components/msg'
 let zq = {
     install(Vue, option) {
         // 不重复install

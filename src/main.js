@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from '@/App'
 import router from '@/router'
 import store from '@/store'
+import axios from "axios"
 import $ from 'jquery'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -13,6 +14,7 @@ import zqlayer from '@/lib/index'
 Vue.use(zqlayer)
 Vue.use(zq)
 
+Vue.prototype.$http=axios
 Vue.config.productionTip = false
 
 new Vue({
