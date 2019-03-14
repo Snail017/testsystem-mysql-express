@@ -60,8 +60,6 @@
         },
         methods:{
             ConfirmData(){
-                this.note = "";
-
                 if(this.password!=''&&this.Confirmpassword!=''&&this.name!=''&&this.code!=''){
                     this.IsOk=true;
                 }
@@ -73,7 +71,7 @@
         confirmPw(){
             this.note = "";
             if(this.code.toLowerCase()!=this.codeData.msg.toLowerCase()){
-                this.note="验证码不匹配"
+                this.note="验证码不匹配";
             }else if(this.password!=this.Confirmpassword){
                 this.isPw=0;
                 this.note="两次密码不匹配" ;
@@ -84,7 +82,6 @@
         },
             register() {
                 var _this = this;
-                _this.confirmPw();
                 var flag= _this.confirmPw();
                 if (flag) {
                     this.$http({
