@@ -20,12 +20,13 @@ let webpackConfig  = {
         disableHostCheck: true,
         // 设置代理
         proxy: {
-                    '/': {
-            target: 'localhost:3000/',
-            changeOrigin: true,
-            pathRewrite: {
-                '^/': '/'
-            }
+              '/': {
+                  ws: false,
+                  target: 'http://localhost:3000',
+                  changeOrigin: true,
+                  pathRewrite: {
+                    '^/': '/'
+                  }
         },
             // '/': {
             //     ws: false,

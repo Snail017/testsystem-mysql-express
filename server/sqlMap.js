@@ -5,7 +5,7 @@
 var sqlMap = {
   // 用户
   user: {
-    add: 'insert into TbUser(Nickname, Password,Usertoken) values (?, ?,?)',
+    add: 'insert into tbuser(Nickname, Password) values (?, ?)',
     sel:' SELECT id,Nickname,Usertoken FROM TbUser where Nickname=?',
     setToken: 'UPDATE TbUser SET Usertoken=? WHERE Nickname=? ',
   }

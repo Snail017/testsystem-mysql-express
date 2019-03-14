@@ -18,6 +18,11 @@ export default new Router({
             component: register
         },
         {
+            path: '/login',
+            name: 'register',
+            component: register
+        },
+        {
             path: '/homeQuestion',
             name: 'homeQuestion',
             component: homeQuestion
