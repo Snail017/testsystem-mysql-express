@@ -51,22 +51,30 @@
         },
         mounted(){
             var _this=this;
-            this.$http({
-                method:"get",
-                url:"/api/getCaptcha",
-            }).then((res)=>{
-                _this.codeData=res.data;
-            })
+            _this.getCode();
         },
         methods:{
+            getCode(){
+                var _this=this;
+                this.$http({
+                    method:"get",
+                    url:"/api/getCaptcha",
+                }).then((res)=>{
+                    _this.codeData=res.data;
+                })
+            },
+            /**
+            *密码输入是否正确，正确注册按钮修改为可用
+            **/
             ConfirmData(){
-                if(this.password!=''&&this.Confirmpassword!=''&&this.name!=''&&this.code!=''){
+                if(this.password!=''&&this.Confirmpassword!=''&&this.name!=''&&this.code!=''&&this.password.length>7&&this.Confirmpassword.length>7){
                     this.IsOk=true;
                 }
             },
         /**
          * 验证密码数据匹配
          * 验证验证码是否匹配
+         * 都为正确显示√
          */
         confirmPw(){
             this.note = "";
@@ -95,6 +103,8 @@
                         res=res.data;
                         if(res.code==200){
                             _this.$router.push("/homeQuestion")
+                        }else{
+                            this.note=res.msg ;
                         }
                     })
                 }

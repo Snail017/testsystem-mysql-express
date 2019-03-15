@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
+    "crypto": "^1.0.1",
     "iview": "^3.3.0",
     "node-tesseract": "^0.2.7",
     "popper.js": "^1.14.6",
