@@ -6,6 +6,8 @@ import editFrom from '@/views/editFrom'
 import questionnaire from '@/views/questionnaire'
 import answer_list from '@/components/answer_list'
 import register from "@/views/register"
+import login from "@/views/login"
+
 Vue.use(Router)
 
 export default new Router({
@@ -19,8 +21,8 @@ export default new Router({
         },
         {
             path: '/login',
-            name: 'register',
-            component: register
+            name: 'login',
+            component: login
         },
         {
             path: '/homeQuestion',

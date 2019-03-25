@@ -9,6 +9,31 @@ var svgCaptcha = require('svg-captcha');
 var conn = mysql.createConnection(models.mysql);
 conn.connect();
 
+//用户登录
+router.post('/user/login', (req, res) => {
+    console.log(req)
+    var login = $sql.user.login,
+        setToken  = $sql.user.setToken ;
+    var params = req.body;
+    conn.query(login, [params.name,params.password], function(err,result,fields) {
+        console.log("result",result,err)
+        if(result!=undefined&&result.length===0){
+            res.json({
+                code:404,
+                msg:"用户名不存在",
+            })
+        }else{
+            conn.query(login, [params.name,params.password], function(err,result,fields){
+                res.json({
+                    code:200,
+                    msg:"登陆成功",
+                })
+            })
+        }
+    })
+
+});
+
 //增加用户接口
 router.post('/user/register', (req, res) => {
   console.log(req)
@@ -17,16 +42,18 @@ router.post('/user/register', (req, res) => {
     setToken  = $sql.user.setToken ;
   var params = req.body;
     conn.query(sel, [params.name], function(err,result,fields) {
-        if(result.length>0){
+        console.log("result",result,err)
+        if(result!=undefined&&result.length>0){
             res.json({
                 code:404,
-                msg:'用户名存在'
+                msg:"用户名已存在",
             })
         }else{
             conn.query(add, [params.name,params.password ], function(err,result) {
+                console.log("result1",result,err)
                 res.json({
                     code:200,
-                    msg:"登录成功"
+                    msg:"注册成功"
                 })
             })
         }

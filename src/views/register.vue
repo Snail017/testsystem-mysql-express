@@ -21,7 +21,9 @@
             <Col span="18">
                 <Input type="text" placeholder="验证码" v-model="code" v-bind:onblur="ConfirmData()"/>
             </Col>
-            <Col span="6" v-html="codeData.img"></Col>
+            <Col span="6" >
+                <div v-html="codeData.img"  @click="getCode"></div>
+            </Col>
         </Row>
         <p class="note">
             {{note}}
@@ -55,6 +57,7 @@
         },
         methods:{
             getCode(){
+                console.log("getcode");
                 var _this=this;
                 this.$http({
                     method:"get",
@@ -102,7 +105,13 @@
                     }).then((res) => {
                         res=res.data;
                         if(res.code==200){
-                            _this.$router.push("/homeQuestion")
+                            this.$Message.info({
+                                content: res.msg,
+                                duration: 3,
+                                onClose:function () {
+                                    _this.$router.push("/homeQuestion")
+                                }
+                            });
                         }else{
                             this.note=res.msg ;
                         }

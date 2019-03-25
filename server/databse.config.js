@@ -5,7 +5,7 @@ module.exports = {
         host: '95.169.20.53',//95.169.20.53
         user: 'root',
         password: 'Zq@574839',  //Zq@574839
-        database: 'zqzqzzq',
+        database: 'zqq',
         port: '3306',
         // 数据表相关的全局配置
         // define: {
