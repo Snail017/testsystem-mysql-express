@@ -1,14 +1,29 @@
-var models = require('../databse.config');
-var express = require('express');
-var router = express.Router();
-var mysql = require('mysql');
-var $sql = require('../sqlMap');
-var svgCaptcha = require('svg-captcha');
+const models = require('../databse.config');
+const express = require('express');
+const router = express.Router();
+const mysql = require('mysql');
+const $sql = require('../sqlMap');
+const svgCaptcha = require('svg-captcha');
+const  crypto=require("crypto")
+const redis = require('redis')
+
+var publick_key="",private_key='';
+
+//连接redis数据库
+const client = redis.createClient(6379, '127.0.0.1')
 
 // 连接数据库
-var conn = mysql.createConnection(models.mysql);
+const conn = mysql.createConnection(models.mysql);
 conn.connect();
 
+client.get('private_key',function (err ,val) {
+    if(err) throw err
+    private_key=val;
+})
+client.get('public_key',function (err ,val) {
+    if(err) throw err
+    publick_key=val;
+})
 //用户登录
 router.post('/user/login', (req, res) => {
     console.log(req)
@@ -23,7 +38,7 @@ router.post('/user/login', (req, res) => {
                 msg:"用户名不存在",
             })
         }else{
-            conn.query(login, [params.name,params.password], function(err,result,fields){
+            conn.query(setToken, [params.name,params.password], function(err,result,fields){
                 res.json({
                     code:200,
                     msg:"登陆成功",
@@ -33,6 +48,14 @@ router.post('/user/login', (req, res) => {
     })
 
 });
+
+//得到公钥
+router.get("/data/public_key",(req,res)=>{
+    res.json({
+        code:404,
+        msg:publick_key
+    })
+})
 
 //增加用户接口
 router.post('/user/register', (req, res) => {

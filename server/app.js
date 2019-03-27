@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 // 后端api路由
 app.use('/', userApi)
 
+
 // 监听端口
 app.listen(3000,'localhost',function(err,res){
   if(err){
