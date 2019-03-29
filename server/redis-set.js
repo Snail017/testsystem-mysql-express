@@ -4,7 +4,9 @@ var client = redis.createClient(6379, '127.0.0.1')
 client.on('error', function (err) {
     console.log('Error ' + err);
 });
-
+client.on('ready',function (res,red) {
+    console.log("success.....")
+})
 var private='-----BEGIN PUBLIC KEY-----\n' +
     'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDOEPbjMW0rlokiP5Cdl2mLXXN3\n' +
     'U3VIFSCVvwHsIb4vwx8f92/R6eFVYV/t9SlGBXw8N3mABGrCRjoz4eDIOGDPt6WU\n' +

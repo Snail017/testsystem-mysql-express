@@ -19,11 +19,12 @@ conn.connect();
 client.get('private_key',function (err ,val) {
     if(err) throw err
     private_key=val;
-})
+});
 client.get('public_key',function (err ,val) {
     if(err) throw err
     publick_key=val;
-})
+});
+
 //用户登录
 router.post('/user/login', (req, res) => {
     console.log(req)
@@ -52,7 +53,7 @@ router.post('/user/login', (req, res) => {
 //得到公钥
 router.get("/data/public_key",(req,res)=>{
     res.json({
-        code:404,
+        code:200,
         msg:publick_key
     })
 })

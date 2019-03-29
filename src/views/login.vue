@@ -29,6 +29,7 @@
 </template>
 
 <script>
+    const crypto = require("crypto")
     export default {
         name: "login",
         data(){
@@ -83,14 +84,15 @@
             },
             login() {
                 var _this = this;
+                console.log(crypto.publicEncrypt(window.localStorage.getItem("public_key"),Buffer.from(_this.password, 'utf8')))
                 var flag= _this.confirmPw();
                 if (flag) {
                     this.$http({
                         method: "post",
                         url: '/user/login',
                         data: {
-                            password: _this.password,
                             name: _this.name,
+                            password: crypto.publicEncrypt(window.localStorage.getItem("public_key"),Buffer.from(_this.password, 'utf8')),
                         }
                     }).then((res) => {
                         res=res.data;
