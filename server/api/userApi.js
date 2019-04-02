@@ -4,10 +4,10 @@ const router = express.Router();
 const mysql = require('mysql');
 const $sql = require('../sqlMap');
 const svgCaptcha = require('svg-captcha');
-const  crypto=require("crypto")
+const crypto = require("crypto")
 const redis = require('redis')
 
-var publick_key="",private_key='';
+var publick_key = "", private_key = '';
 
 //连接redis数据库
 const client = redis.createClient(6379, '127.0.0.1')
@@ -16,33 +16,35 @@ const client = redis.createClient(6379, '127.0.0.1')
 const conn = mysql.createConnection(models.mysql);
 conn.connect();
 
-client.get('private_key',function (err ,val) {
-    if(err) throw err
-    private_key=val;
+client.get('private_key', function (err, val) {
+    if (err) throw err
+    private_key = val;
 });
-client.get('public_key',function (err ,val) {
-    if(err) throw err
-    publick_key=val;
+client.get('public_key', function (err, val) {
+    if (err) throw err
+    publick_key = val;
 });
 
 //用户登录
 router.post('/user/login', (req, res) => {
     console.log(req)
     var login = $sql.user.login,
-        setToken  = $sql.user.setToken ;
+        setToken = $sql.user.setToken;
     var params = req.body;
-    conn.query(login, [params.name,params.password], function(err,result,fields) {
-        console.log("result",result,err)
-        if(result!=undefined&&result.length===0){
+    var ls_pw = crypto.privateDecrypt(private_key, Buffer.from(params.password, 'base64')).toString();
+    conn.query(login, [params.name, ls_pw], function (err, result, fields) {
+        console.log("result", result, err)
+        if (result != undefined &&  result.length == 0) {
             res.json({
-                code:404,
-                msg:"用户名不存在",
+                code: 404,
+                msg: "用户名和密码不匹配，请重新输入",
             })
-        }else{
-            conn.query(setToken, [params.name,params.password], function(err,result,fields){
+        } else {
+
+            conn.query(setToken, [params.name, ls_pw], function (err, result, fields) {
                 res.json({
-                    code:200,
-                    msg:"登陆成功",
+                    code: 200,
+                    msg: "登陆成功",
                 })
             })
         }
@@ -51,33 +53,36 @@ router.post('/user/login', (req, res) => {
 });
 
 //得到公钥
-router.get("/data/public_key",(req,res)=>{
+router.get("/data/public_key", (req, res) => {
     res.json({
-        code:200,
-        msg:publick_key
+        code: 200,
+        msg: publick_key
     })
 })
 
 //增加用户接口
 router.post('/user/register', (req, res) => {
-  console.log(req)
-  var sel = $sql.user.sel,
-      add = $sql.user.add,
-    setToken  = $sql.user.setToken ;
-  var params = req.body;
-    conn.query(sel, [params.name], function(err,result,fields) {
-        console.log("result",result,err)
-        if(result!=undefined&&result.length>0){
+    console.log(req)
+    var sel = $sql.user.sel,
+        add = $sql.user.add,
+        setToken = $sql.user.setToken;
+    var params = req.body;
+
+    conn.query(sel, [params.name], function (err, result, fields) {
+        console.log("result", result, err)
+        if(err) return false;
+        if (result != undefined && result.length > 0) {
             res.json({
-                code:404,
-                msg:"用户名已存在",
+                code: 404,
+                msg: "用户名已存在",
             })
-        }else{
-            conn.query(add, [params.name,params.password ], function(err,result) {
-                console.log("result1",result,err)
+        } else {
+            var ls_pw = crypto.privateDecrypt(private_key, Buffer.from(params.password, 'base64')).toString();
+            conn.query(add, [params.name, ls_pw], function (err, result) {
+                console.log("result1", result, err)
                 res.json({
-                    code:200,
-                    msg:"注册成功"
+                    code: 200,
+                    msg: "注册成功"
                 })
             })
         }
@@ -86,7 +91,7 @@ router.post('/user/register', (req, res) => {
 });
 
 // 获取验证码
-router.get('/api/getCaptcha', function(req, res, next) {
+router.get('/api/getCaptcha', function (req, res, next) {
     var captcha = svgCaptcha.create({
         // 翻转颜色
         inverse: false,
@@ -105,9 +110,9 @@ router.get('/api/getCaptcha', function(req, res, next) {
     res.cookie('captcha', req.session);
     // res.setHeader('Content-Type', 'image/svg+xml');
     res.json({
-        code:200,
-        img:captcha.data,
-        msg:req.session
+        code: 200,
+        img: captcha.data,
+        msg: req.session
     });
 })
 

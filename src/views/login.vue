@@ -23,7 +23,7 @@
         </p>
         <Button type="success"  :disabled="IsOk==false"  long  @click="login()">登录</Button>
         <Row>
-            <router-link to="/login" style="float: right">注册</router-link>
+            <router-link to="/register" style="float: right">注册</router-link>
         </Row>
     </div>
 </template>
@@ -84,15 +84,16 @@
             },
             login() {
                 var _this = this;
-                console.log(crypto.publicEncrypt(window.localStorage.getItem("public_key"),Buffer.from(_this.password, 'utf8')))
+                var ls_pw=_this.crypto.publicEncrypt( window.localStorage.getItem("public_key"),Buffer.from(_this.crypto.createHash('md5').update(_this.password,'base64').digest('hex'))).toString('base64');
                 var flag= _this.confirmPw();
+                _this.getCode();
                 if (flag) {
                     this.$http({
                         method: "post",
                         url: '/user/login',
                         data: {
                             name: _this.name,
-                            password: crypto.publicEncrypt(window.localStorage.getItem("public_key"),Buffer.from(_this.password, 'utf8')),
+                            password:ls_pw,
                         }
                     }).then((res) => {
                         res=res.data;
@@ -120,7 +121,7 @@
     .note{height: 20px;font-size: 12px;color: red;}
     .pos{position: absolute;font-size: 25px;right:0;}
     .icon-zhengque{color: #47cb89;}
-    @media screen and (min-width:800px){
+    @media screen and (min-width:700px){
         .register{width: 600px;margin: auto;border: 1px solid #ddd;padding: 40px;}
     }
 </style>

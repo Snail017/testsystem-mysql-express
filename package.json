@@ -10,6 +10,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
     "crypto": "^1.0.1",
+    "fs": "0.0.1-security",
     "iview": "^3.3.0",
     "node-redis": "^0.1.7",
     "node-tesseract": "^0.2.7",

@@ -21,7 +21,7 @@ Vue.use(zq);
 Vue.use(iView);
 Vue.use(crypto);
 
-
+Vue.prototype.crypto=crypto;
 Vue.prototype.$http=axios;
 Vue.config.productionTip = false;
 
