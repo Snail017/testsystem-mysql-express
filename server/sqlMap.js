@@ -5,10 +5,10 @@
 var sqlMap = {
     // 用户
     user: {
-        add: 'insert into tbUser(Nickname, Password) values (?, ?)',
-        sel: ' SELECT id,Nickname,Usertoken FROM tbUser where Nickname=?',
-        login: ' SELECT Nickname,Password FROM tbUser where Nickname=? and  Password=?',
-        setToken: 'UPDATE tbUser SET Usertoken=? WHERE Nickname=? and Password=?',
+        sql_add: 'insert into tbUser(Nickname, Password) values (?, ?)',
+        sql_sel: ' SELECT id,Nickname,Usertoken FROM tbUser where Nickname=?',
+        sql_login: ' SELECT Nickname,Password ,id,FROM tbUser where Nickname=? and  Password=?',
+        sql_setToken: 'UPDATE tbUser SET Usertoken=? WHERE id=?',
     }
 }
 module.exports = sqlMap

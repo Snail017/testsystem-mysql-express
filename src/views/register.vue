@@ -60,7 +60,7 @@
                 var _this = this;
                 this.$http({
                     method: "get",
-                    url: "/api/getCaptcha",
+                    url: "/user/getCaptcha",
                 }).then((res) => {
                     _this.codeData = res.data;
                 })
@@ -107,7 +107,7 @@
                         res = res.data;
                         if (res.code == 200) {
                             this.$Message.info({
-                                content: res.msg,
+                                content: '注册成功',
                                 duration: 3,
                                 onClose: function () {
                                     _this.$router.push("/homeQuestion")

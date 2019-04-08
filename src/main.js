@@ -29,7 +29,7 @@ Vue.config.productionTip = false;
 //获取公钥
 Vue.prototype.$http({
     method:'get',
-    url:"/data/public_key",
+    url:"/user/public_key",
 }).then((res)=>{
     res=res.data;
     if(res.code==200){
