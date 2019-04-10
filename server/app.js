@@ -3,34 +3,22 @@
  * node启动文件
  */
 const fs = require('fs');
-const path = require('path');
-const models = require('./databse.config');
+const models = require('./config/databse.config');
 const bodyParser = require('body-parser');
-const express = require('express');
 const cookieParase = require('cookie-parser');
 const redis = require('redis');
-const sequlize = require("sequelize")
+const express = require('express');
 const app = express();
-const mysql = require('mysql');
-
+// const mysql = require('mysql');
+// global.router = express.Router();
+// global.$sql = require('./sqlMap');
 global.private_key = fs.readFileSync('./pri.key').toString();
 global.public_key = fs.readFileSync("./pub.key").toString();
 
-global.router = express.Router();
-global.$sql = require('./sqlMap');
+const routes = require('./routes');
 
-const userApi = require('./api/userApi');
-const examApi = require('./api/examApi');
+app.use('/', routes)   // 后端api路由
 
-//实例化sequelize
-var sequlize=new sequlize(models.mysql.database,models.mysql.user,models.mysql.password,{
-    host:models.mysql.host,
-    dialect:'mysql'
-})
-
-// 后端api路由
-app.use('/', userApi)   //用户接口
-app.use('/', examApi)   //考试接口
 
 app.use(cookieParase());
 app.use(bodyParser.json())
@@ -53,8 +41,8 @@ global.client.on('ready', function (res, red) {
 });
 
 // 连接数据库
-global.conn = mysql.createConnection(models.mysql);
-global.conn.connect();
+// global.conn = mysql.createConnection(models.mysql);
+// global.conn.connect();
 
 // 监听端口
 app.listen(3000, 'localhost', function (err, res) {

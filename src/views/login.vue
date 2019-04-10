@@ -21,7 +21,9 @@
         <p class="note">
             {{note}}
         </p>
-        <Button type="success"  :disabled="IsOk==false"  long  @click="login()">登录</Button>
+        <Row>
+            <Button type="success"  :disabled="IsOk==false"  long  @click="login()">登录</Button>
+        </Row>
         <Row>
             <router-link to="/register" style="float: right">注册</router-link>
         </Row>
@@ -116,7 +118,7 @@
 </script>
 
 <style scoped>
-    .register .ivu-row{margin-bottom: 10px;}
+    .register .ivu-row{width:80%;margin:0  auto 10px;}
     .register{margin-top: 100px!important;}
     .note{height: 20px;font-size: 12px;color: red;}
     .pos{position: absolute;font-size: 25px;right:0;}
