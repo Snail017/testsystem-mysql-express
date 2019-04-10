@@ -13,6 +13,7 @@ class User {
      */
     static async create(req, res) {
         let {Nickname, password, /*email,*/ usertoken} = req.body;
+        console.log('paramsqeqeqwe',req.body)
 
         let params = {
             Nickname,
@@ -58,8 +59,7 @@ class User {
 
                 // 创建用户
                 await UserModel.create(params);
-                console.log(params)
-                const newUser = await UserModel.Nickname(params.Nickname)
+                const newUser = await UserModel.Nickname(params.Nickname);
 
                 // 签发token
                 const token = this.setToken(newUser.id, newUser.Nickname)
