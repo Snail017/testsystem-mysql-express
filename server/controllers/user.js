@@ -12,14 +12,13 @@ class User {
      * @returns 创建成功返回用户信息，失败返回错误信息
      */
     static async create(req, res) {
-        let {Nickname, password, /*email,*/ usertoken} = req.body;
-        console.log('paramsqeqeqwe',req.body)
+        let {Nickname, password, /*email,*/ /*usertoken*/} = req.body;
 
         let params = {
             Nickname,
             password,
             // email,
-            usertoken
+            // usertoken
         }
 
         // 检测参数是否存在为空
@@ -42,7 +41,6 @@ class User {
 
         // 查询用户名是否重复
         const existUser = await UserModel.Nickname(params.Nickname);
-        console.log(existUser)
 
         if (existUser) {
             res.status = 403;
@@ -80,6 +78,16 @@ class User {
             }
         }
 
+    }
+
+    /**
+     * 登录
+     * */
+    static async login(req,res){
+        console.log(req)
+        res.json({
+            code:404
+        })
     }
 
     /**

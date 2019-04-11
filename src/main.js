@@ -21,19 +21,19 @@ Vue.use(zq);
 Vue.use(iView);
 Vue.use(crypto);
 
-Vue.prototype.crypto=crypto;
-Vue.prototype.$http=axios;
+Vue.prototype.crypto = crypto;
+Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
-
+// Vue.prototype.$http.defaults.headers = {"Content-Type": 'application/x-www-form-urlencoded;charset=UTF-8'}
 
 //获取公钥
 Vue.prototype.$http({
-    method:'get',
-    url:"/user/public_key",
-}).then((res)=>{
-    res=res.data;
-    if(res.code==200){
-        window.localStorage.setItem("public_key",res.msg)  ;
+    method: 'get',
+    url: "/user/public_key",
+}).then((res) => {
+    res = res.data;
+    if (res.code == 200) {
+        window.localStorage.setItem("public_key", res.msg);
     }
 })
 
@@ -41,8 +41,8 @@ Vue.prototype.$http({
 
 
 new Vue({
-  router,
-  store,
-  render: h => h(App),
+    router,
+    store,
+    render: h => h(App),
 }).$mount('#app')
 
