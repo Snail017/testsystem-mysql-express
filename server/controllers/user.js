@@ -1,6 +1,7 @@
 const UserModel = require('../models/userModel');
 const svgCaptcha = require('svg-captcha');
 const crypto = require("crypto")
+const jwt=require("jsonwebtoken")
 
 class User {
     /**
@@ -12,11 +13,9 @@ class User {
      * @returns 创建成功返回用户信息，失败返回错误信息
      */
     static async create(req, res) {
-        let {Nickname, password, /*email,*/ /*usertoken*/} = req.body;
-
         let params = {
-            Nickname,
-            password,
+            Nickname:req.body.name,
+            Password:req.body.password,
             // email,
             // usertoken
         }
@@ -50,18 +49,17 @@ class User {
             })
 
         } else {
-
             try {
                 // 加密密码
-                params.password = crypto.privateDecrypt(global.private_key, Buffer.from(params.password, 'base64')).toString();
+                params.Password = crypto.privateDecrypt(global.private_key, Buffer.from(params.Password, 'base64')).toString();
 
                 // 创建用户
                 await UserModel.create(params);
                 const newUser = await UserModel.Nickname(params.Nickname);
 
                 // 签发token
-                const token = this.setToken(newUser.id, newUser.Nickname)
-
+                const token =User.setToken(newUser.id, newUser.Nickname);
+            
                 res.status = 200;
                 res.json({
                     code: 200,
@@ -76,6 +74,7 @@ class User {
                     msg: err
                 })
             }
+           
         }
 
     }
@@ -93,12 +92,8 @@ class User {
     /**
      * 根据用户名 ，密码设置token
      * */
-    static async setToken(userid, name) {
-        var header = {
-                type: "jwt",
-                alg: 'hs256',
-            },
-            playload = {
+    static setToken(userid, name) {
+        var playload = {
                 iss: '1670644339@qq.com',   // JWT的签发者
                 sub: name,    // JWT所面向的用户
                 aud: "1670644339@qq.com",  //接收JWT的一方
@@ -107,10 +102,9 @@ class User {
                 iat: new Date().getTime(),  // 该JWT签发的时间
             };
 
-        var encodedString = header.toString("base64").replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_") + '.' + playload.toString("base64").replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
-        var token = crypto.createHmac('sha256', global.private_key).update(encodedString).digest('hex');
-        global.client.set(userid, token, redis.print);
-        return token
+        var token = jwt.sign(playload,private_key,{ algorithm: 'RS256' });
+        global.client.set(userid, token);
+        return token;
     }
 
     static async code(req, res) {

@@ -8,8 +8,8 @@ const cookieParase = require('cookie-parser');
 const redis = require('redis');
 const express = require('express');
 const app = express();
-global.public_key = fs.readFileSync("./pub.key").toString();
-global.private_key = fs.readFileSync('./pri.key').toString();
+global.public_key = fs.readFileSync(__dirname+"/pub.key").toString();
+global.private_key = fs.readFileSync(__dirname+'/pri.key').toString();
 
 app.use(cookieParase());
 app.use(bodyParser.json());
