@@ -106,6 +106,7 @@
                     }).then((res) => {
                         res = res.data;
                         if (res.code == 200) {
+                              this.$http.defaults.headers.common['Authorization'] = res.data;
                             this.$Message.info({
                                 content: '注册成功',
                                 duration: 3,
@@ -113,6 +114,7 @@
                                     _this.$router.push("/homeQuestion")
                                 }
                             });
+
                         } else {
                             this.note = res.msg;
                         }

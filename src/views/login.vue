@@ -99,7 +99,8 @@
                         }
                     }).then((res) => {
                         res=res.data;
-                        if(res.code==200){
+                        if(res.code==200){  
+                           this.$http.defaults.headers.common['Authorization'] = res.data;
                             this.$Message.info({
                                 content: '登陆成功',
                                 duration: 3,
