@@ -130,6 +130,8 @@
 
     .register {
         margin-top: 100px !important;
+        width:80%;
+        margin:auto;
     }
 
     .note {
@@ -151,7 +153,6 @@
     @media screen and (min-width: 800px) {
         .register {
             width: 600px;
-            margin: auto;
             border: 1px solid #ddd;
             padding: 40px;
         }

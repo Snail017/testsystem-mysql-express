@@ -58,13 +58,15 @@ class User {
                 const newUser = await UserModel.Nickname(params.Nickname);
 
                 // 签发token
-                const token =User.setToken(newUser.id, newUser.Nickname);
+                const access_token =User.setToken(newUser.id,10*60, newUser.Nickname);
+                const refresh_token =User.setToken(newUser.id,30*24*60*60, newUser.Nickname);
+                global.client.set(newUser.id,refresh_token);
             
                 res.status = 200;
                 res.json({
                     code: 200,
                     msg: `创建用户成功`,
-                    data: token
+                    data: access_token,
                 })
 
             } catch (err) {
@@ -92,13 +94,13 @@ class User {
     /**
      * 根据用户名 ，密码设置token
      * */
-    static setToken(userid, name) {
+    static setToken(userid, overtime,name) {
         var playload = {
                 iss: '1670644339@qq.com',   // JWT的签发者
                 sub: name,    // JWT所面向的用户
                 aud: "1670644339@qq.com",  //接收JWT的一方
-                exp: new Date().getTime() + 60 * 60 * 24 * 1, //JWT的过期时间1t
-                nbf: new Date().getTime() + 60 * 60 * 24 * 2,  //在xxx日期之间，该JWT都是可用的2t
+                exp: new Date().getTime() + overtime, //JWT的过期时间1t
+                nbf: new Date().getTime() + overtime,  //在xxx日期之间，该JWT都是可用的2t
                 iat: new Date().getTime(),  // 该JWT签发的时间
             };
 
