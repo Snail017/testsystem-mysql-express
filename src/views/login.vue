@@ -100,7 +100,7 @@
                     }).then((res) => {
                         res=res.data;
                         if(res.code==200){  
-                           this.$http.defaults.headers.common['Authorization'] = res.data;
+                            window.localStorage["token"]=res.data;
                             this.$Message.info({
                                 content: '登陆成功',
                                 duration: 3,

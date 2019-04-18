@@ -30,7 +30,6 @@ global.client.on("connect", function () {
     global.client.set("private_key", global.private_key, redis.print);
     global.client.set("public_key", global.private_key, redis.print);
 });
-
 global.client.on('ready', function (res, red) {
     console.log("redis success.....")
 });

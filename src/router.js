@@ -27,47 +27,74 @@ export default new Router({
         {
             path: '/homeQuestion',
             name: 'homeQuestion',
-            component: homeQuestion
+            component: homeQuestion,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
         },
         {
             path: '/editFrom',
             name: 'editFrom',
-            component: editFrom
+            component: editFrom,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
         },
         {
             path: '/homeAnswer',
             name: 'homeAnswer',
-            component: homeAnswer
+            component: homeAnswer,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
         },
         {
             path: '/answer_list',
             name: 'answer_list',
-            component: answer_list
+            component: answer_list,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
         },
         {
             path: '/paper',
             name: 'questionnaire',
-            component: questionnaire
+            component: questionnaire,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
         },
         {
             path: '/checkpaper',
             name: 'questionnaire',
-            component: questionnaire
+            component: questionnaire,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
         },
         {
             path: '/answerpaper',
             name: 'questionnaire',
-            component: questionnaire
+            component: questionnaire,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
         },
         {
             path: '/checkpaper',
             name: 'questionnaire',
-            component: questionnaire
+            component: questionnaire,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
         },
         {
             path: '/questionnaire',
             name: 'questionnaire',
-            component: questionnaire
+            component: questionnaire,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
         },
     ]
 })

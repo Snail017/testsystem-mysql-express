@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from '@/App'
 import router from '@/router'
 import store from '@/store'
-import axios from "axios"
 import crypto from 'crypto'
 import $ from 'jquery'
 import iView from 'iview'
@@ -10,6 +9,7 @@ import 'iview/dist/styles/iview.css';
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import http from "@/http"
 
 import '@/assets/css/common.css'
 import '@/assets/css/iconfont.css'
@@ -22,7 +22,7 @@ Vue.use(iView);
 Vue.use(crypto);
 
 Vue.prototype.crypto = crypto;
-Vue.prototype.$http = axios;
+Vue.prototype.$http = http;
 Vue.config.productionTip = false;
 // Vue.prototype.$http.defaults.headers = {"Content-Type": 'application/x-www-form-urlencoded;charset=UTF-8'}
 
@@ -36,8 +36,6 @@ Vue.prototype.$http({
         window.localStorage.setItem("public_key", res.msg);
     }
 })
-
-//验证token
 
 
 new Vue({

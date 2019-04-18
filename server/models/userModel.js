@@ -59,6 +59,20 @@ class UserModel {
             }
         })
     }
+    /**
+     * 查询用户信息
+     * @param Nickname  姓名
+     * @param Password  密码
+     * @returns {Promise.<*>}
+     */
+    static async Password(Nickname,Password) {
+        return await User.findOne({
+            where: {
+                Nickname,Password
+            }
+        })
+    }
+
 }
 
 module.exports = UserModel

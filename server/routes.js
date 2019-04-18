@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('./controllers/user')
+const Exam = require('./controllers/exam')
 // const UploadToken = require('../controllers/UploadToken')
 const Routers = express.Router();
 /**
@@ -15,6 +16,12 @@ Routers.post('/user/login', User.login);
 Routers.get('/user/getCaptcha', User.code);
 // // 获取公钥
 Routers.get('/user/public_key', User.getPublicKey);
+
+/**
+ * 问卷接口
+ */
+//提交试卷
+Routers.post("/Exam/EditTitle",Exam.create)
 
 
 /**

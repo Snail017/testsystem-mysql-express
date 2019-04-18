@@ -50,7 +50,7 @@ class User {
 
         } else {
             try {
-                // 加密密码
+                // 解密密码
                 params.Password = crypto.privateDecrypt(global.private_key, Buffer.from(params.Password, 'base64')).toString();
 
                 // 创建用户
@@ -85,10 +85,63 @@ class User {
      * 登录
      * */
     static async login(req,res){
-        console.log(req)
-        res.json({
-            code:404
-        })
+        let params = {
+            Nickname:req.body.name,
+            Password:req.body.password,
+            // email,
+            // usertoken
+        }
+
+        // 检测参数是否存在为空
+        let errors = [];
+        for (let item in params) {
+            if (params[item] === undefined) {
+                let index = errors.length + 1;
+                errors.push("错误" + index + ": 参数: " + item + "不能为空")
+            }
+        }
+
+        if (errors.length > 0) {
+            res.status = 412;
+            res.json({
+                code: 412,
+                msg: errors
+            })
+            return false;
+        }
+        // 解密密码
+        params.Password = crypto.privateDecrypt(global.private_key, Buffer.from(params.Password, 'base64')).toString();
+
+       // 查询用户名是否重复
+       const existUser = await UserModel.Password(params.Nickname,params.Password);
+       if(existUser){      
+        try {
+           
+            // 签发token
+            const access_token =User.setToken(existUser.id,10*60, existUser.Nickname);
+            const refresh_token =User.setToken(existUser.id,30*24*60*60, existUser.Nickname);
+            global.client.set(existUser.id,refresh_token);
+        
+            res.status = 200;
+            res.json({
+                code: 200,
+                msg: `用户登录成功`,
+                data: access_token,
+            })
+
+        } catch (err) {
+            res.status = 500;
+            res.json({
+                code: 500,
+                msg: err
+            })
+        }
+       }else{
+           res.json({
+               code:404,
+               msg:"用户名或密码错误"
+           })
+       }
     }
 
     /**
