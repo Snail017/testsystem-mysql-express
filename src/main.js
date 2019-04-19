@@ -24,7 +24,6 @@ Vue.use(crypto);
 Vue.prototype.crypto = crypto;
 Vue.prototype.$http = http;
 Vue.config.productionTip = false;
-// Vue.prototype.$http.defaults.headers = {"Content-Type": 'application/x-www-form-urlencoded;charset=UTF-8'}
 
 //获取公钥
 Vue.prototype.$http({

@@ -1,7 +1,7 @@
 const UserModel = require('../models/userModel');
 const svgCaptcha = require('svg-captcha');
 const crypto = require("crypto")
-const jwt=require("jsonwebtoken")
+const Token = require("./token")
 
 class User {
     /**
@@ -58,15 +58,19 @@ class User {
                 const newUser = await UserModel.Nickname(params.Nickname);
 
                 // 签发token
-                const access_token =User.setToken(newUser.id,10*60, newUser.Nickname);
-                const refresh_token =User.setToken(newUser.id,30*24*60*60, newUser.Nickname);
+                const access_token =Token.setToken(newUser.id,10*60, newUser.Nickname);
+                const refresh_token =Token.setToken(newUser.id,30*24*60*60, newUser.Nickname);
                 global.client.set(newUser.id,refresh_token);
             
                 res.status = 200;
+            
                 res.json({
                     code: 200,
                     msg: `创建用户成功`,
-                    data: access_token,
+                    data: {
+                        access_token:access_token,
+                        user_id:existUser.id
+                    },
                 })
 
             } catch (err) {
@@ -118,15 +122,18 @@ class User {
         try {
            
             // 签发token
-            const access_token =User.setToken(existUser.id,10*60, existUser.Nickname);
-            const refresh_token =User.setToken(existUser.id,30*24*60*60, existUser.Nickname);
+            const access_token =Token.setToken(existUser.id,10*60, existUser.Nickname);
+            const refresh_token =Token.setToken(existUser.id,30*24*60*60, existUser.Nickname);
             global.client.set(existUser.id,refresh_token);
         
             res.status = 200;
             res.json({
                 code: 200,
                 msg: `用户登录成功`,
-                data: access_token,
+                data: {
+                    access_token:access_token,
+                    user_id:existUser.id
+                },
             })
 
         } catch (err) {
@@ -144,23 +151,6 @@ class User {
        }
     }
 
-    /**
-     * 根据用户名 ，密码设置token
-     * */
-    static setToken(userid, overtime,name) {
-        var playload = {
-                iss: '1670644339@qq.com',   // JWT的签发者
-                sub: name,    // JWT所面向的用户
-                aud: "1670644339@qq.com",  //接收JWT的一方
-                exp: new Date().getTime() + overtime, //JWT的过期时间1t
-                nbf: new Date().getTime() + overtime,  //在xxx日期之间，该JWT都是可用的2t
-                iat: new Date().getTime(),  // 该JWT签发的时间
-            };
-
-        var token = jwt.sign(playload,private_key,{ algorithm: 'RS256' });
-        global.client.set(userid, token);
-        return token;
-    }
 
     static async code(req, res) {
         var captcha = svgCaptcha.create({

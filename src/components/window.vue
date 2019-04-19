@@ -30,7 +30,7 @@
     .window .icon-guanbi{position: absolute;right: 1px;font-size: 30px;top:-5px;color: grey;}
     .window input{border-radius: 3px;border:1px solid #ccc;}
     @media screen and (max-width: 1000px){
-        .window{width:80%;left: 50%;margin-left: -400px;}
+        .window{width:80%;left:10%;margin-left: 0;}
     }
 
 </style>

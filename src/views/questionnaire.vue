@@ -155,34 +155,34 @@
                     this.showmsg('请填写答题时间');
                     return false;
                 }
-                $.ajax({
-                    type: 'post',
+                _this.$http({
+                    method: 'post',
                     url: '/Exam/EditTitle',
                     data: {
                         title: titledata.title,
                         testtime: topdata.testTime*60,
                         status: topdata.opentest ? 1 : 0,
                         explain: titledata.editorTxt,
-                        id: topdata.exam_id,
+                        exam_id: topdata.exam_id,
+                        user_id:localStorage.user_id,
                         father: 0,
                         sort:topdata.sort,
                         designated:topdata.designated.length==0?'[]':topdata.designated
                     },
-                    success: (res) => {
-                        res = JSON.parse(res);
-                        if (res.status == 0) {
-                            _this.pagedata.topdata.exam_id=res.data.id;
-                            this.uploadQuestion(res.data);
-                            if(_this.flag){
-                                _this.showmsg('问卷提交成功');
-                                setTimeout(()=>{_this.$router.push('/homeQuestion')},3000)
-                            }
-                        }else{
-                            _this.showmsg(res.msg);
+                }).then(res=>{
+                    res = res.data;
+                    if (res.status == 0) {
+                        _this.pagedata.topdata.exam_id=res.data.id;
+                        this.uploadQuestion(res.data);
+                        if(_this.flag){
+                            _this.showmsg('问卷提交成功');
+                            setTimeout(()=>{_this.$router.push('/homeQuestion')},3000)
                         }
+                    }else{
+                        _this.showmsg(res.msg);
                     }
                 })
-
+            
             },
 
             /**
@@ -541,8 +541,7 @@
             left: 0;
             margin-left: 0;
         }
-        .icon-home{position: fixed;font-size: 25px;
-            right: 0;}
+        .icon-home{position: fixed;font-size: 25px;right: 0;}
         .btn-closetop{position: fixed;z-index: 66;color: #fff;bottom: 0;width: 90%;left: 5%;bottom: 10px;}
         .body>>>.navtop{top:0px;}
         .body>>>.title{margin-top: 35px;}
