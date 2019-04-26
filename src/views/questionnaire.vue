@@ -164,7 +164,6 @@
                         status: topdata.opentest ? 1 : 0,
                         explain: titledata.editorTxt,
                         exam_id: topdata.exam_id,
-                        user_id:localStorage.user_id,
                         father: 0,
                         sort:topdata.sort,
                         designated:topdata.designated.length==0?'[]':topdata.designated

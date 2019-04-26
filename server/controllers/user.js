@@ -1,7 +1,7 @@
 const UserModel = require('../models/userModel');
 const svgCaptcha = require('svg-captcha');
 const crypto = require("crypto")
-const Token = require("./token")
+const Token = require("../config/token.config")
 
 class User {
     /**
@@ -54,23 +54,17 @@ class User {
                 params.Password = crypto.privateDecrypt(global.private_key, Buffer.from(params.Password, 'base64')).toString();
 
                 // 创建用户
-                await UserModel.create(params);
-                const newUser = await UserModel.Nickname(params.Nickname);
+                const newUser= await UserModel.create(params);
 
-                // 签发token
-                const access_token =Token.setToken(newUser.id,10*60, newUser.Nickname);
-                const refresh_token =Token.setToken(newUser.id,30*24*60*60, newUser.Nickname);
-                global.client.set(newUser.id,refresh_token);
+               // 签发token
+                const access_token =Token.setToken(existUser.id,10*60*60 );
+                const refresh_token =Token.setToken(existUser.id,15*24*60*60);
+                Token.redisSet(access_token,refresh_token);
             
                 res.status = 200;
-            
                 res.json({
                     code: 200,
                     msg: `创建用户成功`,
-                    data: {
-                        access_token:access_token,
-                        user_id:existUser.id
-                    },
                 })
 
             } catch (err) {
@@ -84,6 +78,7 @@ class User {
         }
 
     }
+
 
     /**
      * 登录
@@ -122,10 +117,10 @@ class User {
         try {
            
             // 签发token
-            const access_token =Token.setToken(existUser.id,10*60, existUser.Nickname);
-            const refresh_token =Token.setToken(existUser.id,30*24*60*60, existUser.Nickname);
-            global.client.set(existUser.id,refresh_token);
-        
+            const access_token =Token.setToken(existUser.id,60 );
+            const refresh_token =Token.setToken(existUser.id,15*24*60*60);
+           Token.redisSet(access_token,refresh_token);
+
             res.status = 200;
             res.json({
                 code: 200,
@@ -151,7 +146,11 @@ class User {
        }
     }
 
-
+    /**
+     * 设置图像验证码
+     * @param {*} req 
+     * @param {*} res 
+     */
     static async code(req, res) {
         var captcha = svgCaptcha.create({
             // 翻转颜色
@@ -176,14 +175,61 @@ class User {
             msg: req.session
         });
     }
-
-    static async getPublicKey(req, res) {
+    /**
+     * 返回客户端公钥
+     * @param {*req}
+     * @param {*res}
+     * @returns {*public_key} 返回 公钥
+     */
+    static async public_key(req, res) {
         res.json({
             code: 200,
             msg: global.public_key
         })
     }
 
+    /**
+     * 根据类型获取用户名单
+     * @param {*type} req  用户类型 
+     * @param {*} res 
+     */
+    static async list(req,res){
+        let params=req.body;
+        
+        // 检测参数是否存在为空
+        let errors = [];
+        for (let item in params) {
+            if (params[item] === undefined) {
+                let index = errors.length + 1;
+                errors.push("错误" + index + ": 参数: " + item + "不能为空")
+            }
+        }
+
+        if (errors.length > 0) {
+            res.status = 412;
+            res.json({
+                code: 412,
+                msg: errors
+            })
+            return false;
+        }
+        const userList=await UserModel.findAllUserList(params.type);
+        
+        if(userList){
+            try{
+               res.json({
+                   code:200,
+                   data:userList
+               })
+            }catch(err){
+                res.json({
+                    code:500,
+                    msg:err
+                })
+            }
+        }
+        
+    }
 }
 
 module.exports = User

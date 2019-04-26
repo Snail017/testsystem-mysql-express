@@ -65,18 +65,20 @@
               },
               getPerson(){
                   var _this=this;
-                  $.ajax({
-                      type:'get',
-                      url:'/Type/List2?type=51',
-                      success:function (res) {
-                          res=JSON.parse(res);
-                          _this.person=res.data.servicelist;
+                  this.$http({
+                      method:"post",
+                      url:"/User/list",
+                      data:{
+                          type:""
+                      }
+                  }).then(res=>{
+                      res=res.data;
+                       _this.person=res.data.servicelist;
                           _this.$nextTick(()=>{
                              setTimeout(()=>{
                                  $("#select").select2();
                              },1000)
                           })
-                      }
                   })
               },
 

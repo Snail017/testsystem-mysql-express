@@ -13,13 +13,13 @@ class UserModel {
     static async create(user) {
         let {Nickname, Password,/* email, Usertoken*/} = user;
 
-        await User.create({
+        return await User.create({
             Nickname,
             Password,
             // email,
             // Usertoken,
         })
-        return true
+        // return true
     }
 
     /**
@@ -40,10 +40,20 @@ class UserModel {
      * 查询用户列表
      * @returns {Promise<*>}
      */
-    static async findAllUserList() {
-        return await User.findAll({
-            attributes: ['id', 'Nickname', 'email']
-        })
+    static async findAllUserList(type) {
+        if(!type){
+            return await User.findAll({
+                attributes: ['id', 'Nickname'],
+            })
+        }else{
+            return await User.findAll({
+                attributes: ['id', 'Nickname'],
+                where:{
+                    type:type
+                }
+            })
+        }
+        
     }
 
 

@@ -106,8 +106,6 @@
                     }).then((res) => {
                         res = res.data;
                         if (res.code == 200) {
-                            window.localStorage["token"]=res.data.access_token;
-                            window.localStorage["user_id"]=res.data.user_id;
                             this.$Message.info({
                                 content: '注册成功',
                                 duration: 3,

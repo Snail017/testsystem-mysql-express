@@ -10,7 +10,7 @@ var sequelize = new Sequelize(models.mysql.database, models.mysql.user, models.m
     operatorsAliases: false,
     dialectOptions: {
         charset: "utf8mb4",
-        collate: "utf8mb4_unicode_ci",
+        // collate: "utf8mb4_unicode_ci",
         supportBigNumbers: true,
         bigNumberStrings: true
     },
