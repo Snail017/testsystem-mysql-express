@@ -20,10 +20,8 @@
         <div class="st_top_content" v-if="topCofig.topShow">
             <div class="header clearfix">
                 <i class="iconfont icon-guanbi" @click="topCofig.topShow=false"></i>
-                <div class="clearfix mulselect" >
-                    <Multiselect track-by="id" label="id" :multiple="true" :options="person" :custom-label="customLabel" select-label=""  placeholder="请指定考试人"  :hide-selected="true" :searchable="true" v-model="topdata.designated"><span slot="noResult"></span></Multiselect>
-                </div>
-                <p class="form-group" style="margin-top: 50px;">
+                <Multiselect track-by="id" label="id" :multiple="true" :options="person" :custom-label="customLabel" select-label=""  placeholder="请指定考试人"  :hide-selected="true" :searchable="true" v-model="topdata.designated"><span slot="noResult"></span></Multiselect>
+                <p class="form-group">
                     <label>立即发布 <input type="checkbox"  v-model="topdata.opentest"></label>
                     <label>隐藏系统考题 <input type="checkbox"  v-model="topdata.sort"></label>
                 </p>
@@ -32,8 +30,8 @@
                 </p>
                 <div class="footer">
                     <div>
-                        <span class="btn btn-primary" @click.stop="$emit('checkdata')">完成编辑</span>
-                        <router-link tag="a"  target="_blank" :to="{path:'/paper',query:{paper_id:topdata.exam_id}}"  class="btn btn-info"><i class="iconfont icon-yanjing"></i>预览</router-link>
+                        <Button type="primary" @click.stop="$emit('checkdata')">完成编辑</Button>
+                        <router-link tag="Button" type="button"  target="_blank" :to="{path:'/paper',query:{paper_id:topdata.exam_id}}" ><i class="iconfont icon-yanjing"></i>预览</router-link>
                     </div>
                 </div>
             </div>
@@ -60,8 +58,8 @@
               this.getPerson();
           },
           methods:{
-              customLabel ({ id, title }) {
-                  return `[${id}]${title}`
+              customLabel ({ id, Nickname }) {
+                  return `[${id}]${Nickname}`
               },
               getPerson(){
                   var _this=this;
@@ -73,12 +71,7 @@
                       }
                   }).then(res=>{
                       res=res.data;
-                       _this.person=res.data.servicelist;
-                          _this.$nextTick(()=>{
-                             setTimeout(()=>{
-                                 $("#select").select2();
-                             },1000)
-                          })
+                       _this.person=res.data;
                   })
               },
 
@@ -88,6 +81,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .iconfont{font-size: 12px;}
+    .ivu-btn{margin-left: 5px;}
     .icon-guanbi{margin-right: 5px;font-size: 25px;position: absolute;right: 0;top:0;}
     .st_top_content{position: fixed;left:0;top:0;width: 100%;height: 100%;background: #000000b8;z-index: 3;}
     .mulselect>>>.multiselect{position: fixed;width: 500px;font-size: 12px;}
@@ -106,6 +101,8 @@
     .nav-right p{padding:5px 10px;text-align: center;font-size: 14px;}
     .nav-right p:nth-of-type(1){font-size: 25px;font-weight: bold;}
     @media screen and (max-width: 850px){
-
+        .header{width: 90%;margin: auto;}
+        .mulselect>>>.multiselect{width: 300px;;}
+        .mulselect{}
     }
 </style>
