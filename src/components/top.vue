@@ -87,7 +87,7 @@
     .st_top_content{position: fixed;left:0;top:0;width: 100%;height: 100%;background: #000000b8;z-index: 3;}
     .mulselect>>>.multiselect{position: fixed;width: 500px;font-size: 12px;}
     .mulselect>>>.multiselect__input, .mulselect>>>.multiselect__single{font-size: 12px;}
-    .header{width: 600px;background: #fff;padding:20px 40px 0;margin: auto;margin-top: 10%;position: relative}
+    .header{overflow: hidden;width: 600px;background: #fff;padding:20px 40px 0;margin: auto;margin-top: 10%;position: relative}
     .header>div{padding: 10px 0;}
     .header label{vertical-align: middle;margin: 0;width: 49%;}
     .header label:before{content:'*';color: red;padding: 0 5px;}
@@ -100,9 +100,9 @@
     .nav-right>div{background: linear-gradient(to right, #0088ff ,blue, #1568d5);display: flex;border-radius:5px 0 0 5px;}
     .nav-right p{padding:5px 10px;text-align: center;font-size: 14px;}
     .nav-right p:nth-of-type(1){font-size: 25px;font-weight: bold;}
+  
     @media screen and (max-width: 850px){
         .header{width: 90%;margin: auto;}
         .mulselect>>>.multiselect{width: 300px;;}
-        .mulselect{}
     }
 </style>

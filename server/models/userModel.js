@@ -41,7 +41,7 @@ class UserModel {
      * @returns {Promise<*>}
      */
     static async findAllUserList(type) {
-        if(!type){
+        if(!Number(type)){
             return await User.findAll({
                 attributes: ['id', 'Nickname'],
             })
