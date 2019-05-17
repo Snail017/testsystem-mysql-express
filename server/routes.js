@@ -1,27 +1,34 @@
 const express = require('express');
 const User = require('./controllers/user')
 const Exam = require('./controllers/exam')
+const Upload=require('./controllers/upload')
 // const UploadToken = require('../controllers/UploadToken')
 const Routers = express.Router();
+
+
 /**
  * 用户接口
  */
 
-// 用户注册
+//  用户注册
 Routers.post('/user/register', User.create);
-// 用户登录
+//  用户登录
 Routers.post('/user/login', User.login);
-// 获取用户名单
+//  获取用户名单
 Routers.post('/User/list', User.list);
 //  获取图形码
 Routers.get('/user/getCaptcha', User.code);
-// // 获取公钥
+//  获取公钥
 Routers.get('/user/public_key', User.public_key);
+
+//  提交图片
+Routers.post("/UpLoad/SinglePic",Upload.uploadPic);
+
 
 /**
  * 问卷接口
  */
-//提交试卷
+//  提交试卷
 Routers.post("/Exam/EditTitle",Exam.create)
 
 

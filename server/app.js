@@ -9,6 +9,8 @@ const redis = require('redis');
 const express = require('express');
 const Token=require(__dirname+'/config/token.config.js')
 const app = express();
+  
+
 global.public_key = fs.readFileSync(__dirname+"/pub.key").toString();
 global.private_key = fs.readFileSync(__dirname+'/pri.key').toString();
 

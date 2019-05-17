@@ -57,8 +57,8 @@ class User {
                 const newUser= await UserModel.create(params);
 
                // 签发token
-                const access_token =Token.setToken(existUser.id,10*60*60 );
-                const refresh_token =Token.setToken(existUser.id,15*24*60*60);
+                const access_token =Token.setToken(newUser.id,10*60*60 );
+                const refresh_token =Token.setToken(newUser.id,15*24*60*60);
                 Token.redisSet(access_token,refresh_token);
             
                 res.status = 200;
