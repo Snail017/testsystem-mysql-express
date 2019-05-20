@@ -1,29 +1,31 @@
 const multer = require('multer');
 const path = require('path')
+const fs = require('fs');
 
-class Upload {
-    static SinglePic() {
-        var storage = multer.diskStorage({
-            //设置上传后文件路径，uploads文件夹会自动创建。
-            destination: function (req, file, cb) {
-                cb(null, './public/uploads')
-            },
-            //给上传文件重命名，获取添加后缀名
-            filename: function (req, file, cb) {
-                var fileFormat = (file.originalname).split(".");
-                cb(null, file.fieldname + '-' + Date.now() + "." + fileFormat[fileFormat.length - 1]);
-            }
-        });
-        //添加配置文件到muler对象。
-        var upload = multer({
-            storage: storage
-        });
+var createFolder = function (folder) {
+    try {
+        fs.accessSync(folder);
+    } catch (e) {
+        fs.mkdirSync(folder);
     }
+};
+//这个路径为文件上传的文件夹的路径
+var uploadFolder = '../UserPic/';
 
-    static async uploadPic(req, res) {
-        // multer.single("img");
-       
-        var params = req.body
+createFolder(uploadFolder);
+
+// 通过 filename 属性定制
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadFolder);    // 保存的路径，备注：需要自己创建
+    },
+    filename: function (req, file, cb) {
+        var extname = path.extname(file.originalname);//获取文件扩展名
+        // 将保存文件名设置为 字段名 + 时间戳+文件扩展名，比如 logo-1478521468943.jpg
+        cb(null, file.fieldname + '-' + Date.now() + extname);
     }
-}
-module.exports = Upload
+});
+
+var uploadImg = multer({ storage: storage })
+
+module.exports = uploadImg

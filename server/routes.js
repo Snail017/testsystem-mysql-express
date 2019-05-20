@@ -1,9 +1,10 @@
 const express = require('express');
 const User = require('./controllers/user')
 const Exam = require('./controllers/exam')
-const Upload=require('./controllers/upload')
+const upload=require('./controllers/upload')
 // const UploadToken = require('../controllers/UploadToken')
 const Routers = express.Router();
+
 
 
 /**
@@ -22,7 +23,7 @@ Routers.get('/user/getCaptcha', User.code);
 Routers.get('/user/public_key', User.public_key);
 
 //  提交图片
-Routers.post("/UpLoad/SinglePic",Upload.uploadPic);
+Routers.post("/UpLoad/Uploadpic",upload.single("img"),User.uploadImg);
 
 
 /**

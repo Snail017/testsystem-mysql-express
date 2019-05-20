@@ -15,7 +15,7 @@ class Exam {
             exam_id:req.body.exam_id,
             status:req.body.status,
             testtime:req.body.testtime,
-            sort:req.body.s
+            sort:req.body.sort
         };
 
         // 检测参数是否存在为空

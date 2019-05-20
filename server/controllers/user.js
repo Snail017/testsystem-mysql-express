@@ -230,6 +230,15 @@ class User {
         }
         
     }
+    
+    static uploadImg(req,res,next){
+        res.json({
+            code:200,
+            data:{
+                img:"http://zq.img.com/"+req.file.filename
+            }
+        })
+    }
 }
 
 module.exports = User
