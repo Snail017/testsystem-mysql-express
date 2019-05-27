@@ -30,7 +30,7 @@ app.all("*",async(req,res,next)=>{
     try{            
         if(token.status==404){
                 res.json({
-                    code: 999,
+                    code: 401,
                     msg:"token已过期，请重新登录"
                 })
             }else {

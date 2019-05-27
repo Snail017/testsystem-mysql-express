@@ -262,7 +262,7 @@
                     problemData.exam_id = ajaxData.id;
                     problemData.father_number = 1;      //father_number  父标题序号  固定为1  放在最前面
                     if (this.flag) {
-                        $.ajax({
+                        _this.$http({
                             type: 'post',
                             url: '/Exam/EditQuestions',
                             data: problemData,

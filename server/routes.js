@@ -31,6 +31,8 @@ Routers.post("/UpLoad/Uploadpic",upload.single("img"),User.uploadImg);
  */
 //  提交试卷
 Routers.post("/Exam/EditTitle",Exam.create)
+Routers.post("/Exam/EditTitle",Exam.create)
+
 
 
 /**

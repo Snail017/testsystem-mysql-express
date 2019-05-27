@@ -55,7 +55,7 @@ class Token{
                         status:404
                     }
                 }else{
-                    let new_fresh_token=await Token.setToken(id,15*24*60*60);
+                    let new_fresh_token=await Token.setToken(id,1*24*60*60);
                     let new_access_token=await Token.setToken(id,60);
                     Token.redisSet(new_fresh_token,new_fresh_token); //设置新的refresh_token 放入redis
                     return {
