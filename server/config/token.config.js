@@ -61,7 +61,8 @@ class Token{
                     return {
                         status:202,
                         access_token : new_access_token,
-                        msg:"更新token"
+                        uid : id,
+                        msg : "更新token"
                     }
                 }
             }else{

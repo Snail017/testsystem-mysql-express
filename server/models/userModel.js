@@ -19,7 +19,7 @@ class UserModel {
             // email,
             // Usertoken,
         })
-        // return true
+        return true
     }
 
     /**

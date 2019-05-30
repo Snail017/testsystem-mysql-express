@@ -170,12 +170,14 @@
                     },
                 }).then(res=>{
                     res = res.data;
-                    if (res.status == 0) {
+                    if (res.status == 200) {
                         _this.pagedata.topdata.exam_id=res.data.id;
                         this.uploadQuestion(res.data);
                         if(_this.flag){
                             _this.showmsg('问卷提交成功');
-                            setTimeout(()=>{_this.$router.push('/homeQuestion')},3000)
+                            setTimeout(()=>{
+                                _this.$router.push('/homeQuestion')
+                                },3000)
                         }
                     }else{
                         _this.showmsg(res.msg);
@@ -198,7 +200,7 @@
                         switch (name) {
                             case 'questionType':
                                 if (value == 'QA') {
-                                    problemData.type = 0;
+                                    problemData.type = 0; 
                                 } else if (value == 'radio') {
                                     problemData.type = 1;
                                 } else if (value == 'checkbox') {

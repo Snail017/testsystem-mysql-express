@@ -11,16 +11,13 @@ class Exam {
      * @returns 创建成功返回用户信息，失败返回错误信息
      */
     static async create(req, res) {
-        let params = {
-            exam_id:req.body.exam_id,
-            status:req.body.status,
-            testtime:req.body.testtime,
-            sort:req.body.sort
-        };
+        let params = req.body;
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
 
         // 检测参数是否存在为空
         let errors = [];
-        
+
         for (let item in params) {
             if (params[item] === undefined) {
                 let index = errors.length + 1;
@@ -36,8 +33,32 @@ class Exam {
             })
             return false;
         }
-        
+
+        //exam_id==0  新创建的文件
+        if (params.exam_id == 0) {
+            const createExam = await examModel.create(params);
+            if (createExam) {
+                res.json({
+                    status: 200,
+                    data: {
+                        id: createExam.id
+                    },
+                    msg:"提交成功！"
+                })
+            }
+        } else {
+            const createExam = await examModel.alter(params);
+            if (createExam) {
+                res.json({
+                    status: 200,
+                    data: {
+                        id: createExam.id
+                    },
+                    msg:"修改成功"
+                })
+            }
+        }
     }
 }
 
-module.exports = Exam
+module.exports = Exam 

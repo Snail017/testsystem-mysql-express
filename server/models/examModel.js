@@ -2,7 +2,7 @@ const db = require('../config/sequelize.config')
 const Sequelize = db.sequelize;
 const Exam = Sequelize.import('../schema/exam.js')
 
-Exam.sync({force: false});
+Exam.sync({ force: false });
 
 class ExamModel {
     /**
@@ -11,16 +11,34 @@ class ExamModel {
      * @returns {Promise<boolean>}
      */
     static async create(exam) {
-        let {title,user_id, explain,testtime,status,sort} = exam;
-        await Exam.create({
+        let { title, user_id, explain, testtime, status, sort, designated } = exam;
+        let examCreate = await Exam.create({
             title,
             user_id,
             explain,
             testtime,
             status,
-            sort
+            sort,
+            designated
         })
-        return true
+        return examCreate
+    }
+    static async alter(exam) {
+        let { title, user_id, explain, testtime, status, sort, designated, exam_id } = exam;
+        let examCreate = await Exam.update({
+            title,
+            user_id,
+            explain,
+            testtime,
+            status,
+            sort,
+            designated,
+        }, {
+                where: {
+                    id: exam_id
+                }
+            })
+        return examCreate
     }
 
 }

@@ -13,6 +13,12 @@ module.exports = function (sequelize, DataTypes) {
             field: 'userid',
             allowNull: false
         },
+        //指定人
+        designated:{
+            type: JSON,
+            field: 'designated',
+            allowNull: false
+        },
         // 试卷标题
         title: {
             type: DataTypes.STRING(255),
@@ -37,7 +43,7 @@ module.exports = function (sequelize, DataTypes) {
             field: 'status',
             allowNull: false
         },
-        //是否隐藏考题
+        // 是否隐藏考题
         sort:{
             type:Boolean,
             field:'sort',
@@ -61,6 +67,7 @@ module.exports = function (sequelize, DataTypes) {
         // 如果为 true 则表的名称和 model 相同，即 user
         // 为 false MySQL创建的表名称会是复数 users
         // 如果指定的表名称本就是复数形式则不变
-        freezeTableName: true
+        timestamps: true,
+        freezeTableName: true,
     })
 }

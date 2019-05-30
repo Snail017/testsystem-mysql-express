@@ -113,6 +113,7 @@ class User {
 
        // 查询用户名是否重复
        const existUser = await UserModel.Password(params.Nickname,params.Password);
+
        if(existUser){      
         try {
            
