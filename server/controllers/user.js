@@ -14,8 +14,8 @@ class User {
      */
     static async create(req, res) {
         let params = {
-            Nickname:req.body.name,
-            Password:req.body.password,
+            Nickname: req.body.name,
+            Password: req.body.password,
             // email,
             // usertoken
         }
@@ -54,13 +54,13 @@ class User {
                 params.Password = crypto.privateDecrypt(global.private_key, Buffer.from(params.Password, 'base64')).toString();
 
                 // 创建用户
-                const newUser= await UserModel.create(params);
+                const newUser = await UserModel.create(params);
 
-               // 签发token
-                const access_token =Token.setToken(newUser.id,10*60*60 );
-                const refresh_token =Token.setToken(newUser.id,15*24*60*60);
-                Token.redisSet(access_token,refresh_token);
-            
+                // 签发token
+                const access_token = Token.setToken(newUser.id, 10 * 60 * 60);
+                const refresh_token = Token.setToken(newUser.id, 15 * 24 * 60 * 60);
+                Token.redisSet(access_token, refresh_token);
+
                 res.status = 200;
                 res.json({
                     code: 200,
@@ -74,7 +74,7 @@ class User {
                     msg: err
                 })
             }
-           
+
         }
 
     }
@@ -83,10 +83,10 @@ class User {
     /**
      * 登录
      * */
-    static async login(req,res){
+    static async login(req, res) {
         let params = {
-            Nickname:req.body.name,
-            Password:req.body.password,
+            Nickname: req.body.name,
+            Password: req.body.password,
             // email,
             // usertoken
         }
@@ -111,40 +111,40 @@ class User {
         // 解密密码
         params.Password = crypto.privateDecrypt(global.private_key, Buffer.from(params.Password, 'base64')).toString();
 
-       // 查询用户名是否重复
-       const existUser = await UserModel.Password(params.Nickname,params.Password);
+        // 查询用户名是否重复
+        const existUser = await UserModel.Password(params.Nickname, params.Password);
 
-       if(existUser){      
-        try {
-           
-            // 签发token
-            const access_token =Token.setToken(existUser.id,60 );
-            const refresh_token =Token.setToken(existUser.id,15*24*60*60);
-           Token.redisSet(access_token,refresh_token);
+        if (existUser) {
+            try {
 
-            res.status = 200;
+                // 签发token
+                const access_token = Token.setToken(existUser.id, 60);
+                const refresh_token = Token.setToken(existUser.id, 15 * 24 * 60 * 60);
+                Token.redisSet(access_token, refresh_token);
+
+                res.status = 200;
+                res.json({
+                    code: 200,
+                    msg: `用户登录成功`,
+                    data: {
+                        access_token: access_token,
+                        user_id: existUser.id
+                    },
+                })
+
+            } catch (err) {
+                res.status = 500;
+                res.json({
+                    code: 500,
+                    msg: err
+                })
+            }
+        } else {
             res.json({
-                code: 200,
-                msg: `用户登录成功`,
-                data: {
-                    access_token:access_token,
-                    user_id:existUser.id
-                },
-            })
-
-        } catch (err) {
-            res.status = 500;
-            res.json({
-                code: 500,
-                msg: err
+                code: 404,
+                msg: "用户名或密码错误"
             })
         }
-       }else{
-           res.json({
-               code:404,
-               msg:"用户名或密码错误"
-           })
-       }
     }
 
     /**
@@ -194,9 +194,9 @@ class User {
      * @param {*type} req  用户类型 
      * @param {*} res 
      */
-    static async list(req,res){
-        let params=req.body;
-        
+    static async list(req, res) {
+        let params = req.body;
+
         // 检测参数是否存在为空
         let errors = [];
         for (let item in params) {
@@ -214,29 +214,29 @@ class User {
             })
             return false;
         }
-        const userList=await UserModel.findAllUserList(params.type);
-        
-        if(userList){
-            try{
-               res.json({
-                   code:200,
-                   data:userList
-               })
-            }catch(err){
+        const userList = await UserModel.findAllUserList(params.type);
+
+        if (userList) {
+            try {
                 res.json({
-                    code:500,
-                    msg:err
+                    code: 200,
+                    data: userList
+                })
+            } catch (err) {
+                res.json({
+                    code: 500,
+                    msg: err
                 })
             }
         }
-        
+
     }
-    
-    static uploadImg(req,res,next){
+
+    static uploadImg(req, res, next) {
         res.json({
-            code:200,
-            data:{
-                img:"http://zq.img.com/"+req.file.filename
+            code: 200,
+            data: {
+                img: "http://zq.img.com/" + req.file.filename
             }
         })
     }

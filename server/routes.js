@@ -12,15 +12,15 @@ const Routers = express.Router();
  */
 
 //  用户注册
-Routers.post('/user/register', User.create);
+Routers.post('/register', User.create);
 //  用户登录
-Routers.post('/user/login', User.login);
+Routers.post('/login', User.login);
 //  获取用户名单
-Routers.post('/User/list', User.list);
+Routers.post('/users', User.list);
 //  获取图形码
-Routers.get('/user/getCaptcha', User.code);
+Routers.get('/captcha', User.code);
 //  获取公钥
-Routers.get('/user/public_key', User.public_key);
+Routers.get('/publicKey', User.public_key);
 
 //  提交图片
 Routers.post("/UpLoad/Uploadpic",upload.single("img"),User.uploadImg);

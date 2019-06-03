@@ -57,7 +57,7 @@
                 var _this=this;
                 this.$http({
                     method:"get",
-                    url:"/user/getCaptcha",
+                    url:"/captcha",
                 }).then((res)=>{
                     _this.codeData=res.data;
                 })
@@ -92,7 +92,7 @@
                 if (flag) {
                     this.$http({
                         method: "post",
-                        url: '/user/login',
+                        url: '/login',
                         data: {
                             name: _this.name,
                             password:ls_pw,

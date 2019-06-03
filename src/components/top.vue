@@ -65,7 +65,7 @@
                   var _this=this;
                   this.$http({
                       method:"post",
-                      url:"/User/list",
+                      url:"/users",
                       data:{
                           type:""
                       }
