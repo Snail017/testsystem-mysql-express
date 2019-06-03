@@ -68,6 +68,7 @@ class Token{
             }else{
                 return {
                     status:200,
+                    uid : id,
                     msg:"token有效中"
                 };
             }

@@ -10,7 +10,7 @@ class ExamModel {
      * @param title
      * @returns {Promise<boolean>}
      */
-    static async create(exam) {
+    static async createExam(exam) {
         let { title, user_id, explain, testtime, status, sort, designated } = exam;
         let examCreate = await Exam.create({
             title,
@@ -23,7 +23,7 @@ class ExamModel {
         })
         return examCreate
     }
-    static async alter(exam) {
+    static async alterExam(exam) {
         let { title, user_id, explain, testtime, status, sort, designated, exam_id } = exam;
         let examCreate = await Exam.update({
             title,
@@ -39,6 +39,44 @@ class ExamModel {
                 }
             })
         return examCreate
+    }
+
+    static async createQues(exam) {
+        let { answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number } = exam;
+        let sql = await Exam.create({
+            answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number
+        })
+        return sql;
+
+    }
+    static async alterQues(exam) {
+        let { answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number, question_id } = exam;
+        let sql = await Exam.update({
+            answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number
+        }, {
+                where: {
+                    id: question_id
+                }
+            })
+        return sql;
+    }
+
+    /**
+     * @param user_id
+     * @param status
+     * @returns 
+     * 筛选问卷列表
+     */
+    static async getlist(exam) {
+        let { user_id, status } = exam;
+        let sql = await Exam.findAll({
+            
+        },{
+            where:{
+                userid:user_id,
+                status:status
+            }
+        })
     }
 
 }

@@ -172,7 +172,7 @@
                     res = res.data;
                     if (res.status == 200) {
                         _this.pagedata.topdata.exam_id=res.data.id;
-                        this.uploadQuestion(res.data);
+                        _this.uploadQuestion(res.data);
                         if(_this.flag){
                             _this.showmsg('问卷提交成功');
                             setTimeout(()=>{
@@ -190,6 +190,7 @@
              * 上传题目  每个题目上传一次
              **/
             uploadQuestion(ajaxData) {
+                var _this=this;
                 this.flag = true;
                 for (let m in this.pagedata.questiondata) {
                     let problemData = {
@@ -265,12 +266,11 @@
                     problemData.father_number = 1;      //father_number  父标题序号  固定为1  放在最前面
                     if (this.flag) {
                         _this.$http({
-                            type: 'post',
+                            method: 'post',
                             url: '/Exam/EditQuestions',
                             data: problemData,
-                            success: function (res) {
-                                res=JSON.parse(res);
-                            }
+                        }).then(res=>{
+                             res=JSON.parse(res);
                         })
                     }
                 }

@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         // 用户id
         user_id: {
-            type: DataTypes.STRING(100),
+            type: Number,
             field: 'userid',
             allowNull: false
         },
