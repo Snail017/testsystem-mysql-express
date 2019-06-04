@@ -32,7 +32,8 @@ Routers.post("/Uploadpic",upload.single("img"),User.uploadImg);
 //  提交试卷
 Routers.post("/Exam/EditTitle",Exam.create)
 Routers.post("/Exam/EditQuestions",Exam.question)
-Routers.get("/Exam/GetList",Exam.getlist)
+Routers.get("/questionnaireList",Exam.getlist)
+Routers.get("/questions",Exam.getquestions)
 
 
 

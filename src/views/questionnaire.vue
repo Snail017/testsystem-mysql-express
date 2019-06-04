@@ -425,12 +425,11 @@
                 if (_this.$match(window.location.href, 'id') == null) {
                     return false;
                 }
-                $.ajax({
-                    type: 'get',
-                    url: '/Exam/GetQuestions?exam_id=' + _this.$match(window.location.href, 'id') + '',
-                    success: function (res) {
-                        res = JSON.parse(res);
-                      if(res.status==0){
+                _this.$http({
+                    method: 'get',
+                    url: '/questions?exam_id=' + _this.$match(window.location.href, 'id') + '',
+                }).then(res=>{
+                     if(res.status==0){
                           _this.pagedata.titledata.title = res.data.title;
                           _this.pagedata.titledata.editorTxt = res.data.explain;
                           _this.pagedata.topdata.exam_id = res.data.id;
@@ -500,7 +499,6 @@
                       }else{
                           _this.showmsg(res.msg)
                       }
-                    }
                 })
 
             },

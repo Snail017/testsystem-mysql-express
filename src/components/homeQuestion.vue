@@ -68,7 +68,7 @@
             完成{{item.answer_count}}人
           </span>&nbsp;
           <span>
-            <i class="iconfont icon-shijian"></i>2017-12-12 12:12
+            <i class="iconfont icon-shijian"></i>{{item.updatedAt}}
           </span>
         </div>
       </div>
@@ -111,7 +111,7 @@ export default {
       handler(newVal) {
         if (newVal != "") {
           this.examType = "search";
-          this.examTypeUrl = "/Exam/GetList?status=&title=" + newVal + "";
+          this.examTypeUrl = "/questionnaireList?status=&title=" + newVal + "";
           this.Exam(1);
         } else {
           this.examType = "doing";
@@ -123,20 +123,20 @@ export default {
         var _this = this;
         switch (newVal) {
           case "finish":
-            this.examTypeUrl = "/Exam/GetList?status=2";
+            this.examTypeUrl = "/questionnaireList?status=2";
             break;
           case "doing": //进行中的考试
-            this.examTypeUrl = "/Exam/GetList?status=1";
+            this.examTypeUrl = "/questionnaireList?status=1";
             break;
           case "recycle": //进行中的考试
-            this.examTypeUrl = "/Exam/GetList?status=3";
+            this.examTypeUrl = "/questionnaireList?status=3";
             break;
           case "unfinish":
-            this.examTypeUrl = "/Exam/GetList?status=0";
+            this.examTypeUrl = "/questionnaireList?status=0";
             break;
           case "search":
             this.examTypeUrl =
-              "/Exam/GetList?status=&title=" + _this.title + "";
+              "/questionnaireList?status=&title=" + _this.title + "";
             break;
         }
         this.Exam(1);
@@ -250,8 +250,8 @@ export default {
           }
         })
         .then(res => {
-          res = JSON.parse(res);
-          _this.testdata = res.data.data;
+          res=res.data;
+          _this.testdata = res.data.users;
           _this.$set(_this.pagedata, "data_total", res.data.page_total);
           _this.$set(_this.pagedata, "p", res.data.p);
           _this.$set(_this.pagedata, "page_rows", res.data.page_rows);

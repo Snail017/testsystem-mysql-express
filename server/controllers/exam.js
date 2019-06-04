@@ -98,7 +98,8 @@ class Exam {
      */
     static async getlist(req, res) {
         let params = req.query;
-
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
         // 检测参数是否存在为空
         let errors = [];
 
@@ -118,9 +119,45 @@ class Exam {
             return false;
         }
 
-        
-
+        const users = await examModel.getlist(params);
+        res.json({
+            status: 200,
+            data: {
+                users: users,
+                data_total: "2",
+                p: "1",
+                page_rows: "10",
+                page_total: 1
+            }
+        })
     }
+
+    static async getquestion(req,res){
+        let params=req.query;
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
+        // 检测参数是否存在为空
+        let errors = [];
+
+        for (let item in params) {
+            if (params[item] === undefined) {
+                let index = errors.length + 1;
+                errors.push("错误" + index + ": 参数: " + item + "不能为空")
+            }
+        }
+
+        if (errors.length > 0) {
+            res.status = 412;
+            res.json({
+                code: 412,
+                msg: errors
+            })
+            return false;
+        }
+
+        const 
+    }
+
 }
 
 module.exports = Exam 

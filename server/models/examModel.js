@@ -69,14 +69,17 @@ class ExamModel {
      */
     static async getlist(exam) {
         let { user_id, status } = exam;
-        let sql = await Exam.findAll({
-            
-        },{
-            where:{
-                userid:user_id,
-                status:status
-            }
-        })
+        let sql = await Exam.findAll(
+            {
+                limit: 3,
+            },{
+                where: {
+                    userid: user_id,
+                    status: status
+                }
+            })
+
+        return sql
     }
 
 }
