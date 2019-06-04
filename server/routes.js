@@ -23,7 +23,7 @@ Routers.get('/captcha', User.code);
 Routers.get('/publicKey', User.public_key);
 
 //  提交图片
-Routers.post("/UpLoad/Uploadpic",upload.single("img"),User.uploadImg);
+Routers.post("/Uploadpic",upload.single("img"),User.uploadImg);
 
 
 /**
