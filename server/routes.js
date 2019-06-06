@@ -30,10 +30,10 @@ Routers.post("/Uploadpic",upload.single("img"),User.uploadImg);
  * 问卷接口
  */
 //  提交试卷
-Routers.post("/Exam/EditTitle",Exam.create)
-Routers.post("/Exam/EditQuestions",Exam.question)
+Routers.post("/ExamTitle",Exam.create)
+Routers.post("/ExamQuestions",Exam.question)
 Routers.get("/questionnaireList",Exam.getlist)
-Routers.get("/questions",Exam.getquestions)
+Routers.get("/questions",Exam.getquestion)
 
 
 

@@ -40,13 +40,13 @@ module.exports = function (sequelize, DataTypes) {
         // 题目分数
         score: {
             type: Number,
-            field: 'status',
+            field: 'score',
             allowNull: false
         },
         // 题目类型    QA==0  radio==1  checkbox==2  judge==3
         type:{
             type:Number,
-            field:'sort',
+            field:'type',
             allowNull:true
         },
         createdAt: {

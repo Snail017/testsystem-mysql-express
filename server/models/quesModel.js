@@ -1,8 +1,8 @@
 const db = require('../config/sequelize.config')
 const Sequelize = db.sequelize;
-const Exam = Sequelize.import('../schema/question.js')
+const Ques = Sequelize.import('../schema/question.js')
 
-Exam.sync({ force: false });
+Ques.sync({ force: false });
 
 class QuesModel {
     /**
@@ -11,25 +11,35 @@ class QuesModel {
      * @returns {Promise<boolean>}
      */
     static async createQues(exam) {
-        let { answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number } = exam;
-        let sql =await Exam.create({
-            answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number 
+        let { answer, exam_id, score, type, parsing, problem, prompt, extid } = exam;
+        let sql = await Ques.create({
+            answer, exam_id, score, type, parsing, problem, prompt, extid
         })
         return sql;
-
     }
+
     static async alterQues(exam) {
-        let { answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number, question_id } = exam;
-        let sql = await Exam.update({
-            answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number
-        },{
-            where:{
-                id:question_id
+        let { answer, exam_id, score, type, parsing, problem, prompt, extid, question_id } = exam;
+        let sql = await Ques.update({
+            answer, exam_id, score, type, parsing, problem, prompt, extid
+        }, {
+                where: {
+                    id: question_id
+                }
+            })
+        return sql;
+    }
+
+    static async selectQues(exam) {
+        let { exam_id } = exam;
+        let sql = await Ques.findAll({
+            where: {
+                exam_id: exam_id
             }
         })
-        return sql;
+        return sql
     }
-
+    
 }
 
 module.exports = QuesModel

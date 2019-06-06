@@ -157,7 +157,7 @@
                 }
                 _this.$http({
                     method: 'post',
-                    url: '/Exam/EditTitle',
+                    url: '/ExamTitle',
                     data: {
                         title: titledata.title,
                         testtime: topdata.testTime*60,
@@ -267,7 +267,7 @@
                     if (this.flag) {
                         _this.$http({
                             method: 'post',
-                            url: '/Exam/EditQuestions',
+                            url: '/ExamQuestions',
                             data: problemData,
                         }).then(res=>{
                              res=JSON.parse(res);
@@ -429,7 +429,8 @@
                     method: 'get',
                     url: '/questions?exam_id=' + _this.$match(window.location.href, 'id') + '',
                 }).then(res=>{
-                     if(res.status==0){
+                     if(res.status==200){
+                         res =res.data;
                           _this.pagedata.titledata.title = res.data.title;
                           _this.pagedata.titledata.editorTxt = res.data.explain;
                           _this.pagedata.topdata.exam_id = res.data.id;
@@ -442,7 +443,7 @@
                           let ls_option = {
                               introduce:{}
                           };
-                          if(list.length<1){
+                          if(list.length<1||list==undefined){
                               _this.pagedata.questiondata=[];
                           }else{
                               for (let i in list) {

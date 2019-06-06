@@ -42,7 +42,7 @@ class Exam {
                 res.json({
                     status: 200,
                     data: {
-                        id: createExam.id
+                        id: params.exam_id
                     },
                     msg: "提交成功！"
                 })
@@ -53,13 +53,18 @@ class Exam {
                 res.json({
                     status: 200,
                     data: {
-                        id: createExam.id
+                        id: params.exam_id
                     },
                     msg: "修改成功"
                 })
             }
         }
     }
+    /**
+     * 提交题目 
+     * @param {*} req 
+     * @param {*} res 
+     */
 
     static async question(req, res) {
         let params = req.body;
@@ -83,13 +88,18 @@ class Exam {
             return false;
         }
 
-        //根据question_id  判断题目是新建还是修改  ==0新建
+        //根据 question_id  判断题目是新建还是修改  ==0新建
         if (params.question_id == 0) {
             const createQues = await quesModel.createQues(params);
+            if(createQues){
+                
+            }
 
         } else {
             const alterQues = await quesModel.alterExam(params);
-
+            if(alterQues){
+                
+            }
         }
     }
 
@@ -155,7 +165,24 @@ class Exam {
             return false;
         }
 
-        const 
+        const questions=await quesModel.selectQues(params);
+        const title=await examModel.getExam(params);
+       
+        try{
+            if(title){
+                let data=title[0];
+                data.list=questions;
+                res.json({
+                    status:200,
+                    data:data
+                })
+            }
+        }catch(err){
+            res.json({
+                status:500,
+                data:err
+            })
+        }
     }
 
 }

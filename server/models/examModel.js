@@ -2,6 +2,7 @@ const db = require('../config/sequelize.config')
 const Sequelize = db.sequelize;
 const Exam = Sequelize.import('../schema/exam.js')
 
+
 Exam.sync({ force: false });
 
 class ExamModel {
@@ -12,7 +13,7 @@ class ExamModel {
      */
     static async createExam(exam) {
         let { title, user_id, explain, testtime, status, sort, designated } = exam;
-        let examCreate = await Exam.create({
+        let sql = await Exam.create({
             title,
             user_id,
             explain,
@@ -21,7 +22,7 @@ class ExamModel {
             sort,
             designated
         })
-        return examCreate
+        return sql
     }
     static async alterExam(exam) {
         let { title, user_id, explain, testtime, status, sort, designated, exam_id } = exam;
@@ -38,7 +39,7 @@ class ExamModel {
                     id: exam_id
                 }
             })
-        return examCreate
+        return true
     }
 
     static async createQues(exam) {
@@ -72,7 +73,7 @@ class ExamModel {
         let sql = await Exam.findAll(
             {
                 limit: 3,
-            },{
+            }, {
                 where: {
                     userid: user_id,
                     status: status
@@ -82,6 +83,15 @@ class ExamModel {
         return sql
     }
 
+    static async getExam(exam) {
+        let { exam_id } = exam;
+        let sql= await Exam.findAll({
+            where:{
+                id:exam_id
+            }
+        })
+        return sql
+    }
 }
 
 module.exports = ExamModel
