@@ -66,7 +66,7 @@ class Exam {
      * @param {*} res 
      */
 
-    static async question(req, res) {
+    static async ExamQuestions(req, res) {
         let params = req.body;
 
         // 检测参数是否存在为空
@@ -92,13 +92,17 @@ class Exam {
         if (params.question_id == 0) {
             const createQues = await quesModel.createQues(params);
             if(createQues){
-                
+                res.json({
+                    status:200
+                })
             }
 
         } else {
             const alterQues = await quesModel.alterExam(params);
             if(alterQues){
-                
+                res.json({
+                    status:200
+                })
             }
         }
     }
@@ -171,6 +175,7 @@ class Exam {
         try{
             if(title){
                 let data=title[0];
+                data.list=[];
                 data.list=questions;
                 res.json({
                     status:200,
