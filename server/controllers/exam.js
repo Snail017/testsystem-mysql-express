@@ -1,5 +1,6 @@
 const examModel = require('../models/examModel');
 const quesModel = require('../models/quesModel');
+const optionModel = require('../models/optionModel');
 const Token = require("../config/token.config")
 
 class Exam {
@@ -88,27 +89,38 @@ class Exam {
             return false;
         }
 
-        //根据 question_id  判断题目是新建还是修改  ==0新建
-        if (params.question_id == 0) {
-            const createQues = await quesModel.createQues(params);
-            if(createQues){
-                res.json({
-                    status:200
-                })
-            }
+        try {
+            //根据 question_id  判断题目是新建还是修改  ==0新建
+            if (params.question_id == 0) {
+                const createQues = await quesModel.createQues(params);
+                let options=params.extid;
+                options.question_id=createQues.id;
+                const createOption = await optionModel.createOption(options);
+                if (createQues&&createOption) {
+                    res.json({
+                        status: 200
+                    })
+                }
 
-        } else {
-            const alterQues = await quesModel.alterExam(params);
-            if(alterQues){
-                res.json({
-                    status:200
-                })
+            } else {
+                const alterQues = await quesModel.alterExam(params);
+                if (alterQues) {
+                    res.json({
+                        status: 200
+                    })
+                }
             }
+        } catch (err) {
+            res.json({
+                code: 500,
+                msg: err
+            })
         }
+
     }
 
     /**
-     * 获取问卷列表
+     * 获取问卷列表  
      */
     static async getlist(req, res) {
         let params = req.query;
@@ -146,8 +158,8 @@ class Exam {
         })
     }
 
-    static async getquestion(req,res){
-        let params=req.query;
+    static async getquestion(req, res) {
+        let params = req.query;
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
         // 检测参数是否存在为空
@@ -169,23 +181,22 @@ class Exam {
             return false;
         }
 
-        const questions=await quesModel.selectQues(params);
-        const title=await examModel.getExam(params);
-       
-        try{
-            if(title){
-                let data=title[0];
-                data.list=[];
-                data.list=questions;
+        const questions = await quesModel.selectQues(params);
+        const title = await examModel.getExam(params);
+
+        try {
+            if (title) {
+                let ls_data = title[0].dataValues;
+                ls_data.list = questions;
                 res.json({
-                    status:200,
-                    data:data
+                    status: 200,
+                    data: ls_data
                 })
             }
-        }catch(err){
+        } catch (err) {
             res.json({
-                status:500,
-                data:err
+                status: 500,
+                data: err
             })
         }
     }

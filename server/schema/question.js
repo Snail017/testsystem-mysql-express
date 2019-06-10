@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         // 选项
         extid: {
-            type:JSON,
+            type:DataTypes,
             field: 'extid',
             allowNull: false
         },

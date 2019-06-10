@@ -250,7 +250,7 @@
                                 }
                                 problemData.score = value;    //分数
                                 break;
-                            case 'question_id':
+                            case 'id':
                                 problemData[name] = value;
                                 break;
                             case 'analysis':
@@ -289,7 +289,7 @@
                 for(let i in _this.pagedata.questiondata){
                     let ls_questiondata=_this.pagedata.questiondata[i];
                     formdata.questions.push({
-                        question_id:ls_questiondata.question_id,
+                        question_id:ls_questiondata.id,
                         answer:''
                     })
                     if(ls_questiondata.questionType!='checkbox'){
@@ -367,7 +367,7 @@
                                             case 'parsing':
                                                 ls_question.analysis = value;
                                                 break;
-                                            case 'question_id':
+                                            case 'id':
                                                 ls_question[name] = value;
                                                 ls_question.answer=(questions!=[]&&questions[value]!=undefined)?questions[value].answer:'';
                                                 break;
