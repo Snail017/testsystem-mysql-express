@@ -213,21 +213,20 @@ export default {
       formData.append("img", imgFile);
       this.windowdata.imgload = true;
       this.$http({
-        method: "post",
-        url: "/UpLoad/Uploadpic",
-        dataType: "JSON",
-        contentType: false,
-        processData: false,
-        data: formData
-      })
-        .then(res => {
-          res = res.data;
-          this.windowdata.img = res.data.img;
-          this.windowdata.imgload = false;
-        })
-        .then(res => {
-          console.log(res);
-        });
+          method: "post",
+          url: "/UpLoad/Uploadpic",
+          dataType: "JSON",
+          contentType: false,
+          processData: false,
+          data: formData
+        }).then(res => {
+            res = res.data;
+            this.windowdata.img = res.data.img;
+            this.windowdata.imgload = false;
+          })
+          .then(res => {
+            console.log(res);
+          });
     }
   }
 };
