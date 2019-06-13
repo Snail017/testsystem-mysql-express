@@ -210,19 +210,16 @@
                                 problemData.problem = value;    //题目
                                 break;
                             case 'optiondata':
-                                problemData.child_number = Number(m) + 1;
-                                problemData.extid = [];
                                 if(this.pagedata.questiondata[m].questionType==2){
                                     problemData.answer='';
                                 }
+                                 problemData.optiondata=[];
                                 for (let n in value) {
-                                    problemData.extid.push({});
-                                    problemData.extid[n].type = 3; //选项内容
-                                    problemData.extid[n].label = n;
-                                    problemData.extid[n].content = 'text=' + value[n].text + '&img=' + value[n].img + '&answer=' + value[n].answer + '&isUrl=' + value[n].introduce.isUrl + '&url=' + value[n].introduce.url + '&editorTxt=' + value[n].introduce.editorTxt;
                                     if (this.pagedata.questiondata[m].questionType==2&&(value[n].answer == 'true'||value[n].answer == true)) {
                                         problemData.answer += (Number(n) + 1) + '&';    //答案
                                     }
+                                    problemData.optiondata.push(value[n]);
+                                    problemData.optiondata[n].sort=n
                                 }
                                 if(this.pagedata.questiondata[m].questionType==2&&problemData.answer.charAt(problemData.problemData.length-1)=='&') {
                                     problemData.answer=problemData.answer.substring(0,problemData.answer.length-1)
@@ -246,8 +243,8 @@
                     problemData.father_number = 1;      //father_number  父标题序号  固定为1  放在最前面
                     if (this.flag) {
                         _this.$http({
-                            method: 'post',
-                            url: '/ExamQuestions',
+                            method: 'put',
+                            url: '/questions',
                             data: problemData,
                         }).then(res=>{
                              res=JSON.parse(res);
@@ -351,24 +348,8 @@
                                             case 'problem':
                                                 ls_question.editorTxt = value;
                                                 break;
-                                            case 'extid':
-                                                ls_question.optiondata = [];
-                                                for (let n in value) {
-                                                    for (let Aname in value[n]) {
-                                                        if (Aname == 'content') {
-                                                            value[n][Aname] = '?&' + value[n][Aname];
-                                                            ls_option.text = _this.$match(value[n][Aname], 'text');
-                                                            ls_option.img = _this.$match(value[n][Aname], 'img');
-                                                            if(list[i].type==2){
-                                                                ls_option.answer=ls_question.answer.indexOf(Number(n)+1)!=-1?true:false;
-                                                            }
-                                                            ls_option.introduce.isUrl = _this.$match(value[n][Aname], 'isUrl');
-                                                            ls_option.introduce.url = _this.$match(value[n][Aname], 'url');
-                                                            ls_option.introduce.editorTxt = _this.$match(value[n][Aname], 'editorTxt');
-                                                        }
-                                                    }
-                                                    ls_question.optiondata.push($.extend(true,{},ls_option));
-                                                }
+                                            case 'optiondata':
+                                                ls_question[name] = value;
                                                 break;
                                         }
                                     }

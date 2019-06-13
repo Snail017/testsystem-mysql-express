@@ -14,41 +14,47 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         //内容
-        content:{
+        text:{
             type: DataTypes.STRING(255),
             field: 'content',
-            allowNull: false
+            allowNull: true
         },
         // 选项排序
-        lable: {
+        sort: {
             type: DataTypes.STRING(11),
             field: 'sort',
-            allowNull: false
+            allowNull: true
         },
         //选项图片
         img:{
             type: DataTypes.STRING(255),
-            field: 'label',
-            allowNull: false
+            field: 'img',
+            allowNull: true
         },
         //选项介绍
         introduce:{
             type: DataTypes.STRING(255),
             field: 'introduce',
-            allowNull: false
+            allowNull: true
+        },
+         //答案
+         answer:{
+            type: DataTypes.STRING(255),
+            field: 'answer',
+            allowNull: true
         },
         createdAt: {
             type: DataTypes.DATE,
             field: 'created_id',
             get() {
-                return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD');
+                return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:MM:SS');
             }
         },
         updatedAt: {
             type: DataTypes.DATE,
             field: 'updated_id',
             get() {
-                return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD');
+                return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:MM:SS');
             }
         }
     }, {

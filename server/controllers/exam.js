@@ -68,7 +68,7 @@ class Exam {
      * @param {*} res 
      */
 
-    static async ExamQuestions(req, res) {
+    static async PutQuestions(req, res) {
         let params = req.body;
 
         // 检测参数是否存在为空
@@ -96,8 +96,8 @@ class Exam {
                 const createQues = await quesModel.createQues(params);
                 //questionType  判断题目类型  非简答题才有选项
                 if (params.questionType != 0) {
-                    for (let i in params.extid) {
-                        let ls_option = params.extid[i];
+                    for (let i in params.optiondata) {
+                        let ls_option = params.optiondata[i];
                         ls_option.question_id = createQues.id;
                         var createOption = await optionModel.createOption(ls_option);
                         if (!createOption) {
@@ -121,10 +121,10 @@ class Exam {
                 const alterQues = await quesModel.alterQues(params);
                 if (params.questionType != 0) {
                     //修改选项   当option_id==0是该选项为新建
-                    for(let i in params.extid){
-                        for (let i in params.extid) {
-                            params.extid[i].question_id=params.question_id;
-                            var createOption = await optionModel.createOption(params.extid[i]);
+                    for(let i in params.optiondata){
+                        for (let i in params.optiondata) {
+                            params.optiondata[i].question_id=params.question_id;
+                            var createOption = await optionModel.createOption(params.optiondata[i]);
                             if (!createOption) {
                                 res.json({
                                     status: 500,

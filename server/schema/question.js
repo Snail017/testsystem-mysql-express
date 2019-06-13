@@ -32,9 +32,9 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         },
         // 选项
-        extid: {
-            type:DataTypes,
-            field: 'extid',
+        optiondata: {
+            type: DataTypes.STRING(255),
+            field: 'options',
             allowNull: true
         },
         // 题目分数
@@ -53,14 +53,14 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.DATE,
             field: 'created_id',
             get() {
-                return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD');
+                return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:MM:SS');
             }
         },
         updatedAt: {
             type: DataTypes.DATE,
             field: 'updated_id',
             get() {
-                return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD');
+                return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:MM:SS');
             }
         }
     }, {
