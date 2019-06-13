@@ -4,7 +4,7 @@
             <div class="st_question_content" @click.stop="items.isshow+=1;">
                 <div style="display: flex"><span v-if="!topdata.sort">{{indexs+1}}.</span><b  v-if="topdata.sort" class="cl-red">*</b><span v-html="items.editorTxt==''?'请输入题目':items.editorTxt"></span></div>
                 <div class="form-group pdt-10 clearfix" v-html='items.note'></div>
-                <div v-if="items.questionType=='radio'">
+                <div v-if="items.questionType==1">
                     <div  v-for="(item,index) in items.optiondata" :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}">
                         <label>
                             <input type="radio"  :checked="items.answer==(index+1)"  >
@@ -13,23 +13,21 @@
                             <span v-html="item.introduce.isUrl=='1'?item.introduce.url:item.introduce.editorTxt"></span>
                     </div>
                 </div>
-                <div v-if="items.questionType=='judge'">
+                <div v-if="items.questionType==3">
                    <div v-for="(item,index) in items.optiondata"  :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}">
                        <label><input type="radio"  :checked="items.answer==index"  ><span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
                            <img :src="item.img" alt=""></label>
                    </div>
                 </div>
-                <div v-if="items.questionType=='checkbox'">
+                <div v-if="items.questionType==2">
                     <div v-for="(item,index) in items.optiondata" :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}">
                         <label ><input type="checkbox"  :aa="items.answer.toString().indexOf(index+1)!=-1"><span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
                             <img :src="item.img" alt=""></label>
                         <span v-html="item.introduce.isUrl=='1'?item.introduce.url:item.introduce.editorTxt"></span>
                     </div>
                 </div>
-                <!--姓名-->
-                <div v-if="items.questionType=='name'" class="form-control clearfix"><i class="icon iconfont icon-ren"></i></div>
                 <!--简答-->
-                <textarea v-if="items.questionType=='QA'" class="col-md-10" readonly></textarea>
+                <textarea v-if="items.questionType==0" class="col-md-10" readonly></textarea>
                 <div class="pd-10 clearfix" v-if="items.analysis!=''"><span class="fl">题目解析：</span><div class="fl" v-html="items.analysis"></div></div>
                 <div class="pd-10 btn_option">
                     <div class="fr" >
@@ -49,10 +47,10 @@
                     <div class="col-md-2">
                         <select name="type" id="" class="form-control" v-model="items.questionType">
                             <!--<option value="name">姓名</option>-->
-                            <option value="QA">简答</option>
-                            <option value="radio">单选</option>
-                            <option value="checkbox">多选</option>
-                            <option value="judge">判断</option>
+                            <option value="0">简答</option>
+                            <option value="1">单选</option>
+                            <option value="2">多选</option>
+                            <option value="3">判断</option>
                         </select>
                     </div>
                     <div class="col-md-3 form-check col-form-label">
@@ -69,7 +67,7 @@
                               @click="items.haswindow+=1;wintxt.editorTxt=items.analysis;items.windowtype='analysis'">设置答案解析</span>
                     </div>
                 </div>
-                <testOption v-if="items.questionType!='QA'&&items.questionType!='name'"  :optiondata="items.optiondata" :questiondata="items" :index="indexs" :questiontype="items.questionType"></testOption>
+                <testOption v-if="items.questionType!=0"  :optiondata="items.optiondata" :questiondata="items" :index="indexs" :questiontype="items.questionType"></testOption>
                 <p class="btn btn-primary btn-block" @click="items.isshow+=1">完成编辑</p>
 
                 <div class="bg" v-if="items.haswindow%2==1" @click="items.haswindow+=1;"></div>
@@ -127,18 +125,16 @@
                     _this.questiondata.length>1?_this.questiondata.splice(indexs,1):'';
                     return false;
                 }
-                $.ajax({
-                    type:'post',
-                    url:'/Exam/DeleteQuestions',
+                _this.$http({
+                    method:'delete',
+                    url:'/questions',
                     data:{
                         id:id
                     },
-                    success:function (res) {
-                        res=JSON.parse(res);
-                        if(res.status==0){
+                }).then(res=>{
+                        if(res.status==200){
                             _this.questiondata.length>1?_this.questiondata.splice(indexs,1):'';
                         }
-                    }
                 })
             },
             copy(res,indexs){

@@ -1,6 +1,6 @@
 const moment = require('moment');
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('tbQuestionnaire', {
+    return sequelize.define('tbquestionnaire', {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,

@@ -11,8 +11,8 @@ class OptionModel {
      * @returns {Promise<boolean>}
      */
     static async createOption(exam) {
-        let { answer, exam_id, score, type, parsing, problem, prompt, extid } = exam;
-        let sql = await Ques.create({
+        let { id, question_id, content, type, parsing, problem, prompt, extid } = exam;
+        let sql = await Option.create({
             answer, exam_id, score, type, parsing, problem, prompt, extid
         })
         return sql;

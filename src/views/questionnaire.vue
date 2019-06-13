@@ -42,7 +42,7 @@
                         note: '',           //编辑提示
                         analysis: '',    //答案解析
                         score: null,   //题目分值
-                        questionType: 'radio', //题目类型
+                        questionType: 1, //题目类型
                         navOperate: false,
                         haswindow: false,   //编辑窗口是否弹出
                         question_id: 0, //题目ID
@@ -80,7 +80,7 @@
                         note: '',           //编辑提示
                         analysis: '',    //答案解析
                         score: null,   //题目分值
-                        questionType: 'radio', //题目类型
+                        questionType: 1, //题目类型
                         navOperate: false,
                         mustanswer:false,
                         haswindow: false,   //编辑窗口是否弹出
@@ -199,18 +199,7 @@
                     for (let name in this.pagedata.questiondata[m]) {
                         let value = this.pagedata.questiondata[m][name];
                         switch (name) {
-                            case 'questionType':
-                                if (value == 'QA') {
-                                    problemData.type = 0; 
-                                } else if (value == 'radio') {
-                                    problemData.type = 1;
-                                } else if (value == 'checkbox') {
-                                    problemData.type = 2;
-                                } else if (value == 'judge') {
-                                    problemData.type = 3;
-                                }
-                                break;
-                            case 'answer':
+                            case 'answer':case 'questionType': case 'question_id': case 'analysis': case 'note':
                                 problemData[name]=value
                                 break;
                             case 'editorTxt':
@@ -223,7 +212,7 @@
                             case 'optiondata':
                                 problemData.child_number = Number(m) + 1;
                                 problemData.extid = [];
-                                if(this.pagedata.questiondata[m].questionType=='checkbox'){
+                                if(this.pagedata.questiondata[m].questionType==2){
                                     problemData.answer='';
                                 }
                                 for (let n in value) {
@@ -231,14 +220,14 @@
                                     problemData.extid[n].type = 3; //选项内容
                                     problemData.extid[n].label = n;
                                     problemData.extid[n].content = 'text=' + value[n].text + '&img=' + value[n].img + '&answer=' + value[n].answer + '&isUrl=' + value[n].introduce.isUrl + '&url=' + value[n].introduce.url + '&editorTxt=' + value[n].introduce.editorTxt;
-                                    if (this.pagedata.questiondata[m].questionType=='checkbox'&&(value[n].answer == 'true'||value[n].answer == true)) {
+                                    if (this.pagedata.questiondata[m].questionType==2&&(value[n].answer == 'true'||value[n].answer == true)) {
                                         problemData.answer += (Number(n) + 1) + '&';    //答案
                                     }
                                 }
-                                if(this.pagedata.questiondata[m].questionType=='checkbox'&&problemData.answer.charAt(problemData.problemData.length-1)=='&') {
+                                if(this.pagedata.questiondata[m].questionType==2&&problemData.answer.charAt(problemData.problemData.length-1)=='&') {
                                     problemData.answer=problemData.answer.substring(0,problemData.answer.length-1)
                                 }
-                                if (this.pagedata.questiondata[m].questionType!='QA'&&problemData.answer == '') {
+                                if (this.pagedata.questiondata[m].questionType!=0&&problemData.answer == '') {
                                     this.showmsg('第' + (Number(m) + 1) + '题请选择一个正确答案。')
                                     this.flag=false;
                                 }
@@ -249,15 +238,6 @@
                                     this.flag=false;
                                 }
                                 problemData.score = value;    //分数
-                                break;
-                            case 'id':
-                                problemData[name] = value;
-                                break;
-                            case 'analysis':
-                                problemData.parsing = value;
-                                break;
-                            case 'note':
-                                problemData.prompt = value;
                                 break;
                         }
 
@@ -292,7 +272,7 @@
                         question_id:ls_questiondata.id,
                         answer:''
                     })
-                    if(ls_questiondata.questionType!='checkbox'){
+                    if(ls_questiondata.questionType!=2){
                         formdata.questions[i].answer=ls_questiondata.hasOwnProperty('answer')?ls_questiondata.answer:'';
                     }else{
                         for(let n in ls_questiondata.optiondata){
@@ -361,26 +341,12 @@
                                     for (let name in list[i]) {
                                         let value = list[i][name];
                                         switch (name) {
-                                            case 'prompt':
-                                                ls_question.note = value;
-                                                break;
-                                            case 'parsing':
-                                                ls_question.analysis = value;
+                                            case 'parsing':case 'type':case 'prompt':
+                                                ls_question[name] = value;
                                                 break;
                                             case 'id':
                                                 ls_question[name] = value;
                                                 ls_question.answer=(questions!=[]&&questions[value]!=undefined)?questions[value].answer:'';
-                                                break;
-                                            case 'type':
-                                                if (value == 0) {
-                                                    ls_question.questionType = 'QA';
-                                                } else if (value == 1) {
-                                                    ls_question.questionType = 'radio';
-                                                } else if (value == 2) {
-                                                    ls_question.questionType = 'checkbox';
-                                                } else if (value == 3) {
-                                                    ls_question.questionType = 'judge';
-                                                }
                                                 break;
                                             case 'problem':
                                                 ls_question.editorTxt = value;
@@ -450,25 +416,8 @@
                                   for (let name in list[i]) {
                                       let value = list[i][name];
                                       switch (name) {
-                                          case 'prompt':
-                                              ls_question.note = value;
-                                              break;
-                                          case 'parsing':
-                                              ls_question.analysis = value;
-                                              break;
-                                          case 'question_id':case 'score':case 'answer':
-                                          ls_question[name] = value;
-                                          break;
-                                          case 'type':
-                                              if (value == 0) {
-                                                  ls_question.questionType = 'QA';
-                                              } else if (value == 1) {
-                                                  ls_question.questionType = 'radio';
-                                              } else if (value == 2) {
-                                                  ls_question.questionType = 'checkbox';
-                                              } else if (value == 3) {
-                                                  ls_question.questionType = 'judge';
-                                              }
+                                          case 'question_id':case 'score':case 'answer':case 'parsing': case 'type':case 'prompt':case "questionType":
+                                              ls_question[name] = value;
                                               break;
                                           case 'problem':
                                               ls_question.editorTxt = value;

@@ -39,14 +39,14 @@
           <input
             type="checkbox"
             :name="'checkbox'+index"
-            v-if="questiontype=='checkbox'"
+            v-if="questiontype==2"
             value="true"
             v-model="items.answer"
           >
           <input
             type="radio"
             :name="'radio'+index"
-            v-if="questiontype=='radio'||questiontype=='judge'"
+            v-if="questiontype==1||questiontype==3"
             :value="indexs+1"
             v-model="questiondata.answer"
           >
@@ -69,7 +69,7 @@
         </td>
       </tr>
     </table>
-    <div v-if="questiontype!='judge'">
+    <div v-if="questiontype!=3">
       <div class="col-md-3 form-check-label addoption" @click="addoption()">
         <i class="iconfont icon-tianjia"></i>添加选项
       </div>
@@ -103,7 +103,7 @@
           <img :src="windowdata.img" class="st_cont_img">
         </a>
       </div>
-      <div class="st_cont_btn pd-10">
+      <div class="st_cont_btn pd-10">                                                                                                                                                                  
         <span class="btn btn-info" @click="windowdata.has_img_window=false">取消</span>
         <span class="btn btn-primary" @click="windowImg();windowdata.has_img_window=false">确定</span>
       </div>
@@ -169,7 +169,7 @@ export default {
   watch: {
     questiontype: {
       handler(newVal) {
-        if (newVal == "judge") {
+        if (newVal == 3) {
           let ls_option = $.extend(true, {}, this.questiondata.optiondata[0]);
           let ls_reduce = this.optiondata.length - 2;
           if (ls_reduce > 0) {

@@ -1,6 +1,6 @@
 const moment = require('moment');
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('tbOption', {
+    return sequelize.define('tboption', {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
@@ -20,16 +20,22 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         // 选项排序
-        label: {
+        lable: {
             type: DataTypes.STRING(11),
+            field: 'sort',
+            allowNull: false
+        },
+        //选项图片
+        img:{
+            type: DataTypes.STRING(255),
             field: 'label',
             allowNull: false
         },
-        // 题目类型    QA==0  radio==1  checkbox==2  judge==3
-        type:{
-            type:Number,
-            field:'type',
-            allowNull:true
+        //选项介绍
+        introduce:{
+            type: DataTypes.STRING(255),
+            field: 'introduce',
+            allowNull: false
         },
         createdAt: {
             type: DataTypes.DATE,

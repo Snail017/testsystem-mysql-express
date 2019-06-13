@@ -1,6 +1,6 @@
 const moment = require('moment');
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('tbQuestion', {
+    return sequelize.define('tbquestion', {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
@@ -20,22 +20,22 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         // 解析
-        parsing: {
+        analysis: {
             type: DataTypes.STRING(255),
-            field: 'parsing',
-            allowNull: false
+            field: 'analysis',
+            allowNull: true
         },
         // 试卷说明
-        prompt: {
+        note: {
             type: DataTypes.STRING(255),
-            field: 'prompt',
-            allowNull: false
+            field: 'note',
+            allowNull: true
         },
         // 选项
         extid: {
             type:DataTypes,
             field: 'extid',
-            allowNull: false
+            allowNull: true
         },
         // 题目分数
         score: {
@@ -44,7 +44,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         // 题目类型    QA==0  radio==1  checkbox==2  judge==3
-        type:{
+        questionType:{
             type:Number,
             field:'type',
             allowNull:true

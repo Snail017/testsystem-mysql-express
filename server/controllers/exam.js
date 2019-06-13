@@ -63,7 +63,8 @@ class Exam {
     }
     /**
      * 提交题目 
-     * @param {*} req 
+     * @param {*question_id} req  question_id==0 创建题目
+     * @param {*questionType}  questionType!=0 提交选项
      * @param {*} res 
      */
 
@@ -93,21 +94,51 @@ class Exam {
             //根据 question_id  判断题目是新建还是修改  ==0新建
             if (params.question_id == 0) {
                 const createQues = await quesModel.createQues(params);
-                let options=params.extid;
-                options.question_id=createQues.id;
-                const createOption = await optionModel.createOption(options);
-                if (createQues&&createOption) {
-                    res.json({
-                        status: 200
-                    })
+                //questionType  判断题目类型  非简答题才有选项
+                if (params.questionType != 0) {
+                    for (let i in params.extid) {
+                        let ls_option = params.extid[i];
+                        ls_option.question_id = createQues.id;
+                        var createOption = await optionModel.createOption(ls_option);
+                        if (!createOption) {
+                            res.json({
+                                status: 500,
+                                msg: "题目上传错误"
+                            })
+                        }
+                        return false;
+                    }
                 }
 
-            } else {
-                const alterQues = await quesModel.alterExam(params);
-                if (alterQues) {
+                if (createQues) {
                     res.json({
-                        status: 200
+                        status: 200,
+                        msg: "上传成功"
                     })
+                }
+            } else {
+                //修改问题  
+                const alterQues = await quesModel.alterQues(params);
+                if (params.questionType != 0) {
+                    //修改选项   当option_id==0是该选项为新建
+                    for(let i in params.extid){
+                        for (let i in params.extid) {
+                            params.extid[i].question_id=params.question_id;
+                            var createOption = await optionModel.createOption(params.extid[i]);
+                            if (!createOption) {
+                                res.json({
+                                    status: 500,
+                                    msg: "题目上传错误"
+                                })
+                            }
+                            return false;
+                        }
+                    }
+                    if (alterQues) {
+                        res.json({
+                            status: 200
+                        })
+                    }
                 }
             }
         } catch (err) {
@@ -187,7 +218,11 @@ class Exam {
         try {
             if (title) {
                 let ls_data = title[0].dataValues;
-                ls_data.list = questions;
+                ls_data.list = [];
+                for (let i in questions) {
+                    ls_data.list.push(questions[i].dataValues);
+                    ls_data.list[i].question_id = questions[i].dataValues.id;
+                }
                 res.json({
                     status: 200,
                     data: ls_data
@@ -199,6 +234,47 @@ class Exam {
                 data: err
             })
         }
+    }
+
+    /**
+     * 删除题目
+     */
+    static async deletequestion(req, res) {
+        let params = req.body;
+        // 检测参数是否存在为空
+        let errors = [];
+
+        for (let item in params) {
+            if (params[item] === undefined) {
+                let index = errors.length + 1;
+                errors.push("错误" + index + ": 参数: " + item + "不能为空")
+            }
+        }
+
+        if (errors.length > 0) {
+            res.status = 412;
+            res.json({
+                code: 412,
+                msg: errors
+            })
+            return false;
+        }
+
+        try {
+            const delQues = await quesModel.delQues(params);
+            if (delQues) {
+                res.json({
+                    status: 200
+                })
+            }
+
+        } catch (err) {
+            res.json({
+                status: 500,
+                data: err
+            })
+        }
+
     }
 
 }

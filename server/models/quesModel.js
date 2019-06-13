@@ -11,23 +11,27 @@ class QuesModel {
      * @returns {Promise<boolean>}
      */
     static async createQues(exam) {
-        let { answer, exam_id, score, type, parsing, problem, prompt, extid } = exam;
-        let sql = await Ques.create({
-            answer, exam_id, score, type, parsing, problem, prompt, extid
-        })
-        return sql;
-    }
-
-    static async alterQues(exam) {
-        let { answer, exam_id, score, type, parsing, problem, prompt, extid, question_id } = exam;
+        let { question_id, content, sort, img, introduce } = exam;
         let sql = await Ques.update({
-            answer, exam_id, score, type, parsing, problem, prompt, extid
+            content, sort, img, introduce
         }, {
                 where: {
                     id: question_id
                 }
             })
         return sql;
+    }
+
+    static async alterQues(exam) {
+        let { question_id, content, label, img, introduce } = exam;
+        await Ques.update({
+            content, label, img, introduce
+        }, {
+                where: {
+                    id: question_id
+                }
+            })
+        return true;
     }
 
     static async selectQues(exam) {
@@ -39,7 +43,17 @@ class QuesModel {
         })
         return sql
     }
-    
+    static async delQues(exam) {
+        let { id } = exam;
+        await Ques.destroy({
+            where: {
+                id: id
+            }
+        })
+
+        return true
+    }
+
 }
 
 module.exports = QuesModel
