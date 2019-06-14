@@ -1,5 +1,5 @@
 <template>
-    <div class="body" :class="{'paperbg':isPaper}">
+    <div class="body" :class="{'paperbg':isPaper}">{{pagedata}}
         <div class="content">
             <Top v-if="!isPaper" :ispage="isPaper" :topCofig="topCofig"  :topdata="pagedata.topdata" :questiondata="pagedata.questiondata" @checkdata="checkdata"></Top>
             <Navtop v-if="!isPaper" :tempdata="pagedataTemp"  :questiondata="pagedata.questiondata"></Navtop>
@@ -56,6 +56,7 @@
                                 url: '',
                                 editorTxt: '',
                             },
+                            option_id:0
                         }],
                     }],
                     topdata: {
@@ -95,6 +96,7 @@
                                 url: '',
                                 editorTxt: '',
                             },
+                            option_id:0
                         }],
                     }],
                     topdata: {
@@ -170,7 +172,7 @@
                     },
                 }).then(res=>{
                     res = res.data;
-                    if (res.status == 200) {
+                    if (res.code == 200) {
                         _this.pagedata.topdata.exam_id=res.data.id;
                         _this.uploadQuestion(res.data);
                         if(_this.flag){
@@ -228,6 +230,7 @@
                                     this.showmsg('第' + (Number(m) + 1) + '题请选择一个正确答案。')
                                     this.flag=false;
                                 }
+                                problemData.optiondata=value;
                                 break;
                             case 'score':
                                 if (value == '' || value == null) {
@@ -403,24 +406,8 @@
                                           case 'problem':
                                               ls_question.editorTxt = value;
                                               break;
-                                          case 'extid':
-                                              ls_question.optiondata = [];
-                                              for (let n in value) {
-                                                  for (let Aname in value[n]) {
-                                                      if (Aname == 'content') {
-                                                          value[n][Aname] = '?&' + value[n][Aname];
-                                                          ls_option.text = _this.$match(value[n][Aname], 'text');
-                                                          ls_option.img = _this.$match(value[n][Aname], 'img');
-                                                          if(list[i].type==2){
-                                                              ls_option.answer = (_this.$match(value[n][Aname], 'answer')=='true'?true:false);
-                                                          }
-                                                          ls_option.introduce.isUrl = _this.$match(value[n][Aname], 'isUrl');
-                                                          ls_option.introduce.url = _this.$match(value[n][Aname], 'url');
-                                                          ls_option.introduce.editorTxt = _this.$match(value[n][Aname], 'editorTxt');
-                                                      }
-                                                  }
-                                                  ls_question.optiondata.push($.extend(true,{},ls_option));
-                                              }
+                                          case 'optiondata':
+                                              ls_question.optiondata =value;
                                               break;
                                       }
                                   }

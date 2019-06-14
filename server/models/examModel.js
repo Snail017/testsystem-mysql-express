@@ -83,7 +83,7 @@ class ExamModel {
         return sql
     }
 
-    static async getExam(exam) {
+    static async findExam(exam) {
         let { exam_id } = exam;
         let sql= await Exam.findAll({
             where:{

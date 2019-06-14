@@ -40,8 +40,9 @@ class Exam {
         if (params.exam_id == 0) {
             const createExam = await examModel.createExam(params);
             if (createExam) {
+                res.status=200;
                 res.json({
-                    status: 200,
+                    code: 200,
                     data: {
                         id: params.exam_id
                     },
@@ -51,8 +52,9 @@ class Exam {
         } else {
             const createExam = await examModel.alterExam(params);
             if (createExam) {
+                res.status=200;
                 res.json({
-                    status: 200,
+                    code: 200,
                     data: {
                         id: params.exam_id
                     },
@@ -101,18 +103,20 @@ class Exam {
                         ls_option.question_id = createQues.id;
                         var createOption = await optionModel.createOption(ls_option);
                         if (!createOption) {
+                            res.status = 500;
                             res.json({
-                                status: 500,
+                                code: 500,
                                 msg: "题目上传错误"
                             })
+                            return false;                        
                         }
-                        return false;
                     }
                 }
 
                 if (createQues) {
+                    res.status = 200;
                     res.json({
-                        status: 200,
+                        code: 200,
                         msg: "上传成功"
                     })
                 }
@@ -121,22 +125,37 @@ class Exam {
                 const alterQues = await quesModel.alterQues(params);
                 if (params.questionType != 0) {
                     //修改选项   当option_id==0是该选项为新建
-                    for(let i in params.optiondata){
+                    for (let i in params.optiondata) {
                         for (let i in params.optiondata) {
-                            params.optiondata[i].question_id=params.question_id;
-                            var createOption = await optionModel.createOption(params.optiondata[i]);
-                            if (!createOption) {
-                                res.json({
-                                    status: 500,
-                                    msg: "题目上传错误"
-                                })
+                            params.optiondata[i].question_id = params.question_id;
+                            if (params.optiondata[i].option_id == 0) {
+                                var createOption = await optionModel.createOption(params.optiondata[i]);
+                                if (!createOption) {
+                                    res.status = 500;
+                                    res.json({
+                                        code: 500,
+                                        msg: "题目上传错误"
+                                    })
+                                    return false;
+                                }
+                            } else {
+                                var createOption = await optionModel.alterOption(params.optiondata[i]);
+                                if (!createOption) {
+                                    res.status = 500;
+                                    res.json({
+                                        code: 500,
+                                        msg: "题目上传错误"
+                                    })
+                                    return false;
+                                }
                             }
-                            return false;
+
                         }
                     }
                     if (alterQues) {
+                        res.status = 200;
                         res.json({
-                            status: 200
+                            code: 200
                         })
                     }
                 }
@@ -177,8 +196,9 @@ class Exam {
         }
 
         const users = await examModel.getlist(params);
+        res.status = 200;
         res.json({
-            status: 200,
+            code: 200,
             data: {
                 users: users,
                 data_total: "2",
@@ -213,24 +233,39 @@ class Exam {
         }
 
         const questions = await quesModel.selectQues(params);
-        const title = await examModel.getExam(params);
+        const title = await examModel.findExam(params);
 
         try {
             if (title) {
-                let ls_data = title[0].dataValues;
-                ls_data.list = [];
+                let ls_title = title[0].dataValues, ls_question = [], ls_option = [];
                 for (let i in questions) {
-                    ls_data.list.push(questions[i].dataValues);
-                    ls_data.list[i].question_id = questions[i].dataValues.id;
+                    ls_question.push(questions[i].dataValues);
+                    ls_option = await optionModel.findAllOption(questions[i].dataValues);
+                    ls_question[i].optiondata = ls_option;
+                    for (let n in ls_option) {
+                        let value = ls_option[n];
+                        ls_question[i].optiondata[n] = {
+                            answer: value.answer,
+                            option_id: value.id,
+                            img: value.img,
+                            introduce: value.introduce,
+                            sort: value.sort,
+                            text: value.text,
+                        };
+                    }
+                    ls_question[i].question_id = questions[i].dataValues.id;
                 }
+                ls_title.list = ls_question;
+                res.status = 200;
                 res.json({
-                    status: 200,
-                    data: ls_data
+                    code: 200,
+                    data: ls_title
                 })
             }
         } catch (err) {
+            res.status = 500;
             res.json({
-                status: 500,
+                code: 500,
                 data: err
             })
         }
@@ -263,20 +298,63 @@ class Exam {
         try {
             const delQues = await quesModel.delQues(params);
             if (delQues) {
+                res.status = 200;
                 res.json({
-                    status: 200
+                    code: 200
                 })
             }
 
         } catch (err) {
+            res.status = 500;
             res.json({
-                status: 500,
+                code: 500,
                 data: err
             })
         }
 
     }
 
+    /**
+     * 删除选项
+     */
+    static async deleteOption(req, res) {
+        let params = req.body;
+        // 检测参数是否存在为空
+        let errors = [];
+
+        for (let item in params) {
+            if (params[item] === undefined) {
+                let index = errors.length + 1;
+                errors.push("错误" + index + ": 参数: " + item + "不能为空")
+            }
+        }
+
+        if (errors.length > 0) {
+            res.status = 412;
+            res.json({
+                code: 412,
+                msg: errors
+            })
+            return false;
+        }
+
+        try {
+            const delOption = await optionModel.deleteOption(params);
+            if (delOption) {
+                res.status = 200;
+                res.json({
+                    code: 200,
+                    msg: "删除成功"
+                })
+            }
+        } catch (err) {
+            res.status = 500;
+            res.json({
+                code: 500,
+                msg: err
+            })
+        }
+    }
 }
 
 module.exports = Exam 

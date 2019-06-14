@@ -138,6 +138,10 @@
                 })
             },
             copy(res,indexs){
+                res.question_id=0;
+                for(let i in res.optiondata){
+                    res.optiondata[i].option_id=0
+                }
                 let ls_data=$.extend(true,{},res);
                 this.questiondata.splice(indexs,0,ls_data)
             },

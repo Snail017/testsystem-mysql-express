@@ -34,7 +34,8 @@ Routers.post("/ExamTitle",Exam.create)
 Routers.put("/questions",Exam.PutQuestions)
 Routers.get("/questionnaireList",Exam.getlist)
 Routers.get("/questions",Exam.getquestion)
-Routers.delete("/questions",Exam.deletequestion)
+Routers.delete("/questions",Exam.deletequestion);
+Routers.delete("/option",Exam.deleteOption)
 
 
 /**

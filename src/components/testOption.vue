@@ -63,8 +63,8 @@
         </td>
         <td>
           <i
-            class="iconfont icon-jianshao"
-            @click="optiondata.length==1?'':optiondata.splice(indexs,1)"
+            class="iconfont icon-jianshao" 
+            @click="optiondata.length==1?'':deleteOption(items.option_id,indexs)"
           ></i>
         </td>
       </tr>
@@ -103,7 +103,7 @@
           <img :src="windowdata.img" class="st_cont_img">
         </a>
       </div>
-      <div class="st_cont_btn pd-10">                                                                                                                                                                  
+      <div class="st_cont_btn pd-10">
         <span class="btn btn-info" @click="windowdata.has_img_window=false">取消</span>
         <span class="btn btn-primary" @click="windowImg();windowdata.has_img_window=false">确定</span>
       </div>
@@ -169,14 +169,9 @@ export default {
   watch: {
     questiontype: {
       handler(newVal) {
-        if (newVal == 3) {
+        if (newVal == 3 && this.optiondata.length < 2) {
           let ls_option = $.extend(true, {}, this.questiondata.optiondata[0]);
-          let ls_reduce = this.optiondata.length - 2;
-          if (ls_reduce > 0) {
-            this.optiondata.splice(2, ls_reduce);
-          } else if (ls_reduce < 0) {
-            this.optiondata.push(ls_option);
-          }
+          this.optiondata.push(ls_option);
         }
       },
       immediate: true,
@@ -188,6 +183,20 @@ export default {
       this.windowdata.text = res.text;
       this.windowdata.img = res.img;
       this.windowdata.index = index;
+    },
+    deleteOption(option_id,indexs) {
+      this.$http({
+          method: "delete",
+          url: "/option",
+          data: {
+            option_id: option_id
+          }
+        })
+        .then(res => {
+          if (res.status == 200) {
+            this.optiondata.splice(indexs, 1);
+          }
+        });
     },
     windowImg() {
       var ImgObj = new Image(); //判断图片是否存在
@@ -213,20 +222,21 @@ export default {
       formData.append("img", imgFile);
       this.windowdata.imgload = true;
       this.$http({
-          method: "post",
-          url: "/UpLoad/Uploadpic",
-          dataType: "JSON",
-          contentType: false,
-          processData: false,
-          data: formData
-        }).then(res => {
-            res = res.data;
-            this.windowdata.img = res.data.img;
-            this.windowdata.imgload = false;
-          })
-          .then(res => {
-            console.log(res);
-          });
+        method: "post",
+        url: "/UpLoad/Uploadpic",
+        dataType: "JSON",
+        contentType: false,
+        processData: false,
+        data: formData
+      })
+        .then(res => {
+          res = res.data;
+          this.windowdata.img = res.data.img;
+          this.windowdata.imgload = false;
+        })
+        .then(res => {
+          console.log(res);
+        });
     }
   }
 };
