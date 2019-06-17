@@ -11,14 +11,10 @@ class QuesModel {
      * @returns {Promise<boolean>}
      */
     static async createQues(exam) {
-        let { question_id, content, sort, img, introduce } = exam;
-        let sql = await Ques.update({
-            content, sort, img, introduce
-        }, {
-                where: {
-                    id: question_id
-                }
-            })
+        let {  problem, analysis, note , score ,questionType } = exam;
+        let sql = await Ques.create({
+            problem, analysis, note , score ,questionType
+        })
         return sql;
     }
 

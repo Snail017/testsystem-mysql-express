@@ -250,7 +250,7 @@
                             url: '/questions',
                             data: problemData,
                         }).then(res=>{
-                             res=JSON.parse(res);
+                            
                         })
                     }
                 }
