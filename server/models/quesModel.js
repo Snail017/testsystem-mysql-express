@@ -11,9 +11,9 @@ class QuesModel {
      * @returns {Promise<boolean>}
      */
     static async createQues(exam) {
-        let {  problem, analysis, note , score ,questionType } = exam;
+        let {  problem, analysis, note , score ,questionType,exam_id ,answer} = exam;
         let sql = await Ques.create({
-            problem, analysis, note , score ,questionType
+            problem, analysis, note , score ,questionType,exam_id,answer
         })
         return sql;
     }

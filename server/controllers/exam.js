@@ -112,7 +112,6 @@ class Exam {
                         }
                     }
                 }
-
                 if (createQues) {
                     res.status = 200;
                     res.json({
@@ -137,6 +136,7 @@ class Exam {
                                         msg: "题目上传错误"
                                     })
                                     return false;
+                                    
                                 }
                             } else {
                                 var createOption = await optionModel.alterOption(params.optiondata[i]);
@@ -149,7 +149,6 @@ class Exam {
                                     return false;
                                 }
                             }
-
                         }
                     }
                     if (alterQues) {
