@@ -241,17 +241,6 @@ class Exam {
                     ls_question.push(questions[i].dataValues);
                     ls_option = await optionModel.findAllOption(questions[i].dataValues);
                     ls_question[i].optiondata = ls_option;
-                    for (let n in ls_option) {
-                        let value = ls_option[n];
-                        ls_question[i].optiondata[n] = {
-                            answer: value.answer,
-                            option_id: value.id,
-                            img: value.img,
-                            introduce: value.introduce,
-                            sort: value.sort,
-                            text: value.text,
-                        };
-                    }
                     ls_question[i].question_id = questions[i].dataValues.id;
                 }
                 ls_title.list = ls_question;

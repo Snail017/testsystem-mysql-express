@@ -13,7 +13,7 @@ class OptionModel {
     static async createOption(exam) {
         let { question_id, text, answer, sort, img, introduce } = exam;
         let sql = await Option.create({
-            question_id, text, answer, sort, img, introduce: introduce.editorTxt
+            question_id, text, answer, sort, img, introduce: introduce.editorTxt, isUrl: Number(introduce.isUrl)
         })
         return sql;
     }
@@ -24,7 +24,7 @@ class OptionModel {
     static async alterOption(exam) {
         let { option_id, question_id, text, answer, sort, img, introduce } = exam;
         await Option.update({
-            question_id, text, answer, sort, img, introduce: introduce.editorTxt
+            question_id, text, answer:answer.toString(), sort, img, introduce: introduce.editorTxt, isUrl: Number(introduce.isUrl)
         }, {
                 where: {
                     question_id: question_id,
@@ -50,11 +50,11 @@ class OptionModel {
      * @return {option_id}
      * 删除选项
      */
-    static async deleteOption(res){
-        let {option_id} = res;
+    static async deleteOption(res) {
+        let { option_id } = res;
         await Option.destroy({
-            where:{
-                id:option_id
+            where: {
+                id: option_id
             }
         })
         return true;

@@ -40,14 +40,13 @@
             type="checkbox"
             :name="'checkbox'+index"
             v-if="questiontype==2"
-            value="true"
             v-model="items.answer"
           >
           <input
             type="radio"
             :name="'radio'+index"
             v-if="questiontype==1||questiontype==3"
-            :value="indexs+1"
+            :value="indexs"
             v-model="questiondata.answer"
           >
         </td>

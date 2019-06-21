@@ -25,6 +25,11 @@ module.exports = function (sequelize, DataTypes) {
             field: 'sort',
             allowNull: true
         },
+        isUrl:{
+            type: Number,
+            field: 'isUrl',
+            allowNull: true
+        },
         //选项图片
         img:{
             type: DataTypes.STRING(255),

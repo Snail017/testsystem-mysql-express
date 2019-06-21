@@ -235,52 +235,38 @@ export default {
         for (let name in this.pagedata.questiondata[m]) {
           let value = this.pagedata.questiondata[m][name];
           switch (name) {
-            case "answer":
             case "analysis":
             case "note":
             case "mustanswer":
+            case "answer":
               problemData[name] = value;
               break;
             case "score":
             case "question_id":
             case "questionType":
-              if (value == "" || value == null) {
+              if (value === "" || value === null) {
                 this.showmsg("第" + (Number(m) + 1) + "题" + name + "为空。");
                 this.flag = false;
               }
-              problemData.score = value;                // 分数
+              problemData[name] = value;
               break;
             case "editorTxt":
               if (value == "" || value == null) {
                 this.showmsg("第" + (Number(m) + 1) + "题题目为空。");
                 this.flag = false;
               }
-              problemData.problem = value;             //题目
+              problemData.problem = value; //题目
               break;
             case "optiondata":
+              problemData.optiondata = value;
+              // 多选时需要循环optiondata将questiondata.answer相加为多个选项 n&m
               if (this.pagedata.questiondata[m].questionType == 2) {
                 problemData.answer = "";
-              }
-              problemData.optiondata = [];
-              for (let n in value) {
-                if (
-                  this.pagedata.questiondata[m].questionType == 2 &&
-                  (value[n].answer == "true" || value[n].answer == true)
-                ) {
-                  problemData.answer += Number(n) + 1 + "&"; //答案
+                for (let n in value) {
+                  if (value[n].answer.toString() == "true"||value[n].answer.toString()=='0') {
+                    problemData.answer += n + "&"; //答案
+                  }
                 }
-                problemData.optiondata.push(value[n]);
-                problemData.optiondata[n].sort = n;
-              }
-              if (
-                this.pagedata.questiondata[m].questionType == 2 &&
-                problemData.answer.charAt(problemData.problemData.length - 1) ==
-                  "&"
-              ) {
-                problemData.answer = problemData.answer.substring(
-                  0,
-                  problemData.answer.length - 1
-                );
               }
               if (
                 this.pagedata.questiondata[m].questionType != 0 &&
@@ -289,7 +275,6 @@ export default {
                 this.showmsg("第" + (Number(m) + 1) + "题请选择一个正确答案。");
                 this.flag = false;
               }
-              problemData.optiondata = value;
               break;
           }
         }
@@ -492,9 +477,9 @@ export default {
                     case "question_id":
                     case "score":
                     case "answer":
-                    case "parsing":
-                    case "type":
-                    case "prompt":
+                    case "note":
+                    case "questionType":
+                    case "analysis":
                     case "questionType":
                       ls_question[name] = value;
                       break;
@@ -502,7 +487,22 @@ export default {
                       ls_question.editorTxt = value;
                       break;
                     case "optiondata":
-                      ls_question.optiondata = value;
+                      ls_question.optiondata = [];
+                      value.forEach((currentValue, index, arr) => {
+                        ls_question.optiondata.push(currentValue);
+                        ls_question.optiondata[index].option_id=currentValue.id;
+                        ls_question.optiondata[index].introduce = {
+                          isUrl: currentValue.isUrl,
+                          url:
+                            currentValue.isUrl == 1
+                              ? currentValue.introduce
+                              : "",
+                          editorTxt:
+                            currentValue.isUrl == 0
+                              ? currentValue.introduce
+                              : ""
+                        };
+                      });
                       break;
                   }
                 }

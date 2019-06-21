@@ -19,9 +19,9 @@ class QuesModel {
     }
 
     static async alterQues(exam) {
-        let { question_id, content, label, img, introduce } = exam;
+        let { problem, analysis, note , score ,questionType,exam_id ,answer ,question_id} = exam;
         await Ques.update({
-            content, label, img, introduce
+            problem, analysis, note , score ,questionType,exam_id ,answer
         }, {
                 where: {
                     id: question_id

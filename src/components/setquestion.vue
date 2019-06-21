@@ -7,7 +7,7 @@
                 <div v-if="items.questionType==1">
                     <div  v-for="(item,index) in items.optiondata" :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}">
                         <label>
-                            <input type="radio"  :checked="items.answer==(index+1)"  >
+                            <input type="radio"  :checked="items.answer==index"  >
                             <span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
                             <img :src="item.img" alt=""></label>
                             <span v-html="item.introduce.isUrl=='1'?item.introduce.url:item.introduce.editorTxt"></span>
