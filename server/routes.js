@@ -1,15 +1,11 @@
 const express = require('express');
 const User = require('./controllers/user')
 const Exam = require('./controllers/exam')
+const Ques = require('./controllers/question')
+const Option = require('./controllers/option')
 const upload=require('./controllers/upload')
 // const UploadToken = require('../controllers/UploadToken')
 const Routers = express.Router();
-
-
-
-/**
- * 用户接口
- */
 
 //  用户注册
 Routers.post('/register', User.create);
@@ -31,11 +27,14 @@ Routers.post("/Uploadpic",upload.single("img"),User.uploadImg);
  */
 //  提交试卷
 Routers.post("/ExamTitle",Exam.create)
-Routers.post("/questions",Exam.PutQuestions)
+Routers.post("/questions",Ques.create)
+Routers.patch("/questions",Ques.patchQues)      
 Routers.get("/questionnaireList",Exam.getlist)
-Routers.get("/questions",Exam.getquestion)
-Routers.delete("/questions",Exam.deletequestion);
-Routers.delete("/option",Exam.deleteOption)
+Routers.get("/questions",  Exam.getExam)
+Routers.delete("/questions",Ques.deletequestion);
+Routers.delete("/option",Option.deleteOption)
+Routers.patch("/Exam",Exam.patchExam)
+Routers.delete("/Exam",Exam.deleteExam)
 
 
 /**

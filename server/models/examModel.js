@@ -92,6 +92,16 @@ class ExamModel {
         })
         return sql
     }
+
+    static async deleteExam(res){
+        let {exam_id} = res;
+        await Exam.destroy({
+            where:{
+                id:exam_id
+            }
+        })
+        return true
+    }
 }
 
 module.exports = ExamModel

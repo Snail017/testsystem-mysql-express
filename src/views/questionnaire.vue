@@ -74,6 +74,7 @@ export default {
             answer: "",
             optiondata: [
               {
+                sort:0,
                 text: "",
                 img: "", //选项图片
                 answer: false,
@@ -118,6 +119,7 @@ export default {
             answer: "",
             optiondata: [
               {
+                sort:0,
                 text: "",
                 img: "", //选项图片
                 answer: false,
@@ -263,7 +265,10 @@ export default {
               if (this.pagedata.questiondata[m].questionType == 2) {
                 problemData.answer = "";
                 for (let n in value) {
-                  if (value[n].answer.toString() == "true"||value[n].answer.toString()=='0') {
+                  if (
+                    value[n].answer.toString() == "true" ||
+                    value[n].answer.toString() == "0"
+                  ) {
                     problemData.answer += n + "&"; //答案
                   }
                 }
@@ -281,13 +286,23 @@ export default {
         problemData.exam_id = ajaxData.id;
         problemData.father_number = 1; //father_number  父标题序号  固定为1  放在最前面
         if (this.flag) {
-          _this
-            .$http({
-              method: "post",
-              url: "/questions",
-              data: problemData
-            })
-            .then(res => {});
+          if (problemData.question_id == 0) {
+            _this
+              .$http({
+                method: "post",
+                url: "/questions",
+                data: problemData
+              })
+              .then(res => {});
+          }else{
+             _this
+              .$http({
+                method: "patch",
+                url: "/questions",
+                data: problemData
+              })
+              .then(res => {});
+          }
         }
       }
     },
@@ -489,19 +504,27 @@ export default {
                     case "optiondata":
                       ls_question.optiondata = [];
                       value.forEach((currentValue, index, arr) => {
-                        ls_question.optiondata.push(currentValue);
-                        ls_question.optiondata[index].option_id=currentValue.id;
-                        ls_question.optiondata[index].introduce = {
-                          isUrl: currentValue.isUrl,
-                          url:
-                            currentValue.isUrl == 1
-                              ? currentValue.introduce
-                              : "",
-                          editorTxt:
-                            currentValue.isUrl == 0
-                              ? currentValue.introduce
-                              : ""
-                        };
+                        ls_question.optiondata.push({
+                          answer:
+                            currentValue.answer == "true" ||
+                            currentValue.answer == true
+                              ? true
+                              : false,
+                          text: currentValue.text,
+                          img: currentValue.img,
+                          option_id: currentValue.id,
+                          introduce: {
+                            isUrl: currentValue.isUrl,
+                            url:
+                              currentValue.isUrl == 1
+                                ? currentValue.introduce
+                                : "",
+                            editorTxt:
+                              currentValue.isUrl == 0
+                                ? currentValue.introduce
+                                : ""
+                          }
+                        });
                       });
                       break;
                   }

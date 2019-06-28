@@ -1,6 +1,7 @@
 const examModel = require('../models/examModel');
 const quesModel = require('../models/quesModel');
 const optionModel = require('../models/optionModel');
+const common = require('../controllers/common');
 const Token = require("../config/token.config")
 
 class Exam {
@@ -17,175 +18,73 @@ class Exam {
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
 
-        // 检测参数是否存在为空
-        let errors = [];
-
-        for (let item in params) {
-            if (params[item] === undefined) {
-                let index = errors.length + 1;
-                errors.push("错误" + index + ": 参数: " + item + "不能为空")
-            }
-        }
-
-        if (errors.length > 0) {
-            res.status = 412;
-            res.json({
-                code: 412,
-                msg: errors
-            })
-            return false;
-        }
-
-        //exam_id==0  新创建的文件
-        if (params.exam_id == 0) {
-            const createExam = await examModel.createExam(params);
-            if (createExam) {
-                res.status=200;
-                res.json({
-                    code: 200,
-                    data: {
-                        id: params.exam_id
-                    },
-                    msg: "提交成功！"
-                })
-            }
-        } else {
-            const createExam = await examModel.alterExam(params);
-            if (createExam) {
-                res.status=200;
-                res.json({
-                    code: 200,
-                    data: {
-                        id: params.exam_id
-                    },
-                    msg: "修改成功"
-                })
-            }
-        }
-    }
-    /**
-     * 提交题目 
-     * @param {*question_id} req  question_id==0 创建题目
-     * @param {*questionType}  questionType!=0 提交选项
-     * @param {*} res 
-     */
-
-    static async PutQuestions(req, res) {
-        let params = req.body;
-
-        // 检测参数是否存在为空
-        let errors = [];
-
-        for (let item in params) {
-            if (params[item] === undefined) {
-                let index = errors.length + 1;
-                errors.push("错误" + index + ": 参数: " + item + "不能为空")
-            }
-        }
-
-        if (errors.length > 0) {
-            res.status = 412;
-            res.json({
-                code: 412,
-                msg: errors
-            })
-            return false;
-        }
-
+        const checkData = await common.checkData(params, res); // 检测参数是否存在为空
+        if (!checkData) return false;
         try {
-            //根据 question_id  判断题目是新建还是修改  ==0新建
-            if (params.question_id == 0) {
-                const createQues = await quesModel.createQues(params);
-                //questionType  判断题目类型  非简答题才有选项
-                if (params.questionType != 0) {
-                    for (let i in params.optiondata) {
-                        let ls_option = params.optiondata[i];
-                        ls_option.question_id = createQues.id;
-                        var createOption = await optionModel.createOption(ls_option);
-                        if (!createOption) {
-                            res.status = 500;
-                            res.json({
-                                code: 500,
-                                msg: "题目上传错误"
-                            })
-                            return false;                        
-                        }
-                    }
-                }
-                if (createQues) {
+            //exam_id==0  新创建的文件
+            if (params.exam_id == 0) {
+                const createExam = await examModel.createExam(params);
+                if (createExam) {
                     res.status = 200;
                     res.json({
                         code: 200,
-                        msg: "上传成功"
+                        data: {
+                            id: params.exam_id
+                        },
+                        msg: "提交成功！"
                     })
                 }
             } else {
-                //修改问题  
-                const alterQues = await quesModel.alterQues(params);
-                if (params.questionType != 0) {
-                    //修改选项   当option_id==0是该选项为新建
-                    for (let i in params.optiondata) {
-                        for (let i in params.optiondata) {
-                            params.optiondata[i].question_id = params.question_id;
-                            if (params.optiondata[i].option_id == 0) {
-                                var createOption = await optionModel.createOption(params.optiondata[i]);
-                                if (!createOption) {
-                                    res.status = 500;
-                                    res.json({
-                                        code: 500,
-                                        msg: "题目上传错误"
-                                    })
-                                    return false;
-                                    
-                                }
-                            } else {
-                                var createOption = await optionModel.alterOption(params.optiondata[i]);
-                                if (!createOption) {
-                                    res.status = 500;
-                                    res.json({
-                                        code: 500,
-                                        msg: "题目上传错误"
-                                    })
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                    if (alterQues) {
-                        res.status = 200;
-                        res.json({
-                            code: 200
-                        })
-                    }
+                const createExam = await examModel.alterExam(params);
+                if (createExam) {
+                    res.status = 200;
+                    res.json({
+                        code: 200,
+                        data: {
+                            id: params.exam_id
+                        },
+                        msg: "修改成功"
+                    })
                 }
             }
         } catch (err) {
+            res.status = 412;
             res.json({
-                code: 500,
+                code: 412,
                 msg: err
             })
+            return false;
         }
-
     }
+
 
     /**
      * 获取问卷列表  
+     * @param {*} req 
+     * @param {*} res 
      */
     static async getlist(req, res) {
         let params = req.query;
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
-        // 检测参数是否存在为空
-        let errors = [];
 
-        for (let item in params) {
-            if (params[item] === undefined) {
-                let index = errors.length + 1;
-                errors.push("错误" + index + ": 参数: " + item + "不能为空")
-            }
-        }
+        let checkdata=await common.checkData(params, res);
+        if(!checkdata) return false;
 
-        if (errors.length > 0) {
+        const users = await examModel.getlist(params);
+        try {
+            res.status = 200;
+            res.json({
+                code: 200,
+                data: {
+                    users: users,
+                    data_total: "2",
+                    p: "1",
+                    page_rows: "10",
+                    page_total: 1
+                }
+            })
+        } catch (errors) {
             res.status = 412;
             res.json({
                 code: 412,
@@ -194,45 +93,23 @@ class Exam {
             return false;
         }
 
-        const users = await examModel.getlist(params);
-        res.status = 200;
-        res.json({
-            code: 200,
-            data: {
-                users: users,
-                data_total: "2",
-                p: "1",
-                page_rows: "10",
-                page_total: 1
-            }
-        })
     }
 
-    static async getquestion(req, res) {
+     /**
+     * 根据exam_id 获取试卷和题目
+     * @param {*} req 
+     * @param {*} res 
+     */
+    static async getExam(req, res) {
         let params = req.query;
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
         // 检测参数是否存在为空
-        let errors = [];
+        let errors = await common.checkData(params,res);
+        if(!errors) return false;
 
-        for (let item in params) {
-            if (params[item] === undefined) {
-                let index = errors.length + 1;
-                errors.push("错误" + index + ": 参数: " + item + "不能为空")
-            }
-        }
-
-        if (errors.length > 0) {
-            res.status = 412;
-            res.json({
-                code: 412,
-                msg: errors
-            })
-            return false;
-        }
-
-        const questions = await quesModel.selectQues(params);
         const title = await examModel.findExam(params);
+        const questions = await quesModel.selectQues(params);
 
         try {
             if (title) {
@@ -256,39 +133,48 @@ class Exam {
                 code: 500,
                 data: err
             })
+            return false;
         }
     }
 
     /**
-     * 删除题目
+     * 修改考卷状态
+     * @param {*exam_id} req 
+     * @param {*status}  ==0 结束本次考试   ==1 发布本次考试  ==2作废本次考试  ==3删除本次试卷 
+     * @param {*} res 
      */
-    static async deletequestion(req, res) {
+    static async patchExam(req, res) {
+        let params = req.query;
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
+
+        let checkdata=await common.checkData(params, res);
+        if(!checkdata) return false;
+
+
+
+    }
+
+    /**
+     * 删除试卷
+     * @param {status==3} req 
+     * @param {*} res 
+     */
+    static async deleteExam(req, res) {
         let params = req.body;
         // 检测参数是否存在为空
-        let errors = [];
-
-        for (let item in params) {
-            if (params[item] === undefined) {
-                let index = errors.length + 1;
-                errors.push("错误" + index + ": 参数: " + item + "不能为空")
-            }
-        }
-
-        if (errors.length > 0) {
-            res.status = 412;
-            res.json({
-                code: 412,
-                msg: errors
-            })
-            return false;
-        }
+        let checkdata=await common.checkData(params, res);
+        if(!checkdata) return false;
+        
+        const delExam = await examModel.deleteExam(params);
 
         try {
-            const delQues = await quesModel.delQues(params);
-            if (delQues) {
+            if (delExam) {
+                await Exam.deleteQuestionByExamid(params.exam_id);
                 res.status = 200;
                 res.json({
-                    code: 200
+                    code: 200,
+                    msg: "问卷删除成功"
                 })
             }
 
@@ -299,50 +185,8 @@ class Exam {
                 data: err
             })
         }
-
     }
 
-    /**
-     * 删除选项
-     */
-    static async deleteOption(req, res) {
-        let params = req.body;
-        // 检测参数是否存在为空
-        let errors = [];
-
-        for (let item in params) {
-            if (params[item] === undefined) {
-                let index = errors.length + 1;
-                errors.push("错误" + index + ": 参数: " + item + "不能为空")
-            }
-        }
-
-        if (errors.length > 0) {
-            res.status = 412;
-            res.json({
-                code: 412,
-                msg: errors
-            })
-            return false;
-        }
-
-        try {
-            const delOption = await optionModel.deleteOption(params);
-            if (delOption) {
-                res.status = 200;
-                res.json({
-                    code: 200,
-                    msg: "删除成功"
-                })
-            }
-        } catch (err) {
-            res.status = 500;
-            res.json({
-                code: 500,
-                msg: err
-            })
-        }
-    }
 }
 
 module.exports = Exam 

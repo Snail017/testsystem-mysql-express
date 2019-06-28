@@ -172,8 +172,8 @@ export default {
           function() {
             _this
               .$http({
-                mtehod: "post",
-                url: "/Exam/ExamStatus",
+                mtehod: "patch",
+                url: "/Exam",
                 data: {
                   exam_id: exam_id,
                   status: type
@@ -201,8 +201,8 @@ export default {
           function() {
             _this
               .$http({
-                method: "post",
-                url: "/Exam/ExamStatus",
+                method: "delete",
+                url: "/Exam",
                 data: {
                   exam_id: exam_id,
                   status: 3

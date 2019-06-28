@@ -49,6 +49,15 @@ class QuesModel {
 
         return true
     }
+    static async delQuesByExamid(exam_id) {
+        let sql = await Ques.destroy({
+            where: {
+                exam_id: exam_id
+            }
+        })
+
+        return sql
+    }
 
 }
 

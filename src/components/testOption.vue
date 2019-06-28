@@ -11,6 +11,7 @@
       </tr>
       <tr v-for="(items,indexs) in optiondata">
         <td>
+          <input type="hidden" v-model="items.sort=indexs">
           <input type="text" class="form-control" v-model="items.text">
           <!--<i class="iconfont icon-jiaru"></i><i class="iconfont icon-jianshao"></i>-->
         </td>
@@ -209,9 +210,12 @@ export default {
     },
     addoption() {
       console.log(this.optiondata);
+      var _this=this;
       this.optiondata.push({
+        answer:false,
         text: "",
         img: "",
+        sort:_this.optiondata.length+1,
         introduce: this.windowdata.introduce
       });
     },

@@ -50,16 +50,16 @@ module.exports = function (sequelize, DataTypes) {
         },
         createdAt: {
             type: DataTypes.DATE,
-            field: 'created_id',
+            field: 'created_date',
             get() {
                 return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:MM:SS');
             }
         },
         updatedAt: {
+            field: 'created_date',
             type: DataTypes.DATE,
-            field: 'updated_id',
             get() {
-                return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:MM:SS');
+                return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:MM:SS');
             }
         }
     }, {
