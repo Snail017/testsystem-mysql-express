@@ -74,7 +74,7 @@ export default {
             answer: "",
             optiondata: [
               {
-                sort:0,
+                sort: 0,
                 text: "",
                 img: "", //选项图片
                 answer: false,
@@ -119,7 +119,7 @@ export default {
             answer: "",
             optiondata: [
               {
-                sort:0,
+                sort: 0,
                 text: "",
                 img: "", //选项图片
                 answer: false,
@@ -240,7 +240,13 @@ export default {
             case "analysis":
             case "note":
             case "mustanswer":
+              problemData[name] = value;
+              break;
             case "answer":
+              if (value == ""&&this.pagedata.questiondata[m].questionType==2) {
+                this.showmsg("第" + (Number(m) + 1) + "题请选择一个正确答案。");
+                this.flag = false;
+              }
               problemData[name] = value;
               break;
             case "score":
@@ -272,13 +278,12 @@ export default {
                     problemData.answer += n + "&"; //答案
                   }
                 }
-              }
-              if (
-                this.pagedata.questiondata[m].questionType != 0 &&
-                problemData.answer == ""
-              ) {
-                this.showmsg("第" + (Number(m) + 1) + "题请选择一个正确答案。");
-                this.flag = false;
+                if (problemData.answer == "") {
+                  this.showmsg(
+                    "第" + (Number(m) + 1) + "题请选择一个正确答案。"
+                  );
+                  this.flag = false;
+                }
               }
               break;
           }
@@ -294,8 +299,8 @@ export default {
                 data: problemData
               })
               .then(res => {});
-          }else{
-             _this
+          } else {
+            _this
               .$http({
                 method: "patch",
                 url: "/questions",

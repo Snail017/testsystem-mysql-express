@@ -20,15 +20,13 @@ class Ques {
         try {
             const delQues = await quesModel.delQues(params);
             if (delQues) {
-                await Exam.deleteOption(req, res);
+                await optionModel.deleteOptionByQuesid(params.id);
                 res.status = 200;
                 res.json({
                     code: 200,
                     msg: '题目删除成功'
                 })
-
             }
-
         } catch (err) {
             res.status = 500;
             res.json({
@@ -78,7 +76,7 @@ class Ques {
                 })
             }
         } catch (err) {
-            res.status=412;
+            res.status = 412;
             res.json({
                 code: 500,
                 msg: err
@@ -105,37 +103,35 @@ class Ques {
             if (params.questionType != 0) {
                 //修改选项   当option_id==0是该选项为新建
                 for (let i in params.optiondata) {
-                    for (let i in params.optiondata) {
-                        params.optiondata[i].question_id = params.question_id;
-                        if (params.optiondata[i].option_id == 0) {
-                            var createOption = await optionModel.createOption(params.optiondata[i]);
-                            if (!createOption) {
-                                res.status = 500;
-                                res.json({
-                                    code: 500,
-                                    msg: "题目上传错误"
-                                })
-                                return false;
-                            }
-                        } else {
-                            var createOption = await optionModel.alterOption(params.optiondata[i]);
-                            if (!createOption) {
-                                res.status = 500;
-                                res.json({
-                                    code: 500,
-                                    msg: "题目上传错误"
-                                })
-                                return false;
-                            }
+                    params.optiondata[i].question_id = params.question_id;
+                    if (params.optiondata[i].option_id == 0) {
+                        var createOption = await optionModel.createOption(params.optiondata[i]);
+                        if (!createOption) {
+                            res.status = 500;
+                            res.json({
+                                code: 500,
+                                msg: "题目上传错误"
+                            })
+                            return false;
+                        }
+                    } else {
+                        var createOption = await optionModel.alterOption(params.optiondata[i]);
+                        if (!createOption) {
+                            res.status = 500;
+                            res.json({
+                                code: 500,
+                                msg: "题目上传错误"
+                            })
+                            return false;
                         }
                     }
                 }
-                if (alterQues) {
-                    res.status = 200;
-                    res.json({
-                        code: 200
-                    })
-                }
+            }
+            if (alterQues) {
+                res.status = 200;
+                res.json({
+                    code: 200
+                })
             }
         } catch (err) {
             res.status = 412;
@@ -156,7 +152,7 @@ class Ques {
             const delQuesData = await quesModel.delQuesByExamid(exam_id);
             try {
                 if (delQuesData) {
-
+                    
                 }
             } catch (err) {
                 return err

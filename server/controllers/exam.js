@@ -29,7 +29,7 @@ class Exam {
                     res.json({
                         code: 200,
                         data: {
-                            id: params.exam_id
+                            id: createExam.id
                         },
                         msg: "提交成功！"
                     })
@@ -68,8 +68,8 @@ class Exam {
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
 
-        let checkdata=await common.checkData(params, res);
-        if(!checkdata) return false;
+        let checkdata = await common.checkData(params, res);
+        if (!checkdata) return false;
 
         const users = await examModel.getlist(params);
         try {
@@ -95,18 +95,18 @@ class Exam {
 
     }
 
-     /**
-     * 根据exam_id 获取试卷和题目
-     * @param {*} req 
-     * @param {*} res 
-     */
+    /**
+    * 根据exam_id 获取试卷和题目
+    * @param {*} req 
+    * @param {*} res 
+    */
     static async getExam(req, res) {
         let params = req.query;
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
         // 检测参数是否存在为空
-        let errors = await common.checkData(params,res);
-        if(!errors) return false;
+        let errors = await common.checkData(params, res);
+        if (!errors) return false;
 
         const title = await examModel.findExam(params);
         const questions = await quesModel.selectQues(params);
@@ -148,8 +148,8 @@ class Exam {
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
 
-        let checkdata=await common.checkData(params, res);
-        if(!checkdata) return false;
+        let checkdata = await common.checkData(params, res);
+        if (!checkdata) return false;
 
 
 
@@ -163,23 +163,24 @@ class Exam {
     static async deleteExam(req, res) {
         let params = req.body;
         // 检测参数是否存在为空
-        let checkdata=await common.checkData(params, res);
-        if(!checkdata) return false;
-        
-        const delExam = await examModel.deleteExam(params);
+        let checkdata = await common.checkData(params, res);
+        if (!checkdata) return false;
 
         try {
-            if (delExam) {
-                await Exam.deleteQuestionByExamid(params.exam_id);
+            let findAllOption = await quesModel.findAllQuesByExamid(params.exam_id);
+                for(let i in findAllOption){
+                    let currentVal=findAllOption[i].dataValues;
+                    await optionModel.deleteOptionByQuesid(currentVal.id);
+                    await quesModel.delQuesByExamid(currentVal.exam_id);
+                }
+                await examModel.deleteExam(params);
                 res.status = 200;
                 res.json({
                     code: 200,
                     msg: "问卷删除成功"
                 })
-            }
-
         } catch (err) {
-            res.status = 500;
+            res.status = 412;
             res.json({
                 code: 500,
                 data: err

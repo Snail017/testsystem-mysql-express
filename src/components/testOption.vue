@@ -184,7 +184,7 @@ export default {
       this.windowdata.img = res.img;
       this.windowdata.index = index;
     },
-    deleteOption(option_id,indexs) {
+      deleteOption(option_id,indexs) {
       this.$http({
           method: "delete",
           url: "/option",

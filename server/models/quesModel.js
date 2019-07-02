@@ -50,15 +50,21 @@ class QuesModel {
         return true
     }
     static async delQuesByExamid(exam_id) {
-        let sql = await Ques.destroy({
+        await Ques.destroy({
             where: {
                 exam_id: exam_id
             }
         })
-
-        return sql
+        return true
     }
-
+    static async findAllQuesByExamid(exam_id){
+        let sql= await Ques.findAll({
+            where:{
+                exam_id:exam_id
+            }
+        })
+        return sql;
+    }
 }
 
 module.exports = QuesModel

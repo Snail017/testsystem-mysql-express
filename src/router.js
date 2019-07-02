@@ -1,8 +1,8 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import homeQuestion from '@/components/homeQuestion'
-import homeAnswer from '@/components/homeAnswer'
+import homeQuestion from '@/views/homeQuestion'
+import homeAnswer from '@/views/homeAnswer'
 import editFrom from '@/views/editFrom'
 import questionnaire from '@/views/questionnaire'
 import answer_list from '@/components/answer_list'

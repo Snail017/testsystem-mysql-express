@@ -60,7 +60,7 @@ module.exports = function (sequelize, DataTypes) {
             field: 'updated_date',
             type: DataTypes.DATE,
             get() {
-                return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:MM:SS');
+                return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:MM:SS');
             }
         }
     }, {

@@ -59,6 +59,19 @@ class OptionModel {
         })
         return true;
     }
+    /**
+     * 根据question_id 删除所有选项
+     * @param {*} question_id 
+     */
+    static async deleteOptionByQuesid(question_id) {
+        await Option.destroy({
+            where: {
+                question_id: question_id
+            }
+        })
+        return true;
+    }
 }
 
 module.exports = OptionModel
+    
