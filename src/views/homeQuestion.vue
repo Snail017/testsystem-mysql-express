@@ -172,7 +172,7 @@ export default {
           function() {
             _this
               .$http({
-                mtehod: "patch",
+                method: "patch",
                 url: "/Exam",
                 data: {
                   exam_id: exam_id,
@@ -180,11 +180,10 @@ export default {
                 }
               })
               .then(res => {
-                res = JSON.parse(res);
-                if (res.status == 0) {
+                if (res.status == 200) {
                   _this.Exam(_this.pagedata.p);
                 }
-                _this.$msg(res.msg);
+                _this.$msg(res.data.msg);
               });
           },
           function() {

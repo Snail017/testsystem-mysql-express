@@ -2,7 +2,7 @@ const db = require('../config/sequelize.config')
 const Sequelize = db.sequelize;
 const Option = Sequelize.import('../schema/option.js')
 
-Option.sync({force: true});
+Option.sync({force: false});
 
 class OptionModel {
     /**

@@ -1,6 +1,5 @@
 <template>
   <div class="body" :class="{'paperbg':isPaper}">
-    {{pagedata}}
     <div class="content">
       <Top
         v-if="!isPaper"

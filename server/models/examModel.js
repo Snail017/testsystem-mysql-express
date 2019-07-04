@@ -42,25 +42,6 @@ class ExamModel {
         return true
     }
 
-    static async createQues(exam) {
-        let { answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number } = exam;
-        let sql = await Exam.create({
-            answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number
-        })
-        return sql;
-
-    }
-    static async alterQues(exam) {
-        let { answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number, question_id } = exam;
-        let sql = await Exam.update({
-            answer, child_number, exam_id, score, type, parsing, problem, prompt, extid, father_number
-        }, {
-                where: {
-                    id: question_id
-                }
-            })
-        return sql;
-    }
 
     /**
      * @param user_id
@@ -85,21 +66,34 @@ class ExamModel {
 
     static async findExam(exam) {
         let { exam_id } = exam;
-        let sql= await Exam.findAll({
-            where:{
-                id:exam_id
+        let sql = await Exam.findAll({
+            where: {
+                id: exam_id
             }
         })
         return sql
     }
 
-    static async deleteExam(exam_id){
+    static async deleteExam(exam_id) {
         await Exam.destroy({
-            where:{
-                id:exam_id
+            where: {
+                id: exam_id
             }
         })
         return true
+    }
+
+    static async changeStatus(exam) {
+        let { user_id, exam_id, status } = exam;
+        let sql = await Exam.update({
+            status
+        }, {
+                where: {
+                    userid: user_id,
+                    id: exam_id
+                }
+            })
+        return sql;
     }
 }
 

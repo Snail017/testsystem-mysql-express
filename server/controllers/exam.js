@@ -103,14 +103,19 @@ class Exam {
      * @param {*} res 
      */
     static async patchExam(req, res) {
-        let params = req.query;
+        let params = req.body;
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
 
         let checkdata = await common.checkData(params, res);
         if (!checkdata) return false;
         try{
-
+            await examModel.changeStatus(params);
+            res.status=200;
+            res.json({
+                code:200,
+                msg:"状态修改成功"
+            })
         }catch(err){
             res.status=412;
             res.json({
