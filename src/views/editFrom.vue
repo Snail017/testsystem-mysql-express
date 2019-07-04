@@ -69,7 +69,7 @@
     import Top from '@/components/top'
     import Navtop from '@/components/navtop'
     import testTitle from '@/components/testTitle'
-    import setquestion from '@/QA/setquestion'
+    import setquestion from '@/components/setquestion'
     export default {
         name: "editFrom",
         components: {

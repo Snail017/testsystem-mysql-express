@@ -43,7 +43,7 @@
             :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}"
           >
             <label>
-              <input type="checkbox" :aa="items.answer.toString().indexOf(index+1)!=-1">
+              <input type="checkbox" >
               <span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
               <img :src="item.img" alt>
             </label>

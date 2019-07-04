@@ -29,6 +29,7 @@
                 var _this=this;
                 var ls_data=$.extend(true,{},_this.tempdata.questiondata[0]);   //要对questiondata作为模板push,需要先拷贝一份。
                 ls_data.questionType=type;
+                ls_data.sort=_this.questiondata.length;
                 if(type==3&&ls_data.optiondata.length==1){     //当为判断/3时  选项格式改变 固定为两个选项
                     var ls_option=$.extend(true,{},ls_data.optiondata[0]);
                     ls_data.optiondata.push(ls_option);

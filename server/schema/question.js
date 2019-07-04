@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         // 考试id
         exam_id: {
-            type: Number,
+            type: DataTypes.INTEGER.UNSIGNED,
             field: 'exam_id',
             allowNull: false
         },
@@ -18,6 +18,11 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(255),
             field: 'problem',
             allowNull: false
+        },
+        answer:{
+            type: DataTypes.STRING(255),
+            field: 'answer',
+            allowNull: true
         },
         // 解析
         analysis: {
@@ -29,6 +34,11 @@ module.exports = function (sequelize, DataTypes) {
         note: {
             type: DataTypes.STRING(255),
             field: 'note',
+            allowNull: true
+        },
+        sort: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            field: 'sort',
             allowNull: true
         },
         // 选项

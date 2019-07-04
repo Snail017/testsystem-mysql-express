@@ -216,7 +216,8 @@ export default {
         text: "",
         img: "",
         sort:_this.optiondata.length+1,
-        introduce: this.windowdata.introduce
+        introduce: this.windowdata.introduce,
+        option_id:0,
       });
     },
     fileUpload(e) {

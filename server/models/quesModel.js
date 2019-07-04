@@ -11,17 +11,17 @@ class QuesModel {
      * @returns {Promise<boolean>}
      */
     static async createQues(exam) {
-        let {  problem, analysis, note , score ,questionType,exam_id ,answer} = exam;
+        let { problem, analysis, note, sort, score, questionType, exam_id, answer } = exam;
         let sql = await Ques.create({
-            problem, analysis, note , score ,questionType,exam_id,answer
+            problem, analysis, note, score, sort, questionType, exam_id, answer
         })
         return sql;
     }
 
     static async alterQues(exam) {
-        let { problem, analysis, note , score ,questionType,exam_id ,answer ,question_id} = exam;
+        let { problem, analysis, note, sort, score, questionType, exam_id, answer, question_id } = exam;
         await Ques.update({
-            problem, analysis, note , score ,questionType,exam_id ,answer
+            problem, analysis, note, score, sort, questionType, exam_id, answer
         }, {
                 where: {
                     id: question_id
@@ -30,12 +30,14 @@ class QuesModel {
         return true;
     }
 
-    static async selectQues(exam) {
-        let { exam_id } = exam;
+    static async selectQues(exam_id) {
         let sql = await Ques.findAll({
             where: {
                 exam_id: exam_id
-            }
+            },
+            order: [
+                ["sort", 'ASC']
+            ]
         })
         return sql
     }
@@ -56,14 +58,6 @@ class QuesModel {
             }
         })
         return true
-    }
-    static async findAllQuesByExamid(exam_id){
-        let sql= await Ques.findAll({
-            where:{
-                exam_id:exam_id
-            }
-        })
-        return sql;
     }
 }
 

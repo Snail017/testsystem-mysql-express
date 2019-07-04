@@ -72,6 +72,7 @@ export default {
             haswindow: false, //编辑窗口是否弹出
             question_id: 0, //题目ID
             answer: "",
+            sort: 0,
             optiondata: [
               {
                 sort: 0,
@@ -117,6 +118,7 @@ export default {
             haswindow: false, //编辑窗口是否弹出
             question_id: 0, //题目ID
             answer: "",
+            sort: 0,
             optiondata: [
               {
                 sort: 0,
@@ -231,19 +233,24 @@ export default {
       var _this = this;
       this.flag = true;
       for (let m in this.pagedata.questiondata) {
-        let problemData = {
-          answer: ""
-        };
+        let problemData = {};
         for (let name in this.pagedata.questiondata[m]) {
           let value = this.pagedata.questiondata[m][name];
           switch (name) {
             case "analysis":
             case "note":
-            case "mustanswer":
+            case "mustanswer":            
               problemData[name] = value;
               break;
+              case "sort":
+                problemData[name]=Number(m);
+                break;
             case "answer":
-              if (value == ""&&this.pagedata.questiondata[m].questionType==2) {
+              if (
+                value === "" &&
+                (this.pagedata.questiondata[m].questionType == 3 ||
+                  this.pagedata.questiondata[m].questionType == 1)
+              ) {
                 this.showmsg("第" + (Number(m) + 1) + "题请选择一个正确答案。");
                 this.flag = false;
               }
@@ -267,22 +274,18 @@ export default {
               break;
             case "optiondata":
               problemData.optiondata = value;
-              // 多选时需要循环optiondata将questiondata.answer相加为多个选项 n&m
               if (this.pagedata.questiondata[m].questionType == 2) {
                 problemData.answer = "";
-                for (let n in value) {
+              }
+              for (let n in value) {
+                // 多选时需要循环optiondata将questiondata.answer相加为多个选项 n&m
+                if (this.pagedata.questiondata[m].questionType == 2) {
                   if (
                     value[n].answer.toString() == "true" ||
                     value[n].answer.toString() == "0"
                   ) {
                     problemData.answer += n + "&"; //答案
                   }
-                }
-                if (problemData.answer == "") {
-                  this.showmsg(
-                    "第" + (Number(m) + 1) + "题请选择一个正确答案。"
-                  );
-                  this.flag = false;
                 }
               }
               break;
@@ -498,6 +501,7 @@ export default {
                     case "score":
                     case "answer":
                     case "note":
+                    case "sort":
                     case "questionType":
                     case "analysis":
                     case "questionType":

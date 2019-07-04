@@ -18,15 +18,13 @@ class Ques {
         if (!errors) return false;
 
         try {
-            const delQues = await quesModel.delQues(params);
-            if (delQues) {
-                await optionModel.deleteOptionByQuesid(params.id);
-                res.status = 200;
-                res.json({
-                    code: 200,
-                    msg: '题目删除成功'
-                })
-            }
+            await optionModel.deleteOptionByQuesid(params.id);
+            await quesModel.delQues(params);
+            res.status = 200;
+            res.json({
+                code: 200,
+                msg: '题目删除成功'
+            })
         } catch (err) {
             res.status = 500;
             res.json({
@@ -34,7 +32,6 @@ class Ques {
                 data: err
             })
         }
-
     }
 
 
@@ -52,23 +49,16 @@ class Ques {
 
         try {
             const createQues = await quesModel.createQues(params);
-            //questionType  判断题目类型  非简答题才有选项
-            if (params.questionType != 0) {
-                for (let i in params.optiondata) {
-                    let ls_option = params.optiondata[i];
-                    ls_option.question_id = createQues.id;
-                    var createOption = await optionModel.createOption(ls_option);
-                    if (!createOption) {
-                        res.status = 500;
-                        res.json({
-                            code: 500,
-                            msg: "题目上传错误"
-                        })
-                        return false;
+            if (createQues) {
+                //questionType  判断题目类型  非简答题才有选项
+                if (params.questionType != 0) {
+                    for (let i in params.optiondata) {
+                        let ls_option = params.optiondata[i];
+                        ls_option.exam_id = params.exam_id;
+                        ls_option.question_id = createQues.id;
+                        await optionModel.createOption(ls_option);
                     }
                 }
-            }
-            if (createQues) {
                 res.status = 200;
                 res.json({
                     code: 200,
@@ -88,7 +78,8 @@ class Ques {
 
     /**
      * 修改题目
-     * @param {*} exam_id 
+     * @param {*question_id} question_id !=0
+     * @param {*option_id} option_id ==0创建选项  option_id !=0修改选项
      */
     static async patchQues(req, res) {
         let params = req.body;
@@ -104,6 +95,7 @@ class Ques {
                 //修改选项   当option_id==0是该选项为新建
                 for (let i in params.optiondata) {
                     params.optiondata[i].question_id = params.question_id;
+                    params.optiondata[i].exam_id = params.exam_id;
                     if (params.optiondata[i].option_id == 0) {
                         var createOption = await optionModel.createOption(params.optiondata[i]);
                         if (!createOption) {
@@ -115,8 +107,8 @@ class Ques {
                             return false;
                         }
                     } else {
-                        var createOption = await optionModel.alterOption(params.optiondata[i]);
-                        if (!createOption) {
+                        var alterOption = await optionModel.alterOption(params.optiondata[i]);
+                        if (!alterOption) {
                             res.status = 500;
                             res.json({
                                 code: 500,
@@ -143,20 +135,44 @@ class Ques {
     }
 
     /**
-    * 删除问卷题目
-    * 删除题目选项
-    * @param {exam_id} req 
-    */
-    static async deleteQuestionByExamid(exam_id) {
-        if (exam_id != '') {
-            const delQuesData = await quesModel.delQuesByExamid(exam_id);
-            try {
-                if (delQuesData) {
-                    
+   * 根据exam_id 获取试卷和题目
+   * @param {*} req 
+   * @param {*} res 
+   */
+    static async getQuestions(req, res) {
+        let params = req.query;
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
+        // 检测参数是否存在为空
+        let errors = await common.checkData(params, res);
+        if (!errors) return false;
+
+        const title = await examModel.findExam(params);
+        const questions = await quesModel.selectQues(params.exam_id);
+
+        try {
+            if (title) {
+                let ls_title = title[0].dataValues, ls_question = [], ls_option = [];
+                for (let i in questions) {
+                    ls_question.push(questions[i].dataValues);
+                    ls_option = await optionModel.findAllOption(questions[i].dataValues);
+                    ls_question[i].optiondata = ls_option;
+                    ls_question[i].question_id = questions[i].dataValues.id;
                 }
-            } catch (err) {
-                return err
+                ls_title.list = ls_question;
+                res.status = 200;
+                res.json({
+                    code: 200,
+                    data: ls_title
+                })
             }
+        } catch (err) {
+            res.status = 500;
+            res.json({
+                code: 500,
+                data: err
+            })
+            return false;
         }
     }
 }

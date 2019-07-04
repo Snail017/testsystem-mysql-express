@@ -7,14 +7,20 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
+        // 考试id
+        exam_id: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            field: 'exam_id',
+            allowNull: false
+        },
         // 问题id
         question_id: {
-            type: Number,
+            type: DataTypes.INTEGER.UNSIGNED,
             field: 'question_id',
             allowNull: false
         },
         //内容
-        text:{
+        text: {
             type: DataTypes.STRING(255),
             field: 'content',
             allowNull: true
@@ -25,25 +31,25 @@ module.exports = function (sequelize, DataTypes) {
             field: 'sort',
             allowNull: true
         },
-        isUrl:{
-            type: Number,
+        isUrl: {
+            type: DataTypes.INTEGER.UNSIGNED,
             field: 'isUrl',
             allowNull: true
         },
         //选项图片
-        img:{
+        img: {
             type: DataTypes.STRING(255),
             field: 'img',
             allowNull: true
         },
         //选项介绍
-        introduce:{
+        introduce: {
             type: DataTypes.STRING(255),
             field: 'introduce',
             allowNull: true
         },
-         //答案
-         answer:{
+        //答案
+        answer: {
             type: DataTypes.STRING(255),
             field: 'answer',
             allowNull: true
@@ -56,17 +62,17 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         updatedAt: {
-            field: 'updated_date',
             type: DataTypes.DATE,
+            field: 'updated_date',
             get() {
                 return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:MM:SS');
             }
         }
     }, {
-        // 如果为 true 则表的名称和 model 相同，即 user
-        // 为 false MySQL创建的表名称会是复数 users
-        // 如果指定的表名称本就是复数形式则不变
-        timestamps: true,
-        freezeTableName: true,
-    })
+            // 如果为 true 则表的名称和 model 相同，即 user
+            // 为 false MySQL创建的表名称会是复数 users
+            // 如果指定的表名称本就是复数形式则不变
+            timestamps: true,
+            freezeTableName: true,
+        })
 }

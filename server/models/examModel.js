@@ -93,8 +93,7 @@ class ExamModel {
         return sql
     }
 
-    static async deleteExam(res){
-        let {exam_id} = res;
+    static async deleteExam(exam_id){
         await Exam.destroy({
             where:{
                 id:exam_id

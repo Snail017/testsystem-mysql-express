@@ -35,8 +35,8 @@ class Exam {
                     })
                 }
             } else {
-                const createExam = await examModel.alterExam(params);
-                if (createExam) {
+                const alterExam = await examModel.alterExam(params);
+                if (alterExam) {
                     res.status = 200;
                     res.json({
                         code: 200,
@@ -95,47 +95,6 @@ class Exam {
 
     }
 
-    /**
-    * 根据exam_id 获取试卷和题目
-    * @param {*} req 
-    * @param {*} res 
-    */
-    static async getExam(req, res) {
-        let params = req.query;
-        let token = await Token.checkToken(req.headers.authorization);
-        params.user_id = token.uid;
-        // 检测参数是否存在为空
-        let errors = await common.checkData(params, res);
-        if (!errors) return false;
-
-        const title = await examModel.findExam(params);
-        const questions = await quesModel.selectQues(params);
-
-        try {
-            if (title) {
-                let ls_title = title[0].dataValues, ls_question = [], ls_option = [];
-                for (let i in questions) {
-                    ls_question.push(questions[i].dataValues);
-                    ls_option = await optionModel.findAllOption(questions[i].dataValues);
-                    ls_question[i].optiondata = ls_option;
-                    ls_question[i].question_id = questions[i].dataValues.id;
-                }
-                ls_title.list = ls_question;
-                res.status = 200;
-                res.json({
-                    code: 200,
-                    data: ls_title
-                })
-            }
-        } catch (err) {
-            res.status = 500;
-            res.json({
-                code: 500,
-                data: err
-            })
-            return false;
-        }
-    }
 
     /**
      * 修改考卷状态
@@ -150,7 +109,16 @@ class Exam {
 
         let checkdata = await common.checkData(params, res);
         if (!checkdata) return false;
+        try{
 
+        }catch(err){
+            res.status=412;
+            res.json({
+                code:500,
+                msg:err
+            })
+            return false;
+        }
 
 
     }
@@ -167,18 +135,14 @@ class Exam {
         if (!checkdata) return false;
 
         try {
-            let findAllOption = await quesModel.findAllQuesByExamid(params.exam_id);
-                for(let i in findAllOption){
-                    let currentVal=findAllOption[i].dataValues;
-                    await optionModel.deleteOptionByQuesid(currentVal.id);
-                    await quesModel.delQuesByExamid(currentVal.exam_id);
-                }
-                await examModel.deleteExam(params);
-                res.status = 200;
-                res.json({
-                    code: 200,
-                    msg: "问卷删除成功"
-                })
+            await optionModel.deleteOptionByExamid(params.exam_id);
+            await quesModel.delQuesByExamid(params.exam_id);
+            await examModel.deleteExam(params.exam_id);
+            res.status = 200;
+            res.json({
+                code: 200,
+                msg: "问卷删除成功"
+            })
         } catch (err) {
             res.status = 412;
             res.json({
