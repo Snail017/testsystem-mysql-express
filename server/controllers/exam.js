@@ -1,7 +1,7 @@
 const examModel = require('../models/examModel');
 const quesModel = require('../models/quesModel');
 const optionModel = require('../models/optionModel');
-const common = require('../controllers/common');
+const common = require('./common');
 const Token = require("../config/token.config")
 
 class Exam {
@@ -156,6 +156,7 @@ class Exam {
             })
         }
     }
+
 
 }
 

@@ -5,7 +5,7 @@ import homeQuestion from '@/views/homeQuestion'
 import homeAnswer from '@/views/homeAnswer'
 import editFrom from '@/views/editFrom'
 import questionnaire from '@/views/questionnaire'
-import answer_list from '@/components/answer_list'
+import answer_list from '@/views/answer_list'
 import register from "@/views/register"
 import login from "@/views/login"
 

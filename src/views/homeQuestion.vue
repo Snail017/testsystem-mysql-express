@@ -7,14 +7,15 @@
         </router-link>
       </div>
       <div class="col-sm-3 st_sear">
-        <input type="text" class="form-control" placeholder="请输入问卷名进行搜索..." v-model="title">
-        <i class="iconfont icon-chazhao" @click="examType='search'"></i>
+        <input type="text" class="form-control" placeholder="请输入问卷名进行搜索..." v-model="title" />
+        <i class="iconfont icon-chazhao" @click="Exam(1)"></i>
       </div>
       <div class="col-sm-2">
         <select name id class="form-control" v-model="examType">
-          <option value="unfinish">未发布</option>
-          <option value="doing">发布中</option>
-          <option value="finish">已完成</option>
+          <option value="">全部</option>
+          <option value="0">未发布</option>
+          <option value="1">发布中</option>
+          <option value="2">已完成</option>
         </select>
       </div>
       <div class="col-sm-5" style="text-align: right">
@@ -68,7 +69,8 @@
             完成{{item.answer_count}}人
           </span>&nbsp;
           <span>
-            <i class="iconfont icon-shijian"></i>{{item.updatedAt}}
+            <i class="iconfont icon-shijian"></i>
+            {{item.updatedAt}}
           </span>
         </div>
       </div>
@@ -95,7 +97,7 @@ export default {
         page_rows: 1, //每页n条数据
         page_total: "" //共多少数据
       },
-      examType: "doing",
+      examType: 0,
       examTypeUrl: "",
       layerdata: {
         msg: "",
@@ -107,38 +109,9 @@ export default {
     pagenation
   },
   watch: {
-    title: {
-      handler(newVal) {
-        if (newVal != "") {
-          this.examType = "search";
-          this.examTypeUrl = "/questionnaireList?status=&title=" + newVal + "";
-          this.Exam(1);
-        } else {
-          this.examType = "doing";
-        }
-      }
-    },
     examType: {
       handler(newVal) {
-        var _this = this;
-        switch (newVal) {
-          case "finish":
-            this.examTypeUrl = "/questionnaireList?status=2";
-            break;
-          case "doing": //进行中的考试
-            this.examTypeUrl = "/questionnaireList?status=1";
-            break;
-          case "recycle": //进行中的考试
-            this.examTypeUrl = "/questionnaireList?status=3";
-            break;
-          case "unfinish":
-            this.examTypeUrl = "/questionnaireList?status=0";
-            break;
-          case "search":
-            this.examTypeUrl =
-              "/questionnaireList?status=&title=" + _this.title + "";
-            break;
-        }
+        this.examTypeUrl ="/questionnaireList?status=" + this.examType;
         this.Exam(1);
       },
       immediate: true
@@ -242,13 +215,14 @@ export default {
         .$http({
           method: "get",
           url: _this.examTypeUrl,
-          data: {
+          params: {
             pagecount: p,
-            page: "10"
+            page: "10",
+            title:_this.title
           }
         })
         .then(res => {
-          res=res.data;
+          res = res.data;
           _this.testdata = res.data.users;
           _this.$set(_this.pagedata, "data_total", res.data.page_total);
           _this.$set(_this.pagedata, "p", res.data.p);

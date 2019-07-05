@@ -50,18 +50,40 @@ class ExamModel {
      * 筛选问卷列表
      */
     static async getlist(exam) {
-        let { user_id, status } = exam;
-        let sql = await Exam.findAll(
-            {
-                limit: 3,
-            }, {
-                where: {
-                    userid: user_id,
-                    status: status
-                }
-            })
-
-        return sql
+        let { user_id, status, title, page, pagecount } = exam;
+        if(status==""){
+            return await Exam.findAll(
+                {
+                    where: {
+                        userid: user_id,
+                        title: title
+                    },
+                    offset: (Number(pagecount) - 1) * page,
+                    limit: Number(page),
+                    order: [
+                        ['id', 'DESC']
+                    ]
+                },
+            )
+    
+        }else{
+            return await Exam.findAll(
+                {
+                    where: {
+                        userid: user_id,
+                        status: status,
+                        title: {
+                            $like:"%"+title+"%"
+                        }
+                    },
+                    offset: (Number(pagecount) - 1) * page,
+                    limit: Number(page),
+                    order: [
+                        ['id', 'DESC']
+                    ],
+                },
+            )
+        }
     }
 
     static async findExam(exam) {

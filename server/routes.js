@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('./controllers/user')
 const Exam = require('./controllers/exam')
+const Answer = require('./controllers/answer')
 const Ques = require('./controllers/question')
 const Option = require('./controllers/option')
 const upload=require('./controllers/upload')
@@ -22,10 +23,7 @@ Routers.get('/publicKey', User.public_key);
 Routers.post("/Uploadpic",upload.single("img"),User.uploadImg);
 
 
-/**
- * 问卷接口
- */
-//  提交试卷
+// 问卷接口
 Routers.post("/ExamTitle",Exam.create)
 Routers.post("/questions",Ques.create)
 Routers.patch("/questions",Ques.patchQues)      
@@ -35,6 +33,9 @@ Routers.delete("/questions",Ques.deletequestion);
 Routers.delete("/option",Option.deleteOption)
 Routers.patch("/Exam",Exam.patchExam)
 Routers.delete("/Exam",Exam.deleteExam)
+
+//答卷接口
+Routers.get("/answerList",Answer.answerList)
 
 
 /**

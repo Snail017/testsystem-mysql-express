@@ -1,5 +1,5 @@
 <template>
-  <div class="body" :class="{'paperbg':isPaper}">
+  <div class="body" :class="{'paperbg':isPaper}">{{pagedata}}
     <div class="content">
       <Top
         v-if="!isPaper"
@@ -199,7 +199,7 @@ export default {
           data: {
             title: titledata.title,
             testtime: topdata.testTime * 60,
-            status: topdata.opentest ? 1 : 0,
+            status: topdata.opentest ? 1: 0,
             explain: titledata.editorTxt,
             exam_id: topdata.exam_id,
             father: 0,
