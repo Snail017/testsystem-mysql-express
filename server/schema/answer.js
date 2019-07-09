@@ -18,15 +18,11 @@ module.exports = function (sequelize, DataTypes) {
             field: 'userid',
             allowNull: false
         },
-        qustion_id:{
+         // 考试状态（是否发布）  未发布为1  发布为2  已结束 3
+         status: {
             type: DataTypes.INTEGER.UNSIGNED,
-            field: 'qustion_id',
+            field: 'status',
             allowNull: false
-        },
-        answer:{
-            type: DataTypes.STRING(255),
-            field: 'answer',
-            allowNull: true
         },
         createdAt: {
             type: DataTypes.DATE,

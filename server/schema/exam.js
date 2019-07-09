@@ -9,13 +9,13 @@ module.exports = function (sequelize, DataTypes) {
         },
         // 用户id
         user_id: {
-            type: Number,
+            type: DataTypes.INTEGER.UNSIGNED,
             field: 'userid',
             allowNull: false
         },
         //指定人
-        designated:{
-            type: JSON,
+        designated: {
+            type: DataTypes.JSON,
             field: 'designated',
             allowNull: false
         },
@@ -39,15 +39,15 @@ module.exports = function (sequelize, DataTypes) {
         },
         // 考试状态（是否发布）  未发布为1  发布为2  已结束 3
         status: {
-            type: Number,
+            type: DataTypes.INTEGER.UNSIGNED,
             field: 'status',
             allowNull: false
         },
         // 是否隐藏考题
-        sort:{
-            type:Boolean,
-            field:'sort',
-            allowNull:true
+        sort: {
+            type: DataTypes.BOOLEAN,
+            field: 'sort',
+            allowNull: true
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -64,10 +64,10 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     }, {
-        // 如果为 true 则表的名称和 model 相同，即 user
-    // 为 false MySQL创建的表名称会是复数 users
-        // 如果指定的表名称本就是复数形式则不变
-        timestamps: true,
-        freezeTableName: true,
-    })
+            // 如果为 true 则表的名称和 model 相同，即 user
+            // 为 false MySQL创建的表名称会是复数 users
+            // 如果指定的表名称本就是复数形式则不变
+            timestamps: true,
+            freezeTableName: true,
+        })
 }

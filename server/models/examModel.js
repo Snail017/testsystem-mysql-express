@@ -1,7 +1,7 @@
 const db = require('../config/sequelize.config')
 const Sequelize = db.sequelize;
 const Exam = Sequelize.import('../schema/exam.js')
-
+const Op = Sequelize.Op;
 
 Exam.sync({ force: false });
 
@@ -51,39 +51,22 @@ class ExamModel {
      */
     static async getlist(exam) {
         let { user_id, status, title, page, pagecount } = exam;
-        if(status==""){
-            return await Exam.findAll(
-                {
-                    where: {
-                        userid: user_id,
-                        title: title
-                    },
-                    offset: (Number(pagecount) - 1) * page,
-                    limit: Number(page),
-                    order: [
-                        ['id', 'DESC']
-                    ]
+        return await Exam.findAll(
+            {
+                where: {
+                    userid: user_id,
+                    status: status==""?{[Op.gte]:0}:status,
+                    title: {
+                        [Op.like]: "%" + title + "%"
+                    }
                 },
-            )
-    
-        }else{
-            return await Exam.findAll(
-                {
-                    where: {
-                        userid: user_id,
-                        status: status,
-                        title: {
-                            $like:"%"+title+"%"
-                        }
-                    },
-                    offset: (Number(pagecount) - 1) * page,
-                    limit: Number(page),
-                    order: [
-                        ['id', 'DESC']
-                    ],
-                },
-            )
-        }
+                offset: (Number(pagecount) - 1) * page,
+                limit: Number(page),
+                order: [
+                    ['id', 'DESC']
+                ],
+            },
+        )
     }
 
     static async findExam(exam) {

@@ -19,7 +19,7 @@
         </select>
       </div>
       <div class="col-sm-5" style="text-align: right">
-        <span class="btn btn-outline-info" @click="examType='recycle'">
+        <span class="btn btn-outline-info" @click="examType==3">
           <i class="iconfont icon-huishouzhan"></i>回收站
         </span>
       </div>
@@ -30,16 +30,13 @@
         v-for="(item,index) in testdata"
         :class="{'bg_yellow':item.status==0,'bg_green':item.status==1}"
       >
-        <div class="col-sm-5 row">
+        <div class="col-sm-4 row">
           <span class="col-sm-3">ID:{{item.id}}</span>
           <span class="col-sm-8 st_title">{{item.title}}</span>
         </div>
-        <div class="col-sm-7" style="text-align: right">
+        <div class="col-sm-8" style="text-align: right">
           <span class="st_btn green" v-if="item.status==0" @click.stop="ExamStatus(item.id,1)">
             <i class="iconfont icon-weibiaoti--1"></i>发布考试
-          </span>
-          <span class="st_btn lightgreen" v-if="item.status==0" @click.stop="ExamStatus(item.id,2)">
-            <i class="iconfont icon-weibiaoti--1"></i>作废
           </span>
           <router-link
             tag="span"
@@ -58,10 +55,16 @@
           >
             <i class="iconfont icon-yanjing"></i>答题情况
           </router-link>
-          <span class="st_btn blue" v-if="item.status==1" @click.stop="ExamStatus(item.id,0)">
-            <i class="iconfont icon-weibiaoti--"></i>结束考试
+           <span class="st_btn lightgreen" v-if="item.status==1" @click.stop="ExamStatus(item.id,2)">
+            <i class="iconfont icon-weibiaoti--1"></i>考试完成
           </span>
-          <span class="st_btn blue" @click.stop="deleteExam(item.id,index)" v-if="item.status!='1'">
+          <span class="st_btn blue" v-if="item.status==1" @click.stop="ExamStatus(item.id,0)">
+            <i class="iconfont icon-weibiaoti--"></i>取消发布
+          </span>
+          <span class="st_btn blue" @click.stop="ExamStatus(item.id,3)" v-if="item.status!=1">
+            <i class="iconfont icon-huishouzhan"></i>加入回收站
+          </span>
+          <span class="st_btn blue" @click.stop="deleteExam(item.id,index)" v-if="item.status==3">
             <i class="iconfont icon-huishouzhan"></i>删除
           </span>
           <span v-if="item.status=='1'">
