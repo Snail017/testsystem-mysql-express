@@ -62,16 +62,10 @@ module.exports = function (sequelize, DataTypes) {
         createdAt: {
             type: DataTypes.DATE,
             field: 'created_date',
-            get() {
-                return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:MM:SS');
-            }
         },
         updatedAt: {
             type: DataTypes.DATE,
             field: 'updated_date',
-            get() {
-                return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:MM:SS');
-            }
         }
     }, {
         // 如果为 true 则表的名称和 model 相同，即 user

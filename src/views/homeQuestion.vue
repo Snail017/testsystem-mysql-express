@@ -100,7 +100,7 @@ export default {
         page_rows: 1, //每页n条数据
         page_total: "" //共多少数据
       },
-      examType: 0,
+      examType: -1,
       examTypeUrl: "",
       layerdata: {
         msg: "",

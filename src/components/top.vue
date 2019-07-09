@@ -70,8 +70,7 @@
                           type:""
                       }
                   }).then(res=>{
-                      res=res.data;
-                       _this.person=res.data;
+                       _this.person=res.data.data;
                   })
               },
 

@@ -204,8 +204,7 @@ export default {
             exam_id: topdata.exam_id,
             father: 0,
             sort: topdata.sort,
-            designated:
-              topdata.designated.length == 0 ? "[]" : topdata.designated
+            designated:topdata.designated
           }
         })
         .then(res => {
@@ -481,7 +480,7 @@ export default {
             _this.pagedata.topdata.testTime = res.data.testtime / 60;
             _this.pagedata.topdata.sort = res.data.sort;
             _this.pagedata.topdata.designated =
-              res.data.designated != "" ? JSON.parse(res.data.designated) : "";
+              res.data.designated.length>0 ? JSON.parse(res.data.designated) : "";
             _this.pagedata.topdata.opentest =
               res.data.status == 0 ? false : true;
             let list = res.data.list;
