@@ -55,10 +55,16 @@ class ExamModel {
             {
                 where: {
                     userid: user_id,
-                    status: status==""?{[Op.gte]:0}:status,
-                    title: {
-                        [Op.like]: "%" + title + "%"
+                    status: status==-1?{[Op.lt]:3}:status,
+                    [Op.or]:{
+                        title: {
+                            [Op.like]: "%" + title + "%"
+                        },
+                        id: {
+                            [Op.like]: "%" + title + "%"
+                        }
                     }
+                    
                 },
                 offset: (Number(pagecount) - 1) * page,
                 limit: Number(page),

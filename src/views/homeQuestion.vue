@@ -12,14 +12,14 @@
       </div>
       <div class="col-sm-2">
         <select name id class="form-control" v-model="examType">
-          <option value="">全部</option>
+          <option value="-1">全部</option>
           <option value="0">未发布</option>
           <option value="1">发布中</option>
           <option value="2">已完成</option>
         </select>
       </div>
       <div class="col-sm-5" style="text-align: right">
-        <span class="btn btn-outline-info" @click="examType==3">
+        <span class="btn btn-outline-info" @click="examType=3">
           <i class="iconfont icon-huishouzhan"></i>回收站
         </span>
       </div>
@@ -56,12 +56,12 @@
             <i class="iconfont icon-yanjing"></i>答题情况
           </router-link>
            <span class="st_btn lightgreen" v-if="item.status==1" @click.stop="ExamStatus(item.id,2)">
-            <i class="iconfont icon-weibiaoti--1"></i>考试完成
+            <i class="iconfont icon-weibiaoti--1"></i>考试作废
           </span>
           <span class="st_btn blue" v-if="item.status==1" @click.stop="ExamStatus(item.id,0)">
             <i class="iconfont icon-weibiaoti--"></i>取消发布
           </span>
-          <span class="st_btn blue" @click.stop="ExamStatus(item.id,3)" v-if="item.status!=1">
+          <span class="st_btn blue" @click.stop="ExamStatus(item.id,3)" v-if="item.status!=3&item.status!=1">
             <i class="iconfont icon-huishouzhan"></i>加入回收站
           </span>
           <span class="st_btn blue" @click.stop="deleteExam(item.id,index)" v-if="item.status==3">
@@ -141,6 +141,8 @@ export default {
         ls_msg = "确定发布考试？";
       } else if (type == 2) {
         ls_msg = "确定作废本次试卷？";
+      }else if(type==3){
+        ls_msg = "确定删除试卷？";
       }
       _this.$confirm(ls_msg, {
         btn: ["确定", "取消"],
