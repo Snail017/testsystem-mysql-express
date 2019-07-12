@@ -7,18 +7,23 @@ const bodyParser = require('body-parser');
 const cookieParase = require('cookie-parser');
 const redis = require('redis');
 const express = require('express');
+const webpackDevMiddleware = require('webpack-dev-middleware');
 const Token = require(__dirname + '/config/token.config.js')
 const app = express();
 
-
-global.public_key = fs.readFileSync(__dirname + "/pub.key").toString();
-global.private_key = fs.readFileSync(__dirname + '/pri.key').toString();
+global.public_key = fs.readFileSync(__dirname + "/pub.key");
+global.private_key = fs.readFileSync(__dirname + '/pri.key');
 
 app.use(cookieParase());
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: true}));
 
 const routes = require('./routes');
+
+app.use(webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath
+  }));
+
 //对接口过滤检验token
 app.all("*", async (req, res, next) => {
     res.header("Access-Control-Expose-Headers", "Authorization");
@@ -64,7 +69,7 @@ global.client.on("connect", function () {
     global.client.set("public_key", global.private_key, redis.print);
 });
 
-global.client.on('ready', function (res, red) {
+global.client.on('ready', function (res, req) {
     console.log("redis success.....")
 });
 

@@ -10,9 +10,10 @@
             </div>
             <div class="col-sm-2">
                 <select name="" id="" class="form-control" v-model="examType">
-                    <option value="unfinish">未完成</option>
-                    <option value="doing" selected>考卷列表</option>
-                    <option value="finish">已完成</option>
+                    <option value="-1">全部</option>
+                    <option value="0">未完成</option>
+                    <option value="1">完成中</option>
+                    <option value="2">已完成</option>
                 </select>
             </div>
             <div class="col-sm-5" style="text-align: right">
@@ -54,7 +55,7 @@
                     page_rows:1, //每页n条数据
                     page_total:'' ,//共多少数据
                 },
-                examType:'doing',
+                examType:-1,
                 examTypeUrl:'',
                 title:'',
             }
