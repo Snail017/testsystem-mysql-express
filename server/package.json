@@ -23,9 +23,11 @@
     "pg-hstore": "^2.3.3",
     "plugin": "^0.3.3",
     "redis": "^2.8.0",
+    "redis-parser": "^3.0.0",
     "sequelize": "^5.10.0",
     "tedious": "^6.2.0",
     "url-loader": "^2.0.1",
+    "util": "^0.12.1",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5"
   },

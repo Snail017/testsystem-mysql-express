@@ -20,9 +20,9 @@ app.use(bodyParser.json());
 
 const routes = require('./routes');
 
-app.use(webpackDevMiddleware(compiler, {
-    publicPath: config.output.publicPath
-  }));
+// app.use(webpackDevMiddleware(compiler, {
+//     publicPath: config.output.publicPath
+//   }));
 
 //对接口过滤检验token
 app.all("*", async (req, res, next) => {
