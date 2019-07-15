@@ -1,13 +1,13 @@
 'use strict';
 
 const webpack = require('webpack');
-const path=require('path')
+const path = require('path')
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './app.js',
+        app: './server/app.js',
     },
     devtool: 'inline-source-map',
     target: 'node',
@@ -42,6 +42,6 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        
-        ]
+
+    ]
 };
