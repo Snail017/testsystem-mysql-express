@@ -11,8 +11,14 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const Token = require(__dirname + '/config/token.config.js')
 const app = express();
 
-global.public_key = fs.readFileSync(__dirname + "/pub.key");
-global.private_key = fs.readFileSync(__dirname + '/pri.key');
+global.public_key = fs.readFile("./pub.key", 'UTF-8', (err, data) => {
+    if (err) throw err;
+    console.log(data);
+});
+global.private_key = fs.readFile('./pri.key', 'UTF-8', (err, data) => {
+    if (err) throw err;
+    console.log(data);
+});
 
 app.use(cookieParase());
 app.use(bodyParser.json());

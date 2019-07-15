@@ -1,47 +1,32 @@
-'use strict';
-
-const webpack = require('webpack');
-const path = require('path')
-
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
+const path = require("path")
+const fs = require("fs");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const nodeModules = {};
+fs.readdirSync("node_modules")
+    .filter(function (x) {
+        return [".bin"].indexOf(x) === -1;
+    })
+    .forEach(function (mod) {
+        nodeModules[mod] = "commonjs " + mod;
+    });
 module.exports = {
-    entry: {
-        app: './server/app.js',
-    },
-    devtool: 'inline-source-map',
-    target: 'node',
+    mode: 'development',
+    entry: './server/app.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js'
+        path: path.resolve(__dirname, "dist"),
+        filename: "SysServer.js",
+        chunkFilename: "[name].chunk.js",
+        libraryTarget: "commonjs"
     },
-    resolve: {
-        extensions: ['.js']
-    },
-    // externals: externals,
     node: {
-        console: true,
-        global: true,
-        process: true,
-        Buffer: true,
-        __filename: true,
-        __dirname: true,
-        setImmediate: true
-    },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-            },
-            {
-                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: 'url-loader',
-            },
-        ]
+        fs: 'empty',
+        child_process: 'empty',
+        tls: 'empty',
+        net: 'empty'
     },
     plugins: [
-        new CleanWebpackPlugin(),
-
-    ]
+        new CleanWebpackPlugin()
+    ],
+    target: "node",
+    externals: nodeModules,
 };
