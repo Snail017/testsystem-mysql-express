@@ -279,8 +279,8 @@ export default {
                 // 多选时需要循环optiondata将questiondata.answer相加为多个选项 n&m
                 if (this.pagedata.questiondata[m].questionType == 2) {
                   if (
-                    value[n].answer.toString() == "true" ||
-                    value[n].answer.toString() == "0"
+                    String(value[n].answer)== "true" ||
+                    String(value[n].answer) == "0"
                   ) {
                     problemData.answer += n + "&"; //答案
                   }

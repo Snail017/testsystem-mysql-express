@@ -24,7 +24,7 @@ class OptionModel {
     static async alterOption(exam) {
         let { option_id, question_id,exam_id, text, answer, sort, img, introduce } = exam;
         await Option.update({
-            text, answer:answer.toString(), sort, img, introduce: introduce.editorTxt, isUrl: Number(introduce.isUrl)
+            text, answer:String(answer), sort, img, introduce: introduce.editorTxt, isUrl: Number(introduce.isUrl)
         }, {
                 where: {
                     question_id:question_id,

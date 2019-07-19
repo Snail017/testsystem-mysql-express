@@ -1,6 +1,7 @@
 const path = require("path")
 const fs = require("fs");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 const nodeModules = {};
 fs.readdirSync("node_modules")
     .filter(function (x) {
@@ -10,22 +11,31 @@ fs.readdirSync("node_modules")
         nodeModules[mod] = "commonjs " + mod;
     });
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: './server/app.js',
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "SysServer.js",
-        chunkFilename: "[name].chunk.js",
-        libraryTarget: "commonjs"
     },
+    devtool: 'inline-source-map',
     node: {
         fs: 'empty',
         child_process: 'empty',
         tls: 'empty',
-        net: 'empty'
+        net: 'empty',
+        __dirname: false
     },
     plugins: [
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new CopyPlugin([
+            {
+                from: __dirname + '/key/',
+                to: __dirname + "/dist/key/",
+                toType: 'dir',
+                force: true,
+                ignore: ['.*']
+            }
+        ])
     ],
     target: "node",
     externals: nodeModules,

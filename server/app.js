@@ -3,32 +3,21 @@
  * node启动文件
  */
 const fs = require('fs');
+const path=require("path")
 const bodyParser = require('body-parser');
 const cookieParase = require('cookie-parser');
 const redis = require('redis');
 const express = require('express');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const Token = require(__dirname + '/config/token.config.js')
+const Token = require('./config/token.config.js')
 const app = express();
 
-global.public_key = fs.readFile("./pub.key", 'UTF-8', (err, data) => {
-    if (err) throw err;
-    console.log(data);
-});
-global.private_key = fs.readFile('./pri.key', 'UTF-8', (err, data) => {
-    if (err) throw err;
-    console.log(data);
-});
-
+global.public_key = fs.readFileSync(__dirname+"/key/pub.key").toString();
+global.private_key = fs.readFileSync(__dirname+"/key/pri.key").toString();
 app.use(cookieParase());
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
 
 const routes = require('./routes');
-
-// app.use(webpackDevMiddleware(compiler, {
-//     publicPath: config.output.publicPath
-//   }));
 
 //对接口过滤检验token
 app.all("*", async (req, res, next) => {

@@ -1,7 +1,7 @@
 const UserModel = require('../models/userModel');
 const svgCaptcha = require('svg-captcha');
 const crypto = require("crypto")
-const Token = require("../config/token.config")
+const Token = require( "../config/token.config")
 
 class User {
     /**
@@ -109,7 +109,7 @@ class User {
             return false;
         }
         // 解密密码
-        params.Password = crypto.privateDecrypt(global.private_key, Buffer.from(params.Password, 'base64')).toString();
+        params.Password = crypto.privateDecrypt(global.private_key, Buffer.from(params.Password, 'base64'));
 
         // 查询用户名是否重复
         const existUser = await UserModel.Password(params.Nickname, params.Password);
