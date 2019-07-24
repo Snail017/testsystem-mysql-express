@@ -479,8 +479,7 @@ export default {
             _this.pagedata.topdata.exam_id = res.data.id;
             _this.pagedata.topdata.testTime = res.data.testtime / 60;
             _this.pagedata.topdata.sort = res.data.sort;
-            _this.pagedata.topdata.designated =
-              res.data.designated.length>0 ? JSON.parse(res.data.designated) : "";
+            _this.pagedata.topdata.designated =res.data.designated;
             _this.pagedata.topdata.opentest =
               res.data.status == 0 ? false : true;
             let list = res.data.list;

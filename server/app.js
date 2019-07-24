@@ -17,8 +17,8 @@ global.private_key = fs.readFileSync(__dirname+"/key/pri.key").toString();
 app.use(cookieParase());
 app.use(bodyParser.json());
 
-const routes = require('./routes');
-
+const routes = require(__dirname+'/routes');
+ 
 //对接口过滤检验token
 app.all("*", async (req, res, next) => {
     res.header("Access-Control-Expose-Headers", "Authorization");

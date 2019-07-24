@@ -1,7 +1,7 @@
 const examModel = require('../models/examModel');
 const quesModel = require('../models/quesModel');
 const optionModel = require('../models/optionModel');
-const userExam=require("../models/userexamModel")
+const userExam = require("../models/userexamModel")
 const common = require('./common');
 const Token = require("../config/token.config")
 
@@ -25,6 +25,11 @@ class Exam {
             //exam_id==0  新创建的文件
             if (params.exam_id == 0) {
                 const createExam = await examModel.createExam(params);
+                await userExam.delByExam(createExam.id);
+                for (let i in params.designated) {
+                    let value = params.designated[i];
+                    await userExam.create({ exam_id: createExam.id, user_id: value.id });
+                }
                 if (createExam) {
                     res.status = 200;
                     res.json({
@@ -37,6 +42,11 @@ class Exam {
                 }
             } else {
                 const alterExam = await examModel.alterExam(params);
+                await userExam.delByExam(params.exam_id);
+                for (let i in params.designated) {
+                    let value = params.designated[i];
+                    await userExam.create({ exam_id: params.exam_id, user_id: value.id })
+                }
                 if (alterExam) {
                     res.status = 200;
                     res.json({
@@ -71,9 +81,8 @@ class Exam {
 
         let checkdata = await common.checkData(params, res);
         if (!checkdata) return false;
-
-        const users = await examModel.getlist(params);
         try {
+            const users = await examModel.getlist(params);
             res.status = 200;
             res.json({
                 code: 200,
@@ -96,7 +105,6 @@ class Exam {
 
     }
 
-
     /**
      * 修改考卷状态
      * @param {*exam_id} req 
@@ -110,18 +118,18 @@ class Exam {
 
         let checkdata = await common.checkData(params, res);
         if (!checkdata) return false;
-        try{
+        try {
             await examModel.changeStatus(params);
-            res.status=200;
+            res.status = 200;
             res.json({
-                code:200,
-                msg:"状态修改成功"
+                code: 200,
+                msg: "状态修改成功"
             })
-        }catch(err){
-            res.status=412;
+        } catch (err) {
+            res.status = 412;
             res.json({
-                code:500,
-                msg:err
+                code: 500,
+                msg: err
             })
             return false;
         }

@@ -1,31 +1,45 @@
 const db = require('../config/sequelize.config')
 const Sequelize = db.sequelize;
 const userExam = Sequelize.import('../schema/user_exam.js')
-const Op=Sequelize.Op;
+const Op = Sequelize.Op;
 userExam.sync({ force: false });
 
 class userexamModel {
     static async create(res) {
-        let { user_id, exam_id, status } = res;
+        let { user_id, exam_id } = res;
         return userExam.create({
-            user_id, exam_id, status
+            userid: user_id,
+            examid: exam_id,
         })
     }
 
-    static async getExam(res) {
-        let {status ,userid}=res;
-        return userExam.findAll({
-            where: {
-                userid: userid,
-                status:status==-1?'>0':status
+    static async delByExam(exam_id){
+        return userExam.destroy({
+            where:{
+                examid:exam_id
             }
         })
     }
 
-    static async getUser(res) {
+    static async delByUser(user_id){
+        return userExam.destroy({
+            where:{
+                userid:user_id
+            }
+        })
+    }
+
+    static async findUser(exam_id) {
         return userExam.findAll({
             where: {
-                examid: examid
+                examid: exam_id
+            }
+        })
+    }
+    static async findExam(user_id) {
+        return userExam.findAll({
+            where: {
+                userid: user_id
             }
         })
     }

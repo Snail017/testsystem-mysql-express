@@ -11,7 +11,7 @@ fs.readdirSync("node_modules")
         nodeModules[mod] = "commonjs " + mod;
     });
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: './server/app.js',
     output: {
         path: path.resolve(__dirname, "dist"),

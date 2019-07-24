@@ -1,5 +1,7 @@
 const examModel = require('../models/examModel');
 const quesModel = require('../models/quesModel');
+const userModel = require('../models/userModel');
+const userExamModel = require('../models/userexamModel');
 const optionModel = require('../models/optionModel');
 const common = require('../controllers/common');
 const Token = require("../config/token.config")
@@ -160,6 +162,16 @@ class Ques {
                     ls_question[i].question_id = questions[i].dataValues.id;
                 }
                 ls_title.list = ls_question;
+                let lj_user=await userExamModel.findUser(params.exam_id);
+                ls_title.designated=[];
+                for(let i in lj_user){
+                    let {userid,examid}=lj_user[i].dataValues;
+                    let ls_nickname=await userModel.findNicknameById(userid);
+                    ls_title.designated.push({
+                        id:ls_nickname[0].id,
+                        Nickname:ls_nickname[0].Nickname
+                    })
+                }
                 res.status = 200;
                 res.json({
                     code: 200,

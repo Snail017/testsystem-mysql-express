@@ -1,5 +1,5 @@
 /*实例化sequelize*/
-const Sequelize = require('sequelize')
+const Sequelize =require("sequelize")
 const models = require('../config/databse.config')
 
 // 实例化，并指定配置

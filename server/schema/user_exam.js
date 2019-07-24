@@ -13,11 +13,6 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             allowNull: false
         },
-        status: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            field: 'status',
-            allowNull: false
-        },
         createdAt: {
             type: DataTypes.DATE,
             field: 'created_date',

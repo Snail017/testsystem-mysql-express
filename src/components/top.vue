@@ -59,7 +59,7 @@
           },
           methods:{
               customLabel ({ id, Nickname }) {
-                  return `[${id}]${Nickname}`
+                  return `${id}]${Nickname}`
               },
               getPerson(){
                   var _this=this;

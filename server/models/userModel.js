@@ -2,7 +2,7 @@ const db = require('../config/sequelize.config')
 const Sequelize = db.sequelize;
 const User = Sequelize.import('../schema/user.js')
 
-User.sync({force: false});
+User.sync({ force: false });
 
 class UserModel {
     /**
@@ -11,7 +11,7 @@ class UserModel {
      * @returns {Promise<boolean>}
      */
     static async create(user) {
-        let {Nickname, Password,/* email, Usertoken*/} = user;
+        let { Nickname, Password,/* email, Usertoken*/ } = user;
 
         return await User.create({
             Nickname,
@@ -41,19 +41,19 @@ class UserModel {
      * @returns {Promise<*>}
      */
     static async findAllUserList(type) {
-        if(!Number(type)){
+        if (!Number(type)) {
             return await User.findAll({
                 attributes: ['id', 'Nickname'],
             })
-        }else{
+        } else {
             return await User.findAll({
                 attributes: ['id', 'Nickname'],
-                where:{
-                    type:type
+                where: {
+                    type: type
                 }
             })
         }
-        
+
     }
 
 
@@ -75,10 +75,18 @@ class UserModel {
      * @param Password  密码
      * @returns {Promise.<*>}
      */
-    static async Password(Nickname,Password) {
+    static async Password(Nickname, Password) {
         return await User.findOne({
             where: {
-                Nickname,Password
+                Nickname, Password
+            }
+        })
+    }
+
+    static async findNicknameById(user_id) {
+        return await User.findAll({
+            where: {
+                id: user_id
             }
         })
     }
