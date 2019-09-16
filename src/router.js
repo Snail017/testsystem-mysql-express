@@ -1,6 +1,7 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
+import home from '@/views/home'
 import homeQuestion from '@/views/homeQuestion'
 import homeAnswer from '@/views/homeAnswer'
 import editFrom from '@/views/editFrom'
@@ -15,6 +16,16 @@ export default new Router({
     // mode: 'history',
     // base: process.env.BASE_URL,
     routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: home
+        },
+        {
+            path: '/home',
+            name: 'home',
+            component: home
+        },
         {
             path: '/register',
             name: 'register',

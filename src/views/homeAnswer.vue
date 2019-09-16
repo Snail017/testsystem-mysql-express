@@ -2,9 +2,9 @@
   <div class="form-horizontal answer_body">
     <div class="form-group row answer_head">
       <div class="col-sm-2">
-        <span class="btn btn-outline-primary">
-          <i class="iconfont icon-xierushujuku"></i>我的答卷
-        </span>
+        <router-link tag="span" class="btn btn-outline-primary" to="/questionnaire">
+          <i class="iconfont icon-xierushujuku"></i>制作问卷
+        </router-link>
       </div>
       <div class="col-sm-3 st_sear">
         <input type="text" class="form-control" placeholder="请输入答卷名进行搜索..." v-model="title" />

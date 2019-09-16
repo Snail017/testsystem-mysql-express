@@ -3,7 +3,12 @@
     <div class="form-group row answer_head">
       <div class="col-sm-2">
         <router-link tag="span" class="btn btn-outline-primary" to="/questionnaire">
-          <i class="iconfont icon-76xinzeng"></i>我的问卷
+          <i class="iconfont icon-76xinzeng"></i>制作问卷
+        </router-link>
+      </div>
+      <div class="col-sm-2">
+        <router-link tag="span" class="btn btn-outline-primary" to="/homeAnswer">
+          <i class="iconfont icon-xierushujuku"></i>我的答卷
         </router-link>
       </div>
       <div class="col-sm-3 st_sear">
@@ -18,7 +23,7 @@
           <option value="2">已完成</option>
         </select>
       </div>
-      <div class="col-sm-5" style="text-align: right">
+      <div class="col-sm-3" style="text-align: right">
         <span class="btn btn-outline-info" @click="examType=3">
           <i class="iconfont icon-huishouzhan"></i>回收站
         </span>

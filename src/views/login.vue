@@ -12,7 +12,7 @@
         </Row>
         <Row>
             <Col span="18">
-                <Input type="text" placeholder="验证码" v-model="code" v-bind:onblur="ConfirmData()"/>
+                <Input type="text" placeholder="验证码" v-model="code" v-bind:onblur="ConfirmData()" @keyup.enter.native="login()"/>
             </Col>
             <Col span="6" >
                 <div v-html="codeData.img"  @click="getCode"></div>
@@ -105,7 +105,7 @@
                                 content: '登陆成功',
                                 duration: 3,
                                 onClose:function () {
-                                    _this.$router.push("/homeQuestion")
+                                    _this.$router.push("/home")
                                 }
                             });
                         }else{

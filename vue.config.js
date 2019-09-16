@@ -1,52 +1,45 @@
 const path = require('path');
+
 function resolve(_dir) {
-    return path.join(__dirname, _dir)
+	return path.join(__dirname, _dir)
 }
-const webpack=require("webpack")
-let webpackConfig  = {
-    configureWebpack: {
-        plugins: [
-            new webpack.ProvidePlugin({
-                $:"jquery",
-                jQuery:"jquery",
-                "windows.jQuery":"jquery"
-            }),
-        ]
-    },
-    chainWebpack: config => {
-        config.resolve.alias.set('@', resolve('/src'))
-    },
-    devServer: {
-        disableHostCheck: true,
-        // 设置代理
-        proxy: {
-              '/': {
-                  ws: false,
-                  target: 'http://localhost:3000',
-                  changeOrigin: true,
-                  pathRewrite: {
-                    '^/': '/'
-                  }
-        },
-            // '/': {
-            //     ws: false,
-            //     target: 'http://zq.oss.admin.com:80/',
-            //     changeOrigin: true,
-            //     pathRewrite: {
-            //         '^/': '/'
-            //     }
-            // },
-        }
-    },
+const webpack = require("webpack")
+let webpackConfig = {
+	configureWebpack: {
+		plugins: [
+			new webpack.ProvidePlugin({
+				$: "jquery",
+				jQuery: "jquery",
+				"windows.jQuery": "jquery"
+			}),
+		]
+	},
+	chainWebpack: config => {
+		config.resolve.alias.set('@', resolve('/src'))
+	},
+	devServer: {
+		disableHostCheck: true,
+		// 设置代理
+		proxy: {
+			'/': {
+				ws: false,
+				target: 'http://localhost:3000',
+				changeOrigin: true,
+				pathRewrite: {
+					'^/': '/'
+				}
+			},
+		}
+	},
 
-    outputDir: undefined,
-    assetsDir: undefined,
-    runtimeCompiler: undefined,
-    productionSourceMap: undefined,
-    parallel: undefined,
+	outputDir: undefined,
+	assetsDir: undefined,
+	runtimeCompiler: undefined,
+	productionSourceMap: undefined,
+	parallel: undefined,
 
-    css: {
-      extract: false
-    }
+	css: {
+		extract: false
+	}
 }
 module.exports = webpackConfig;

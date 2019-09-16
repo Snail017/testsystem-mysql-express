@@ -110,7 +110,7 @@
                                 content: '注册成功',
                                 duration: 3,
                                 onClose: function () {
-                                    _this.$router.push("/homeQuestion")
+                                    _this.$router.push("/home")
                                 }
                             });
 

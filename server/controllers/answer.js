@@ -13,7 +13,7 @@ class Answer {
         if (!errors) return false;
 
         try {
-            const answerList=await answerModel.answerList(params);
+            const answerList =await answerModel.answerList(params);
             if(answerList){
                 
             }
@@ -23,7 +23,6 @@ class Answer {
                 code: 500,
                 msg: err
             })
-            return false;
         }
     }
 }
