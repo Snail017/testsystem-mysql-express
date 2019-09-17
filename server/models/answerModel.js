@@ -8,24 +8,15 @@ answer.sync({ force: false });
 class AnswerModel {
     static async answerList(res) {
         let { user_id, status, title, page, pagecount } = res;
-        return await Exam.findAll(
+        return await userExam.findAll(
             {
                 where: {
-                    userid: user_id,
-                    status: status == -1 ? { [Op.lt]: 3 } : status,
-                    [Op.or]: {
-                        title: {
-                            [Op.like]: "%" + title + "%"
-                        },
-                        id: {
-                            [Op.like]: "%" + title + "%"
-                        }
-                    }
+                    userid: user_id
                 },
                 offset: (Number(pagecount) - 1) * page,
                 limit: Number(page),
                 order: [
-                    ['id', 'DESC']
+                    ['examid', 'DESC']
                 ],
             },
         )

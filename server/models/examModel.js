@@ -74,6 +74,30 @@ class ExamModel {
             },
         )
     }
+    /**
+     * 通过status title id 查找问卷
+     * @param {status,title,id} exam 
+     */
+    static async getlistByExamid(exam) {
+        let { exam_id, status, title} = exam;
+        return await Exam.find(
+            {
+                where: {
+                    examid: exam_id,
+                    status: status == -1 ? { [Op.lt]: 3 } : status,
+                    [Op.or]: {
+                        title: {
+                            [Op.like]: "%" + title + "%"
+                        },
+                        id: {
+                            [Op.like]: "%" + title + "%"
+                        }
+                    }
+
+                },
+            },
+        )
+    }
 
     static async findExam(exam) {
         let { exam_id } = exam;

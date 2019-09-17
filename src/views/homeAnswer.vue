@@ -2,12 +2,12 @@
   <div class="form-horizontal answer_body">
     <div class="form-group row answer_head">
       <div class="col-sm-2">
-        <router-link tag="span" class="btn btn-outline-primary" to="/questionnaire">
-          <i class="iconfont icon-xierushujuku"></i>制作问卷
+        <router-link tag="span" class="btn btn-outline-primary" to="/homeQuestion">
+          <i class="iconfont icon-xierushujuku"></i>我的问卷
         </router-link>
       </div>
       <div class="col-sm-3 st_sear">
-        <input type="text" class="form-control" placeholder="请输入答卷名进行搜索..." v-model="title" />
+        <input type="text" class="form-control" placeholder="请输入答卷名进行搜索..." v-model="title" @keyup.enter="Exam(1)"/>
         <i class="iconfont icon-chazhao" @click="Exam(1)"></i>
       </div>
       <div class="col-sm-2">
@@ -218,11 +218,7 @@ export default {
         })
         .then(res => {
           res = res.data;
-          _this.testdata = res.data.users;
-          _this.$set(_this.pagedata, "data_total", res.data.page_total);
-          _this.$set(_this.pagedata, "p", res.data.p);
-          _this.$set(_this.pagedata, "page_rows", res.data.page_rows);
-          _this.$set(_this.pagedata, "page_total", res.data.page_total);
+          _this.testdata = res.data;
         });
     }
   }

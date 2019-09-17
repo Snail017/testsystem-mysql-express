@@ -13,6 +13,10 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             allowNull: false
         },
+        respondid:{
+            type: DataTypes.INTEGER,
+            field: 'respondid'
+        },
         createdAt: {
             type: DataTypes.DATE,
             field: 'created_date',

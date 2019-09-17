@@ -12,7 +12,7 @@
         </router-link>
       </div>
       <div class="col-sm-3 st_sear">
-        <input type="text" class="form-control" placeholder="请输入问卷名进行搜索..." v-model="title" />
+        <input type="text" class="form-control" placeholder="请输入问卷名进行搜索..." v-model="title" @keyup.enter="Exam(1)" />
         <i class="iconfont icon-chazhao" @click="Exam(1)"></i>
       </div>
       <div class="col-sm-2">
