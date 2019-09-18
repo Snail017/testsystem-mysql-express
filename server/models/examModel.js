@@ -83,7 +83,7 @@ class ExamModel {
         return await Exam.find(
             {
                 where: {
-                    examid: exam_id,
+                    id: exam_id,
                     status: status == -1 ? { [Op.lt]: 3 } : status,
                     [Op.or]: {
                         title: {

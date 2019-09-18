@@ -36,7 +36,7 @@ Routers.delete("/Exam",Exam.deleteExam)
 
 //答卷接口
 Routers.get("/answerList",Answer.answerList)
-
+Routers.get("/personalPage",Answer.personalPage)
 
 /**
  * 上传token

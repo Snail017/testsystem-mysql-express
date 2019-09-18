@@ -68,7 +68,6 @@
         watch:{
             'topdata.testTime':{
                 handler(newVal,oldVal) {
-                    console.log(newVal,oldVal)
                     var _this=this;
                     if(newVal==0){
                         _this.$emit('submitAnswer',1);

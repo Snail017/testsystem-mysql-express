@@ -13,7 +13,7 @@ zq.install = function (Vue, options) {
         /**
          *   从url中正则匹配得到数据
          **/
-        var reg = new RegExp("[?&]" + name + "=([^&]*)(&|$)", "i");
+        var reg = new RegExp("[?|&]" + name + "=([^&]*)(&|$)", "i");
         var r = search.match(reg);
         if (r != null) return unescape(r[1]);
         return null;

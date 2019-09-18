@@ -348,7 +348,7 @@ export default {
           );
         }
       }
-      $.ajax({
+      _this.$http({
         type: "post",
         url: "/Exam/SubmitExam",
         data: formdata,
@@ -377,23 +377,14 @@ export default {
         return false;
       }
       this.isPaper = true;
-      if (window.location.hash.indexOf("service_id=") != -1) {
-        ls_url =
-          "/Exam/GetAnswer?exam_id=" +
-          this.$match(window.location.hash, "paper_id") +
-          "&service_id=" +
-          this.$match(window.location.hash, "service_id");
-      } else {
-        ls_url =
-          "/Exam/GetPersonalInfo?exam_id=" +
-          _this.$match(window.location.hash, "paper_id") +
-          "";
-      }
-      $.ajax({
-        type: "get",
-        url: ls_url,
-        success: function(res) {
-          res = JSON.parse(res);
+      this.$http({
+        method: "get",
+        url: '/personalPage',
+        data:{
+          exam_id:_this.$match(window.location.hash, "paper_id")
+        }
+      }).then(res=>{
+         console.log(res);
           if (res.status == 0) {
             _this.pagedata.titledata.title = res.data.exam.title;
             _this.pagedata.titledata.editorTxt = res.data.exam.explain;
@@ -451,7 +442,6 @@ export default {
           } else {
             _this.showmsg(res.msg);
           }
-        }
       });
     },
     /**
