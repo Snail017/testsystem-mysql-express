@@ -27,8 +27,8 @@
       ></setquestion>
       <Msg v-if="hasMsg" :msg="msg"></Msg>
       <div v-if="!isPaper" style="background: #fff;text-align: center;padding: 30px;">
-        <span class="btn btn-primary" @click="!isPaper?topCofig.topShow=true:''">提交</span>
-        <span class="btn btn-info">取消</span>
+          <Button type="primary" @click="!isPaper?topCofig.topShow=true:''">提交</Button>
+          <Button type="info" >取消</Button>
       </div>
     </div>
     <!--{{pagedata}}-->
@@ -371,30 +371,29 @@ export default {
      * 根据 url 得到paper_id  请求ajax获取设置好的题目
      **/
     answerQuestion() {
-      var _this = this;
-      var ls_url = "";
-      if (!_this.$match(window.location.hash, "paper_id")) {
+      var _this = this,
+          paper_id=this.$match(window.location.hash, "paper_id");
+      if (!paper_id) {
         return false;
       }
-      this.isPaper = true;
-      this.$http({
-        method: "get",
+      _this.isPaper = true;
+      _this.$http({
+        method: "GET",
         url: '/personalPage',
-        data:{
-          exam_id:_this.$match(window.location.hash, "paper_id")
+        params:{
+          exam_id:paper_id
         }
       }).then(res=>{
-         console.log(res);
-          if (res.status == 0) {
-            _this.pagedata.titledata.title = res.data.exam.title;
-            _this.pagedata.titledata.editorTxt = res.data.exam.explain;
-            _this.pagedata.topdata.exam_id = res.data.exam.id;
-            _this.pagedata.topdata.testTime = res.data.exam.testtime / 60;
-            _this.pagedata.topdata.sort = res.data.exam.sort;
-            _this.pagedata.topdata.score_sum = res.data.answerinfo.score_sum;
+        res=res.data;
+          if (res.code == 200) {
+            _this.pagedata.titledata.title = res.data.title;
+            _this.pagedata.titledata.editorTxt = res.data.explain;
+            _this.pagedata.topdata.exam_id = res.data.id;
+            _this.pagedata.topdata.testTime = res.data.testtime / 60;
+            _this.pagedata.topdata.sort = res.data.sort;
             _this.pagedata.topdata.opentest =
               res.data.status == 0 ? false : true;
-            let list = res.data.exam.list;
+            let list = res.data.list;
             let questions = res.data.answerinfo.questions;
             let ls_question = {};
             let ls_option = {
@@ -442,7 +441,7 @@ export default {
           } else {
             _this.showmsg(res.msg);
           }
-      });
+      })
     },
     /**
      * 从问卷列表进入  编辑问卷题目

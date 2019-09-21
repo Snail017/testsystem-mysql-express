@@ -1,34 +1,33 @@
 <template>
   <div class="form-horizontal answer_body">
-    <div class="form-group row answer_head">
-      <div class="col-sm-2">
-        <router-link tag="span" class="btn btn-outline-primary" to="/questionnaire">
+    <Row class="answer_head" :gutter="16">
+      <Col :xs="{span:8}" :lg="{span:3}">
+       <router-link tag="Button" type="primary" to="/questionnaire">
           <i class="iconfont icon-76xinzeng"></i>制作问卷
         </router-link>
-      </div>
-      <div class="col-sm-2">
-        <router-link tag="span" class="btn btn-outline-primary" to="/homeAnswer">
+      </Col>
+      <Col :xs="{span:8}" :lg="{span:3}">
+        <router-link tag="Button" type="primary" to="/homeAnswer">
           <i class="iconfont icon-xierushujuku"></i>我的答卷
         </router-link>
-      </div>
-      <div class="col-sm-3 st_sear">
-        <input type="text" class="form-control" placeholder="请输入问卷名进行搜索..." v-model="title" @keyup.enter="Exam(1)" />
-        <i class="iconfont icon-chazhao" @click="Exam(1)"></i>
-      </div>
-      <div class="col-sm-2">
-        <select name id class="form-control" v-model="examType">
-          <option value="-1">全部</option>
-          <option value="0">未发布</option>
-          <option value="1">发布中</option>
-          <option value="2">已完成</option>
-        </select>
-      </div>
-      <div class="col-sm-3" style="text-align: right">
-        <span class="btn btn-outline-info" @click="examType=3">
+      </Col>
+      <Col :lg="8" :xs="24" class="st_sear">
+        <Input type="text"  placeholder="请输入问卷名进行搜索..." size="large" v-model="title" @on-enter="Exam(1)" icon="ios-search" ></Input>
+      </Col>
+      <Col :lg="5" :xs="24">
+        <Select v-model="examType" size="large">
+          <Option value="-1">全部</Option>
+          <Option value="0">未发布</Option>
+          <Option value="1">发布中</Option>
+          <Option value="2">已完成</Option>
+        </Select>
+      </Col>
+      <Col :xs="{span:5}" :lg="3">
+        <Button type="info" @click="examType=3">
           <i class="iconfont icon-huishouzhan"></i>回收站
-        </span>
-      </div>
-    </div>
+        </Button>
+      </Col>
+    </Row>
     <template v-if="testdata!=''">
       <div
         class="form-group row answer_list"

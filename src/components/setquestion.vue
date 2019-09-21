@@ -56,56 +56,61 @@
           <span class="fl">题目解析：</span>
           <div class="fl" v-html="items.analysis"></div>
         </div>
-        <div class="pd-10 btn_option">
-          <div class="fr">
-            <span class="btn btn-outline-primary" @click.stop="items.isshow+=1">编辑</span>
-            <span class="btn btn-outline-primary" @click.stop="copy(items,indexs)">复制</span>
-            <span
-              class="btn btn-outline-primary"
-              @click.stop="deleteQuestion(items.question_id,indexs)"
-            >删除</span>
-            <span
-              class="btn btn-outline-primary"
-              @click.stop="questiondata.length>1?($set(questiondata,indexs,questiondata[indexs-1]),$set(questiondata,indexs-1,items)):''"
-            >上移</span>
-            <span
-              class="btn btn-outline-primary"
-              @click.stop="questiondata.length>1?($set(questiondata,indexs,questiondata[indexs+1]),$set(questiondata,indexs+1,items)):''"
-            >下移</span>
-            <span class="btn btn-outline-primary" @click.stop="first(items.indexs)">最前</span>
-            <span class="btn btn-outline-primary" @click.stop="last(items,indexs)">最后</span>
-          </div>
-        </div>
+        <Row justify="end" type="flex">
+          <Col :lg="2" :xs="6">
+           <Button  type="primary" @click.stop="items.isshow+=1">编辑</Button>
+          </Col>
+          <Col :lg="2" :xs="6">
+           <Button  type="primary" @click.stop="copy(items,indexs)">复制</Button>
+          </Col>
+          <Col :lg="2" :xs="6">
+            <Button  type="primary" @click.stop="deleteQuestion(items.question_id,indexs)"
+            >删除</Button>
+          </Col>
+          <Col :lg="2" :xs="6">
+            <Button type="primary" @click.stop="questiondata.length>1?($set(questiondata,indexs,questiondata[indexs-1]),$set(questiondata,indexs-1,items)):''"
+            >上移</Button> 
+          </Col>
+          <Col :lg="2" :xs="6">
+            <Button  type="primary"  @click.stop="questiondata.length>1?($set(questiondata,indexs,questiondata[indexs+1]),$set(questiondata,indexs+1,items)):''"
+            >下移</Button>
+          </Col>
+          <Col :lg="2" :xs="6">
+            <Button type="primary" @click="first(items.indexs)">最前</Button>
+          </Col>
+          <Col :lg="2" :xs="6">
+            <Button type="primary" @click="last(items,indexs)">最后</Button>
+          </Col>
+        </Row>
       </div>
       <div class="st_setquestion" v-if="items.isshow%2==1">
         <testeditor :editordata="items"></testeditor>
-        <div class="row st_selecttype">
-          <div class="col-md-2">
-            <select name="type" id class="form-control" v-model="items.questionType">
-              <!--<option value="name">姓名</option>-->
-              <option value="0">简答</option>
-              <option value="1">单选</option>
-              <option value="2">多选</option>
-              <option value="3">判断</option>
-            </select>
-          </div>
-          <div class="col-md-3 form-check col-form-label">
+        <Row class="st_selecttype" :gutter="16"> 
+          <Col :xs="12" :lg="4">
+           <Select v-model="items.questionType" >
+              <Option value="0">简答</Option>
+              <Option value="1">单选</Option>
+              <Option value="2">多选</Option>
+              <Option value="3">判断</Option>
+            </Select>
+          </Col>
+          <Col :xs="12" :lg="4">
             <input type="checkbox" class="form-check-input" v-model="items.mustanswer">
             <label class="form-check-label">必答</label>
             <span
               class="st_note"
               @click="items.haswindow+=1;wintxt.editorTxt=items.note;items.windowtype='note'"
             >编辑提示</span>
-          </div>
-          <div class="col-md-5">
+          </Col>
+           <Col :xs="24" :lg="10">
             <label>题目分数：</label>
-            <input type="number" style="padding-left:5px;width: 50px;" v-model="items.score">
+            <Input  style="width: 80px;" v-model="items.score"></Input>
             <span
               class="st_note"
               @click="items.haswindow+=1;wintxt.editorTxt=items.analysis;items.windowtype='analysis'"
             >设置答案解析</span>
-          </div>
-        </div>
+          </Col>
+        </Row>
         <testOption
           v-if="items.questionType!=0"
           :optiondata="items.optiondata"
@@ -113,18 +118,22 @@
           :index="indexs"
           :questiontype="items.questionType"
         ></testOption>
-        <p class="btn btn-primary btn-block" @click="items.isshow+=1">完成编辑</p>
+        <Button  type="primary" long @click="items.isshow+=1">完成编辑</Button>
 
         <div class="bg" v-if="items.haswindow%2==1" @click="items.haswindow+=1;"></div>
         <div class="window" v-if="items.haswindow%2==1">
           <i class="iconfont icon-guanbi" @click="items.haswindow+=1;"></i>
           <testeditor :editordata="wintxt"></testeditor>
+          <Row type="flex" justify="center" class="pd10">
+            <Col span='2'>
+              <Button type="info" size="large" @click="items.haswindow+=1;">取消</Button>
+            </Col>
+            <Col span='2'>
+              <Button type="primary" size="large" @click="items.windowtype=='note'?items.note=wintxt.editorTxt:items.analysis=wintxt.editorTxt;items.haswindow+=1;"
+              >确定</Button>
+            </Col>
+          </Row> 
           <div style="text-align: center;" class="pd-10">
-            <span class="btn btn-info" @click="items.haswindow+=1;">取消</span>
-            <span
-              class="btn btn-primary"
-              @click="items.windowtype=='note'?items.note=wintxt.editorTxt:items.analysis=wintxt.editorTxt;items.haswindow+=1;"
-            >确定</span>
           </div>
         </div>
       </div>
@@ -267,7 +276,6 @@ input:disabled {
 }
 .btn_option {
   margin-left: -16%;
-  width: 120%;
   position: relative;
   height: 48px;
 }

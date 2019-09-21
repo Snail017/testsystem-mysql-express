@@ -15,10 +15,12 @@ let webpackConfig = {
 		]
 	},
 	chainWebpack: config => {
-		config.resolve.alias.set('@', resolve('/src'))
+		config.resolve.alias.set('@', resolve('/src'));
+		config.resolve.symlinks(true);
 	},
 	devServer: {
-		disableHostCheck: true,
+		hot: true,
+		disableHostCheck: false,
 		// 设置代理
 		proxy: {
 			'/': {
@@ -31,12 +33,6 @@ let webpackConfig = {
 			},
 		}
 	},
-
-	outputDir: undefined,
-	assetsDir: undefined,
-	runtimeCompiler: undefined,
-	productionSourceMap: undefined,
-	parallel: undefined,
 
 	css: {
 		extract: false

@@ -1,8 +1,18 @@
 <template>
  <div v-if="windowdata.haswindow">
    <div class="window "><i class="col-md-1 iconfont icon-guanbi"  @click="windowdata.haswindow=false"></i>
-     <div class="form-group row"><label class="col-sm-1 col-form-label">标题</label><div class="col-sm-10 "><input type="text" class="form-control" v-model="windowdata.title"/></div></div>
-     <div class="form-group row"><label class="col-sm-1 col-form-label">说明</label><div class="col-sm-10"><testeditor  :editordata="windowdata"></testeditor></div></div>
+    <Row>
+       <Col span="2">标题</Col>
+       <Col span="10">
+        <Input v-model="windowdata.title"/></Input>
+       </Col>
+    </Row>
+    <Row>
+       <Col span="2">说明</Col>
+       <Col span="10">
+        <testeditor  :editordata="windowdata"></testeditor>
+       </Col>
+    </Row>
    </div>
    <div class="bg" @click="windowdata.haswindow=false"></div>
  </div>

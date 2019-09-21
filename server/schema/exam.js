@@ -15,21 +15,21 @@ module.exports = function (sequelize, DataTypes) {
         },
         //指定人
         designated: {
-            type: DataTypes.JSON,
+            type: DataTypes.STRING(255),
             field: 'designated',
-            allowNull: false
+            allowNull: true
         },
         // 试卷标题
         title: {
             type: DataTypes.STRING(255),
             field: 'title',
-            allowNull: false
+            allowNull: true
         },
         // 试卷说明
         explain: {
             type: DataTypes.STRING(255),
-            field: 'introduce',
-            allowNull: false
+            field: 'explain',
+            allowNull: true
         },
         // 考试时间
         testtime: {
@@ -52,16 +52,10 @@ module.exports = function (sequelize, DataTypes) {
         createdAt: {
             type: DataTypes.DATE,
             field: 'created_date',
-            get() {
-                return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:MM:SS');
-            }
         },
         updatedAt: {
             field: 'updated_date',
             type: DataTypes.DATE,
-            get() {
-                return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:MM:SS');
-            }
         }
     }, {
             // 如果为 true 则表的名称和 model 相同，即 user

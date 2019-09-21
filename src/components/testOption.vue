@@ -12,8 +12,7 @@
       <tr v-for="(items,indexs) in optiondata">
         <td>
           <input type="hidden" v-model="items.sort=indexs">
-          <input type="text" class="form-control" v-model="items.text">
-          <!--<i class="iconfont icon-jiaru"></i><i class="iconfont icon-jianshao"></i>-->
+          <Input type="text" class="form-control" v-model="items.text"></Input>
         </td>
         <td>
           <img
@@ -70,73 +69,92 @@
       </tr>
     </table>
     <div v-if="questiontype!=3">
-      <div class="col-md-3 form-check-label addoption" @click="addoption()">
+      <Col span="6" class=" addoption" @click="addoption()">
         <i class="iconfont icon-tianjia"></i>添加选项
-      </div>
+      </Col>
     </div>
     <div
       class="bg"
       @click="windowdata.has_img_window=false;windowdata.has_introduce_window=false;"
       v-if="windowdata.has_img_window||windowdata.has_introduce_window"
     ></div>
-    <div class="imgcontent container-fluid" v-if="windowdata.has_img_window">
-      <div class="row bg-ddd cont_head">
-        <div class="col-md-11">{{windowdata.text}}</div>
-        <i @click="windowdata.has_img_window=false" class="col-md-1 iconfont icon-guanbi"></i>
-      </div>
-      <div class="row pd-10">
-        <input type="text" class="col-md-8" v-model="windowdata.img">
-        <div class="input-group-addon btn btn-primary btn-file col-md-2">
-          <span class="fileinput-new">
-            选择文件
-            <i v-if="windowdata.imgload" class="iconfont icon-jiazaizhong1"></i>
-          </span>
-          <input
-            type="file"
-            name="file"
-            class="file_upload"
-            accept="image/*"
-            @change="fileUpload($event)"
-          >
-        </div>
-        <a :href="windowdata.img" target="_blank" class="col-md-2">
-          <img :src="windowdata.img" class="st_cont_img">
-        </a>
-      </div>
-      <div class="st_cont_btn pd-10">
-        <span class="btn btn-info" @click="windowdata.has_img_window=false">取消</span>
-        <span class="btn btn-primary" @click="windowImg();windowdata.has_img_window=false">确定</span>
-      </div>
+    <div class="imgcontent container-fluid" v-if="windowdata.has_img_window">{{windowdata}}
+      <Row class="bg-ddd cont_head">
+        <Col span="23">{{windowdata.text}}</Col>
+        <Col span="1">
+           <i @click="windowdata.has_img_window=false" class=" iconfont icon-guanbi"></i>
+        </Col> 
+      </Row>
+      <Row class="pd-10">
+        <Col span='16'>
+           <Input v-model="windowdata.img"></Input>
+        </Col>
+        <Col span="4">
+            <Button type="primary"  class="btn-file">
+              <span class="fileinput-new">
+                选择文件
+                <i v-if="windowdata.imgload" class="iconfont icon-jiazaizhong1"></i>
+              </span>
+              <input
+                type="file"
+                name="file"
+                class="file_upload"
+                accept="image/*"
+                @change="fileUpload($event)"
+              >
+            </Button>
+        </Col>
+        <Col span="4">
+          <router-link  target="_blank"  :to="windowdata.img">
+            <img :src="windowdata.img" class="st_cont_img"> 
+          </router-link>
+        </Col>
+      </Row>
+      <Row class="pd-10" type="flex" justify="center">
+        <Col span="2">
+          <Button type="info" size="large" @click="windowdata.has_img_window=false">取消</Button>
+        </Col>
+        <Col span="2">
+          <Button type="primary" size="large"  @click="windowImg();windowdata.has_img_window=false">确定</Button>
+        </Col>
+      </Row>
     </div>
     <div class="imgcontent container-fluid" v-if="windowdata.has_introduce_window">
-      <div class="row bg-ddd cont_head">
-        <div class="col-md-11">选项说明</div>
-        <i @click="windowdata.has_introduce_window=false" class="col-md-1 iconfont icon-guanbi"></i>
-      </div>
-      <div class="row pd-10">
-        <label class="col-md-3">
-          <input type="radio" name="isUrl" value="0" v-model="windowdata.introduce.isUrl">直接输入内容
-        </label>
-        <label>
-          <input type="radio" name="isUrl" value="1" v-model="windowdata.introduce.isUrl">显示网址内容
-        </label>
-      </div>
-      <testeditor v-if="windowdata.introduce.isUrl==0" :editordata="windowdata.introduce"></testeditor>
-      <div class="row pd-10" v-if="windowdata.introduce.isUrl==1">
-        <input
-          type="text"
-          placeholder="请输入网址https://"
-          class="form-control"
-          v-model="windowdata.introduce.url"
-        >
-      </div>
-      <div class="st_cont_btn pd-10">
-        <span class="btn btn-info" @click="windowdata.has_introduce_window=false">取消</span>
-        <span
-          class="btn btn-primary"
-          @click="optiondata[windowdata.index].introduce=windowdata.introduce;windowdata.has_introduce_window=false"
-        >确定</span>
-      </div>
+      <Row class="bg-ddd cont_head">
+         <Col span="23">选项说明</Col>
+         <Col span="1">
+            <i @click="windowdata.has_introduce_window=false" class="iconfont icon-guanbi"></i>
+         </Col>
+      </Row>
+       <Row class="pd-10">
+         <Col span="6">
+           <input type="radio" name="isUrl" value="0" v-model="windowdata.introduce.isUrl">直接输入内容
+         </Col>
+         <Col span="6">
+           <input type="radio" name="isUrl" value="1" v-model="windowdata.introduce.isUrl">显示网址内容
+         </Col>
+      </Row>
+      <Row  v-if="windowdata.introduce.isUrl==0" type="flex" justify="center">
+        <Col span="23">
+          <testeditor :editordata="windowdata.introduce"></testeditor>
+        </Col>
+      </Row>
+      <Row class="pd-10" v-else>
+          <Col span="24">
+            <Input  placeholder="请输入网址https://" v-model="windowdata.introduce.url" ></Input>
+          </Col>
+         <Col span="6">
+           <input type="radio" name="isUrl" value="1" v-model="windowdata.introduce.isUrl">显示网址内容
+         </Col>
+      </Row>
+      <Row type="flex" justify="center" class="pd-10">
+          <Col span="3">
+            <Button type="info"  @click="windowdata.has_introduce_window=false">取消</Button>
+          </Col>
+          <Col span="3">
+            <Button type="primary"   @click="optiondata[windowdata.index].introduce=windowdata.introduce;windowdata.has_introduce_window=false">确定</Button>
+          </Col>
+      </Row>
     </div>
   </div>
 </template>
@@ -263,28 +281,24 @@ export default {
 .st_testradio .iconfont {
   vertical-align: middle;
   font-size: 25px;
-  line-height: 38px;
+  line-height: 15px;
   color: gray;
 }
 .st_testradio td {
   text-align: center;
   padding: 6px;
 }
-.st_testradio tr:nth-of-type(1) {
-  background: #ddd;
-}
 .st_testradio td:nth-of-type(1) {
   text-align: left;
   width: 40%;
 }
-/*.st_testradio td:nth-of-type(1) input{width: 80%;display: inline-block;}*/
+.st_testradio tr:nth-of-type(1) {
+  background: #ddd;
+}
 .st_testradio table {
   width: 100%;
 }
-.st_cont_btn {
-  margin: auto;
-  text-align: center;
-}
+
 .addoption {
   cursor: pointer;
 }
@@ -319,7 +333,7 @@ export default {
   border-radius: 0;
 }
 
-.btn-file > input {
+.btn-file .file_upload {
   position: absolute;
   top: 0;
   right: 0;
