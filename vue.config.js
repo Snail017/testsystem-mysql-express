@@ -34,6 +34,8 @@ let webpackConfig = {
 		}
 	},
 
+	
+
 	css: {
 		extract: false
 	}
