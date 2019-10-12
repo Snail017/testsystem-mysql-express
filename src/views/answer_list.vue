@@ -2,14 +2,14 @@
   <div class="st_answerlist">
     <div>
       <div class="st_sear">
-        <input
+        <Input
           type="text"
-          class="form-control"
           v-model="ser_id"
           placeholder="请输入id或者用户名进行搜索..."
           @input="getanswerlist(ser_id)"
         >
-        <i @click="getanswerlist(ser_id)" class="iconfont icon-chazhao"></i>
+         <Button slot="append" icon="ios-search"  @click="getanswerlist(ser_id)"></Button>
+        </Input>
       </div>
       <table v-if="listdata.length>0" border="1">
         <tr>
@@ -73,10 +73,10 @@ export default {
       _this
         .$http({
           method: "get",
-          url: "/answerList",
+          url: "/answerUser",
           params: {
             exam_id: _this.match(window.location.hash, "exam_id"),
-            content: res
+            content: res,
           }
         })
         .then(res => {

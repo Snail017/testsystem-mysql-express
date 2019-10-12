@@ -20,7 +20,6 @@ class ExamModel {
             testtime,
             status,
             sort,
-            designated
         })
         return sql
     }
@@ -33,7 +32,6 @@ class ExamModel {
             testtime,
             status,
             sort,
-            designated,
         }, {
                 where: {
                     id: exam_id
@@ -54,7 +52,7 @@ class ExamModel {
         return await Exam.findAll(
             {
                 where: {
-                    userid: user_id,
+                    user_id: user_id,
                     status: status == -1 ? { [Op.lt]: 3 } : status,
                     [Op.or]: {
                         title: {
@@ -124,7 +122,7 @@ class ExamModel {
             status
         }, {
                 where: {
-                    userid: user_id,
+                    user_id: user_id,
                     id: exam_id
                 }
             })

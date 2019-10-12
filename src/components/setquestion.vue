@@ -11,7 +11,7 @@
           <b v-if="topdata.sort" class="cl-red">*</b>
           <span v-html="items.editorTxt==''?'请输入题目':items.editorTxt"></span>
         </div>
-        <div class="form-group pdt-10 clearfix" v-html="items.note"></div>
+        <div class="form-group pdt-10 clearfix" v-if="items.note!=''" v-html="items.note"></div>
         <div v-if="items.questionType==1">
           <div
             v-for="(item,index) in items.optiondata"
@@ -20,7 +20,7 @@
             <label>
               <input type="radio" :checked="items.answer==index">
               <span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
-              <img :src="item.img" alt>
+              <div v-if="item.img!=''"><img :src="item.img" alt></div>
             </label>
             <span v-html="item.introduce.isUrl=='1'?item.introduce.url:item.introduce.editorTxt"></span>
           </div>
@@ -33,7 +33,7 @@
             <label>
               <input type="radio" :checked="items.answer==index">
               <span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
-              <img :src="item.img" alt>
+              <div v-if="item.img!=''"><img :src="item.img" alt></div>
             </label>
           </div>
         </div>
@@ -45,53 +45,39 @@
             <label>
               <input type="checkbox" >
               <span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
-              <img :src="item.img" alt>
+              <img v-if="item.img!=''" :src="item.img" alt>
             </label>
             <span v-html="item.introduce.isUrl=='1'?item.introduce.url:item.introduce.editorTxt"></span>
           </div>
         </div>
         <!--简答-->
-        <textarea v-if="items.questionType==0" class="col-md-10" readonly></textarea>
+        <Input v-if="items.questionType==0" readonly type="textarea" class="pd-10"></Input>
         <div class="pd-10 clearfix" v-if="items.analysis!=''">
           <span class="fl">题目解析：</span>
           <div class="fl" v-html="items.analysis"></div>
         </div>
         <Row justify="end" type="flex">
-          <Col :lg="2" :xs="6">
-           <Button  type="primary" @click.stop="items.isshow+=1">编辑</Button>
-          </Col>
-          <Col :lg="2" :xs="6">
-           <Button  type="primary" @click.stop="copy(items,indexs)">复制</Button>
-          </Col>
-          <Col :lg="2" :xs="6">
+           <Button  type="primary" @click.stop="items.isshow+=1">编辑</Button> &nbsp;
+           <Button  type="primary" @click.stop="copy(items,indexs)">复制</Button>&nbsp;
             <Button  type="primary" @click.stop="deleteQuestion(items.question_id,indexs)"
-            >删除</Button>
-          </Col>
-          <Col :lg="2" :xs="6">
+            >删除</Button>&nbsp;
             <Button type="primary" @click.stop="questiondata.length>1?($set(questiondata,indexs,questiondata[indexs-1]),$set(questiondata,indexs-1,items)):''"
-            >上移</Button> 
-          </Col>
-          <Col :lg="2" :xs="6">
+            >上移</Button> &nbsp;
             <Button  type="primary"  @click.stop="questiondata.length>1?($set(questiondata,indexs,questiondata[indexs+1]),$set(questiondata,indexs+1,items)):''"
-            >下移</Button>
-          </Col>
-          <Col :lg="2" :xs="6">
-            <Button type="primary" @click="first(items.indexs)">最前</Button>
-          </Col>
-          <Col :lg="2" :xs="6">
+            >下移</Button>&nbsp;
+            <Button type="primary" @click="first(items.indexs)">最前</Button>&nbsp;
             <Button type="primary" @click="last(items,indexs)">最后</Button>
-          </Col>
         </Row>
       </div>
       <div class="st_setquestion" v-if="items.isshow%2==1">
         <testeditor :editordata="items"></testeditor>
         <Row class="st_selecttype" :gutter="16"> 
-          <Col :xs="12" :lg="4">
-           <Select v-model="items.questionType" >
-              <Option value="0">简答</Option>
-              <Option value="1">单选</Option>
-              <Option value="2">多选</Option>
-              <Option value="3">判断</Option>
+          <Col :xs="12" :lg="6">
+           <Select v-model="items.questionType">
+              <Option value="0" key="0">简答</Option>
+              <Option value="1" key="1">单选</Option>
+              <Option value="2" key="2">多选</Option>
+              <Option value="3" key="3">判断</Option>
             </Select>
           </Col>
           <Col :xs="12" :lg="4">
@@ -119,22 +105,17 @@
           :questiontype="items.questionType"
         ></testOption>
         <Button  type="primary" long @click="items.isshow+=1">完成编辑</Button>
-
         <div class="bg" v-if="items.haswindow%2==1" @click="items.haswindow+=1;"></div>
         <div class="window" v-if="items.haswindow%2==1">
-          <i class="iconfont icon-guanbi" @click="items.haswindow+=1;"></i>
+          <Row>
+            <i class="iconfont icon-guanbi" @click="items.haswindow+=1;"></i>
+          </Row>
           <testeditor :editordata="wintxt"></testeditor>
-          <Row type="flex" justify="center" class="pd10">
-            <Col span='2'>
-              <Button type="info" size="large" @click="items.haswindow+=1;">取消</Button>
-            </Col>
-            <Col span='2'>
+          <Row type="flex" justify="center" class="pd-10">
+              <Button type="info" size="large" @click="items.haswindow+=1;">取消</Button> &nbsp;
               <Button type="primary" size="large" @click="items.windowtype=='note'?items.note=wintxt.editorTxt:items.analysis=wintxt.editorTxt;items.haswindow+=1;"
               >确定</Button>
-            </Col>
           </Row> 
-          <div style="text-align: center;" class="pd-10">
-          </div>
         </div>
       </div>
     </div>

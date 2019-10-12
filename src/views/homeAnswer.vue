@@ -1,72 +1,71 @@
 <template>
   <div class="form-horizontal answer_body">
-    <div class="form-group row answer_head">
-      <div class="col-sm-2">
-        <router-link tag="span" class="btn btn-outline-primary" to="/homeQuestion">
+    <Row class="answer_head" :gutter="16">
+      <Col :xs="{span:8}" :lg="{span:3}">
+        <router-link tag="Button" to="/homeQuestion">
           <i class="iconfont icon-xierushujuku"></i>我的问卷
         </router-link>
-      </div>
-      <div class="col-sm-3 st_sear">
-        <input type="text" class="form-control" placeholder="请输入答卷名进行搜索..." v-model="title" @keyup.enter="Exam(1)"/>
-        <i class="iconfont icon-chazhao" @click="Exam(1)"></i>
-      </div>
-      <div class="col-sm-2">
-        <select name id class="form-control" v-model="examType">
-          <option value="-1">全部</option>
-          <option value="0">未完成</option>
-          <option value="1">完成中</option>
-          <option value="2">已完成</option>
-        </select>
-      </div>
-      <div class="col-sm-5" style="text-align: right">
-        <span class="btn btn-outline-info" @click="examType='3'">
+      </Col>
+      <Col :lg="8" :xs="24" class="st_sear">
+        <Input
+          type="text"
+          placeholder="请输入问卷名进行搜索..."
+          size="large"
+          v-model="title"
+          @on-enter="Exam(1)"
+          icon="ios-search"
+        ></Input>
+      </Col>
+      <Col :lg="5" :xs="24">
+        <Select v-model="examType" size="large">
+          <Option value="-1">全部</Option>
+          <Option value="0">未考试</Option>
+          <Option value="1">已完成</Option>
+        </Select>
+      </Col>
+      <Col :lg="5" :xs="24" style="float:right">
+        <Button type="info" @on-click="examType=2">
           <i class="iconfont icon-huishouzhan"></i>回收站
-        </span>
-      </div>
-    </div>
+        </Button>
+      </Col>
+    </Row>
     <template v-if="testdata!=''">
-      <div
-        class="form-group row answer_list"
+      <Row
+        class="answer_list"
         v-for="(item,index) in testdata"
         :class="{'bg_yellow':item.save==0,'bg_green':item.status==1}"
       >
-        <div class="col-sm-5 row">
-          <span class="col-sm-3">ID:{{item.hasOwnProperty('status')?item.id:item.exam_id}}</span>
-          <span class="col-sm-8 st_title">{{item.title}}</span>
-        </div>
-        <div class="col-sm-7" style="text-align: right">
+        <Col :xs="10">ID:{{item.hasOwnProperty('status')?item.id:item.exam_id}}[{{item.title}}]</Col>
+        <Col :xs="14" style="text-align: right">
           <router-link
             tag="span"
             :to="{path:'/paper',query:{paper_id:item.id}}"
             class="st_btn green"
-            v-if="item.status==1"
+            v-if="item.status==0"
           >
             <i class="iconfont icon-weibiaoti--1"></i>开启考试
           </router-link>
-          <span class="st_btn green" v-if="item.save==1">
+          <span class="st_btn green" v-if="item.status==1">
             <i class="iconfont icon-wancheng1"></i>
             {{item.score_sum}}分
           </span>
-          <span
-            class="st_btn blue"
-            @click="deleteExam(item.exam_id,index)"
-            v-if="item.save==0||item.save==1"
-          >
+          <span class="st_btn blue" @click="deleteExam(item.id,index)" v-if="item.status==1">
             <i class="iconfont icon-huishouzhan"></i>删除
           </span>
           <router-link
-            tag="span"
-            :to="{path:'/checkpaper',query:{paper_id:item.exam_id}}"
+            :to="{path:'/checkpaper',query:{paper_id:item.id}}"
             class="st_btn green"
-            v-if="item.save==0||item.save==1"
+            target="_blank"
+            v-if="item.status==1"
           >
-            <i class="iconfont icon-huishouzhan"></i>查看
+            <i class="iconfont icon-yanjing"></i>查看
           </router-link>
           <span>
-            <i class="iconfont icon-shijian"></i>2017-12-12 12:12
+            <i class="iconfont icon-shijian"></i>
+            {{item.updatedAt}}
           </span>
-        </div>
-      </div>
+        </Col>
+      </Row>
       <pagenation v-if="pagedata.page_total>1" :pagedata="pagedata" @page="page"></pagenation>
     </template>
     <div class="st_null" v-if="testdata==''">
@@ -104,36 +103,34 @@ export default {
   watch: {
     examType: {
       handler(newVal) {
-        this.examTypeUrl = "/answerList?status=" + this.examType;
-        this.Exam(1);
+        this.ExamStatus(null, newVal);
       },
       immediate: true
     }
   },
   mounted() {
-    // this.$loading.show();
-    var ls_examType = this.$match(window.location.hash, "examType");
-    if (
-      ls_examType == "doing" ||
-      ls_examType == "unfinish" ||
-      ls_examType == "finish"
-    ) {
-      this.examType = ls_examType;
-    }
+    this.answerList();
   },
   methods: {
+    answerList() {
+      var _this = this;
+      this.$http({
+        method: "get",
+        url: "/answerList",
+        params: {
+          pagecount: _this.pagedata.p,
+          page: "10",
+          title: _this.title,
+          status:_this.examType
+        }
+      }).then(res => {
+         res = res.data;
+         _this.testdata=res.data;
+      });
+    },
     ExamStatus(exam_id, type) {
       var _this = this;
       var ls_msg = "";
-      if (type == 0) {
-        ls_msg = "确定结束考试？";
-      } else if (type == 1) {
-        ls_msg = "确定发布考试？";
-      } else if (type == 2) {
-        ls_msg = "确定作废本次试卷？";
-      } else if (type == 3) {
-        ls_msg = "确定删除试卷？";
-      }
       _this.$confirm(ls_msg, {
         btn: ["确定", "取消"],
         btnFun: [
@@ -141,7 +138,7 @@ export default {
             _this
               .$http({
                 method: "patch",
-                url: "/Exam",
+                url: "/answer",
                 data: {
                   exam_id: exam_id,
                   status: type
@@ -152,36 +149,6 @@ export default {
                   _this.Exam(_this.pagedata.p);
                 }
                 _this.$msg(res.data.msg);
-              });
-          },
-          function() {
-            _this.$hide();
-          }
-        ]
-      });
-    },
-    deleteExam(exam_id, index) {
-      var _this = this;
-      _this.$confirm("确定删除？", {
-        btn: ["确定", "取消"],
-        btnFun: [
-          function() {
-            _this
-              .$http({
-                method: "delete",
-                url: "/Exam",
-                data: {
-                  exam_id: exam_id,
-                  status: 3
-                }
-              })
-              .then(res => {
-                if (res.status == 200) {
-                  _this.Exam(_this.pagedata.p);
-                  _this.$msg("删除成功");
-                } else {
-                  _this.$msg(res.data.data.msg);
-                }
               });
           },
           function() {
@@ -203,23 +170,6 @@ export default {
       if (res <= this.pagedata.page_total && res > 0) {
         this.Exam(res, this.examType);
       }
-    },
-    Exam(p) {
-      var _this = this;
-      _this
-        .$http({
-          method: "get",
-          url: _this.examTypeUrl,
-          params: {
-            pagecount: p,
-            page: "10",
-            title: _this.title
-          }
-        })
-        .then(res => {
-          res = res.data;
-          _this.testdata = res.data;
-        });
     }
   }
 };
@@ -257,6 +207,7 @@ export default {
   background: #cfd6dd;
   color: #2d2525;
   padding: 10px;
+  margin: 10px 0;
   border-radius: 5px;
 }
 .answer_head {
@@ -268,6 +219,7 @@ export default {
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 5px;
 }
 .answer_list:hover {
   box-shadow: 0 0 3px #30a6f5;

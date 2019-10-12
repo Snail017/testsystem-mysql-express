@@ -28,7 +28,6 @@
             class="iconfont icon-tupian"
           ></i>
         </td>
-
         <td>
           <i
             class="iconfont icon-plus-shortanswer"
@@ -68,19 +67,17 @@
         </td>
       </tr>
     </table>
-    <div v-if="questiontype!=3">
-      <Col span="6" class=" addoption" @click="addoption()">
+      <span  v-if="questiontype!=3" class="pd-10 addoption" @click="addoption()">
         <i class="iconfont icon-tianjia"></i>添加选项
-      </Col>
-    </div>
+      </span>
     <div
       class="bg"
       @click="windowdata.has_img_window=false;windowdata.has_introduce_window=false;"
       v-if="windowdata.has_img_window||windowdata.has_introduce_window"
     ></div>
-    <div class="imgcontent container-fluid" v-if="windowdata.has_img_window">{{windowdata}}
+    <div class="imgcontent container-fluid" v-if="windowdata.has_img_window">
       <Row class="bg-ddd cont_head">
-        <Col span="23">{{windowdata.text}}</Col>
+        <Col span="23">{{windowdata.text}}&nbsp;</Col>
         <Col span="1">
            <i @click="windowdata.has_img_window=false" class=" iconfont icon-guanbi"></i>
         </Col> 
@@ -202,7 +199,7 @@ export default {
       this.windowdata.img = res.img;
       this.windowdata.index = index;
     },
-      deleteOption(option_id,indexs) {
+    deleteOption(option_id,indexs) {
       this.$http({
           method: "delete",
           url: "/option",
@@ -219,15 +216,15 @@ export default {
     windowImg() {
       var ImgObj = new Image(); //判断图片是否存在
       ImgObj.src = this.windowdata.img;
-      console.log(ImgObj);
-      if (ImgObj.fileSize > 0 || (ImgObj.width > 1 && ImgObj.height > 1)) {
-        this.optiondata[this.windowdata.index].img = this.windowdata.img;
-      } else {
-        this.windowdata.img = this.optiondata[this.windowdata.index].img;
+      ImgObj.onload=()=>{
+        if (ImgObj.fileSize > 0 || (ImgObj.width > 1 && ImgObj.height > 1)) {
+          this.optiondata[this.windowdata.index].img = this.windowdata.img;
+        } else {
+          this.windowdata.img = this.optiondata[this.windowdata.index].img;
+        }
       }
     },
     addoption() {
-      console.log(this.optiondata);
       var _this=this;
       this.optiondata.push({
         answer:false,
@@ -239,13 +236,14 @@ export default {
       });
     },
     fileUpload(e) {
+      var _this=this;
       var formData = new FormData(); //通过formdata上传
       let imgFile = e.target.files[0];
       formData.append("img", imgFile);
       this.windowdata.imgload = true;
       this.$http({
         method: "post",
-        url: "/UpLoad/Uploadpic",
+        url: "/Uploadpic",
         dataType: "JSON",
         contentType: false,
         processData: false,
@@ -253,8 +251,8 @@ export default {
       })
         .then(res => {
           res = res.data;
-          this.windowdata.img = res.data.img;
-          this.windowdata.imgload = false;
+          _this.windowdata.img = res.data.img;
+          _this.windowdata.imgload = false;
         })
         .then(res => {
           console.log(res);
@@ -301,6 +299,7 @@ export default {
 
 .addoption {
   cursor: pointer;
+  display: inline-block;
 }
 .imgcontent {
   position: fixed;

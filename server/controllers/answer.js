@@ -2,10 +2,86 @@ const answerModel = require('../models/answerModel');
 const examModel = require('../models/examModel');
 const quesModel = require('../models/quesModel');
 const optionModel = require('../models/optionModel');
+const userexamModel = require('../models/userexamModel');
 const common = require('./common');
 const Token = require("../config/token.config")
 
 class Answer {
+    /**
+     * 删除答卷
+     * @param {*exam_id} req 
+     * @param {*} res 
+     */
+    static async deleteAnswer(req,res){
+        let params = req.body;
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
+        let errors = await common.checkData(params);
+        if (!errors) return false;
+        try{
+            var answerUser=await userexamModel.alterAnswer(params);
+            res.status = 200;
+            res.json({
+                code: 200,
+                msg: err
+            })
+        }catch(err){
+            res.status = 412;
+            res.json({
+                code: 500,
+                msg: err
+            })
+        }
+    }
+    /**
+     * 修改答卷状态
+     * @param {*} req 
+     * @param {*} res 
+     */
+    static  async answerStatus(req,res){
+        let params = req.query;
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
+        let errors = await common.checkData(params);
+        if (!errors) return false;
+        try {
+            var answerStatus = await userexamModel.alterAnswer(params)
+        } catch (err) {
+            res.status = 412;
+            res.json({
+                code: 500,
+                msg: err
+            })
+        }
+    }
+    /**
+     * 问卷答题用户
+     * @param {*} req 
+     * @param {*} res 
+     */
+    static async answerUser(req,res){
+        let params = req.query;
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
+        let errors = await common.checkData(params);
+        if (!errors) return false;
+        try{
+            var answerUser=await userexamModel.answerUser(params);
+
+        }catch(err){
+            res.status = 412;
+            res.json({
+                code: 500,
+                msg: err
+            })
+        }
+    }
+
+    /**
+     * 根据userid 获得需要的答卷 
+     * @param {} req 
+     * @param {*} res 
+     */
     static async answerList(req, res) {
         let params = req.query;
         let token = await Token.checkToken(req.headers.authorization);
@@ -14,12 +90,37 @@ class Answer {
         if (!errors) return false;
 
         try {
-            const answerList = await answerModel.answerList(params);  //根据userid从tbuserExam得到问卷id
+            const answerList = await userexamModel.answerList(params);  //根据userid从tbuserExam得到问卷id
             let returndata = [];
-            for (let i in answerList) {   //根据examid title status 得到问卷信息
+            for (let i in answerList) {  
                 let value = answerList[i].dataValues;
-                let answerdata = await examModel.getlistByExamid({ exam_id: value.examid, title: params.title, status: params.status });
-                if (answerdata != null) returndata.push(answerdata.dataValues);
+                let examdata = await examModel.getlistByExamid({ exam_id: value.exam_id, title: params.title, status: -1 });   //根据examid title status 得到问卷信息
+                let answerdata = await answerModel.findByExamid({exam_id:value.exam_id,status:params.status}); //得到答卷状态 进行判断  如果没有数据表明还没有作答
+                if (examdata != null&&examdata.status>0){
+                    if(params.status==-1){
+                        returndata.push({
+                            title:examdata.title,
+                            id:examdata.id,
+                            updatedAt:examdata.updatedAt,
+                            status:answerdata==null?0:1
+                        });
+                    }else if(params.status==0&&answerdata==null){
+                        returndata.push({
+                            title:examdata.title,
+                            id:examdata.id,
+                            updatedAt:examdata.updatedAt,
+                            status:0
+                        });
+                    }else if(answerdata!=null){
+                        returndata.push({
+                            title:examdata.title,
+                            id:examdata.id,
+                            updatedAt:examdata.updatedAt,
+                            status:status
+                        });
+                    }
+                    
+                }
             }
             res.status = 200;
             res.json({
@@ -75,6 +176,37 @@ class Answer {
             })
             return false;
         }
+    }
+
+    /**
+     * 
+     */
+    static async submitExam(req, res) {
+        let params = req.body;
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
+        params.status=1;
+        // 检测参数是否存在为空
+        let errors = await common.checkData(params, res);
+        if (!errors) return false;
+
+        try {
+            await answerModel.alterAnswer(params);   //提交答卷答题情况
+
+            res.status = 200;
+            res.json({
+                code: 200,
+                msg: '创建成功'
+            })
+        } catch (err) {
+            res.status = 500;
+            res.json({
+                code: 500,
+                data: err
+            })
+            return false;
+        }
+
     }
 }
 

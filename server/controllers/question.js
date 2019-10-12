@@ -162,15 +162,10 @@ class Ques {
                     ls_question[i].question_id = questions[i].dataValues.id;
                 }
                 ls_title.list = ls_question;
-                let lj_user=await userExamModel.findUser(params.exam_id);
+                let ls_designated=await userExamModel.findUser(params.exam_id);   //根据examid 得到指定用户有哪些
                 ls_title.designated=[];
-                for(let i in lj_user){
-                    let {userid,examid}=lj_user[i].dataValues;
-                    let ls_nickname=await userModel.findNicknameById(userid);
-                    ls_title.designated.push({
-                        id:ls_nickname[0].id,
-                        Nickname:ls_nickname[0].Nickname
-                    })
+                for(let i in ls_designated){
+                    ls_title.designated.push(ls_designated[i].user_id)
                 }
                 res.status = 200;
                 res.json({

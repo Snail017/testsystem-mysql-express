@@ -20,14 +20,20 @@
         <div class="st_top_content" v-if="topCofig.topShow">
             <div class="header clearfix">
                 <i class="iconfont icon-guanbi" @click="topCofig.topShow=false"></i>
-                <Multiselect track-by="id" label="id" :multiple="true" :options="person" :custom-label="customLabel" select-label=""  placeholder="请指定考试人"  :hide-selected="true" :searchable="true" v-model="topdata.designated"><span slot="noResult"></span></Multiselect>
-                <p class="form-group">
-                    <label>立即发布 <input type="checkbox"  v-model="topdata.opentest"></label>
-                    <label>隐藏系统考题 <input type="checkbox"  v-model="topdata.sort"></label>
-                </p>
-                <p class="form-group">
-                    <label>答卷时间 <input type="text" style="padding: 0 5px;width: 50px;" v-model="topdata.testTime" placeholder="分钟"> </label>
-                </p>
+                <Select  placeholder="请指定考试人" v-model="topdata.designated" multiple filterable>
+                    <Option v-for="item in users" :value="item.id" :key="item.id">[{{item.id}}]{{item.Nickname}}</Option>
+                </Select>
+                <Row>
+                    <Col span="6">
+                      <label>立即发布 <input type="checkbox"  v-model="topdata.opentest"></label>
+                    </Col>
+                    <Col span="8">
+                      <label>隐藏系统考题 <input type="checkbox"  v-model="topdata.sort"></label>
+                    </Col>
+                    <Col span="8">
+                      <label>答卷时间 <Input type="text" style="width:80px;" v-model="topdata.testTime" placeholder="分钟"></Input> </label>
+                    </Col>
+                </Row>
                 <div class="footer">
                     <div>
                         <Button type="primary" @click.stop="$emit('checkdata')">完成编辑</Button>
@@ -41,26 +47,20 @@
 </template>
 
 <script>
-    import Multiselect from 'vue-multiselect'
-    import 'vue-multiselect/dist/vue-multiselect.min.css'
     export default {
           name: 'top',
           props:['topdata','questiondata','topCofig','ispage'],
           data () {
             return {
-                person:[],
+                users:[],
                 navShow:0,
                 countdown:0,
             }
           },
-          components: { Multiselect },
           mounted(){
               this.getPerson();
           },
           methods:{
-              customLabel ({ id, Nickname }) {
-                  return `${id}]${Nickname}`
-              },
               getPerson(){
                   var _this=this;
                   this.$http({
@@ -70,7 +70,8 @@
                           type:""
                       }
                   }).then(res=>{
-                       _this.person=res.data.data;
+                      if(res.data.code==200) _this.users=res.data.data;
+                       
                   })
               },
 

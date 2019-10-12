@@ -5,7 +5,7 @@ function resolve(_dir) {
 }
 const webpack = require("webpack")
 let webpackConfig = {
-	configureWebpack: {
+    configureWebpack: {
 		plugins: [
 			new webpack.ProvidePlugin({
 				$: "jquery",
@@ -14,13 +14,15 @@ let webpackConfig = {
 			}),
 		]
 	},
-	chainWebpack: config => {
+
+    chainWebpack: config => {
 		config.resolve.alias.set('@', resolve('/src'));
 		config.resolve.symlinks(true);
 	},
-	devServer: {
+
+    devServer: {
 		hot: true,
-		disableHostCheck: false,
+		disableHostCheck: true,
 		// 设置代理
 		proxy: {
 			'/': {
@@ -34,10 +36,8 @@ let webpackConfig = {
 		}
 	},
 
-	
-
-	css: {
-		extract: false
-	}
+    css: {
+      extract: false
+    }
 }
 module.exports = webpackConfig;

@@ -28,7 +28,7 @@ class Exam {
                 await userExam.delByExam(createExam.id);
                 for (let i in params.designated) {
                     let value = params.designated[i];
-                    await userExam.create({ exam_id: createExam.id, user_id: value.id });
+                    await userExam.create({ exam_id: createExam.id, user_id: value ,status:params.status});
                 }
                 if (createExam) {
                     res.status = 200;
@@ -45,7 +45,7 @@ class Exam {
                 await userExam.delByExam(params.exam_id);
                 for (let i in params.designated) {
                     let value = params.designated[i];
-                    await userExam.create({ exam_id: params.exam_id, user_id: value.id })
+                    await userExam.create({ exam_id: params.exam_id, user_id: value })
                 }
                 if (alterExam) {
                     res.status = 200;
@@ -166,6 +166,7 @@ class Exam {
         }
     }
 
+    
 
 }
 

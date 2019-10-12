@@ -1,6 +1,5 @@
 <template>
   <div class="body" :class="{'paperbg':isPaper}">
-    <!-- {{pagedata}} -->
     <div class="content">
       <Top
         v-if="!isPaper"
@@ -27,7 +26,7 @@
       ></setquestion>
       <Msg v-if="hasMsg" :msg="msg"></Msg>
       <div v-if="!isPaper" style="background: #fff;text-align: center;padding: 30px;">
-          <Button type="primary" @click="!isPaper?topCofig.topShow=true:''">提交</Button>
+          <Button type="primary" @click="!isPaper?topCofig.topShow=true:''">提交</Button>&nbsp;&nbsp;&nbsp;
           <Button type="info" >取消</Button>
       </div>
     </div>
@@ -67,7 +66,7 @@ export default {
             note: "", //编辑提示
             analysis: "", //答案解析
             score: null, //题目分值
-            questionType: 1, //题目类型
+            questionType: '1', //题目类型
             navOperate: false,
             haswindow: false, //编辑窗口是否弹出
             question_id: 0, //题目ID
@@ -112,7 +111,7 @@ export default {
             note: "", //编辑提示
             analysis: "", //答案解析
             score: null, //题目分值
-            questionType: 1, //题目类型
+            questionType: '1', //题目类型
             navOperate: false,
             mustanswer: false,
             haswindow: false, //编辑窗口是否弹出
@@ -199,7 +198,7 @@ export default {
           url: "/ExamTitle",
           data: {
             title: titledata.title,
-            testtime: topdata.testTime * 60,
+            testtime: topdata.testTime,
             status: topdata.opentest ? 1: 0,
             explain: titledata.editorTxt,
             exam_id: topdata.exam_id,
@@ -320,7 +319,6 @@ export default {
       var _this = this;
       var formdata = {
         exam_id: _this.pagedata.topdata.exam_id,
-        save: type, //(0草稿,1确定提交)
         questions: []
       };
       for (let i in _this.pagedata.questiondata) {
@@ -349,12 +347,12 @@ export default {
         }
       }
       _this.$http({
-        type: "post",
-        url: "/Exam/SubmitExam",
+        method: "post",
+        url: "/SubmitExam",
         data: formdata,
-        success: function(res) {
-          res = JSON.parse(res);
-          if (res.status == 0) {
+      }).then(res=> {
+          res = res.data;
+          if (res.code == 200) {
             _this.showmsg("试卷提交成功");
             setTimeout(() => {
               _this.$router.push("/homeAnswer");
@@ -362,8 +360,7 @@ export default {
           } else {
             _this.showmsg(res.msg);
           }
-        }
-      });
+      })
     },
     /**
      * 从答卷列表进入  编辑答卷题目
@@ -389,12 +386,12 @@ export default {
             _this.pagedata.titledata.title = res.data.title;
             _this.pagedata.titledata.editorTxt = res.data.explain;
             _this.pagedata.topdata.exam_id = res.data.id;
-            _this.pagedata.topdata.testTime = res.data.testtime / 60;
+            _this.pagedata.topdata.testTime = res.data.testtime ;
             _this.pagedata.topdata.sort = res.data.sort;
             _this.pagedata.topdata.opentest =
               res.data.status == 0 ? false : true;
             let list = res.data.list;
-            let questions = res.data.answerinfo.questions;
+            let questions = res.data.list;
             let ls_question = {};
             let ls_option = {
               introduce: {}
@@ -406,12 +403,10 @@ export default {
                 for (let name in list[i]) {
                   let value = list[i][name];
                   switch (name) {
-                    case "parsing":
-                    case "type":
-                    case "prompt":
-                      ls_question[name] = value;
-                      break;
-                    case "id":
+                    case "questionType": case "note": case "score":case "analysis":
+                      ls_question[name]=value;
+                       break;
+                    case "question_id":
                       ls_question[name] = value;
                       ls_question.answer =
                         questions != [] && questions[value] != undefined
@@ -467,9 +462,9 @@ export default {
             _this.pagedata.titledata.title = res.data.title;
             _this.pagedata.titledata.editorTxt = res.data.explain;
             _this.pagedata.topdata.exam_id = res.data.id;
-            _this.pagedata.topdata.testTime = res.data.testtime / 60;
+            _this.pagedata.topdata.testTime = res.data.testtime;
             _this.pagedata.topdata.sort = res.data.sort;
-            _this.pagedata.topdata.designated =res.data.designated;
+            _this.pagedata.topdata.designated=res.data.designated;
             _this.pagedata.topdata.opentest =
               res.data.status == 0 ? false : true;
             let list = res.data.list;
@@ -489,10 +484,9 @@ export default {
                     case "answer":
                     case "note":
                     case "sort":
-                    case "questionType":
                     case "analysis":
                     case "questionType":
-                      ls_question[name] = value;
+                      ls_question[name] = value.toString();
                       break;
                     case "problem":
                       ls_question.editorTxt = value;

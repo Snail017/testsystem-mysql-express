@@ -49,13 +49,13 @@ module.exports = function (sequelize, DataTypes) {
         },
         // 题目分数
         score: {
-            type: Number,
+            type: DataTypes.INTEGER.UNSIGNED,
             field: 'score',
             allowNull: false
         },
         // 题目类型    QA==0  radio==1  checkbox==2  judge==3
         questionType:{
-            type:Number,
+            type:DataTypes.STRING(255),
             field:'type',
             allowNull:true
         },

@@ -13,16 +13,23 @@ module.exports = function (sequelize, DataTypes) {
             field: 'examid',
             allowNull: false
         },
+        //答卷完成状态  ( 0 ==发布中  1==已完成)
+        status:{
+            type: DataTypes.INTEGER,
+            field: 'status'
+        },
+        score:{
+            type: DataTypes.INTEGER,
+        },
         user_id: {
             type: DataTypes.INTEGER.UNSIGNED,
             field: 'userid',
             allowNull: false
         },
-         // 考试状态（是否发布）  未发布为1  发布为2  已结束 3
-         status: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            field: 'status',
-            allowNull: false
+        questions:{
+            type: DataTypes.STRING,
+            field: 'questions',
+            allowNull: true
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -31,6 +38,9 @@ module.exports = function (sequelize, DataTypes) {
         updatedAt: {
             type: DataTypes.DATE,
             field: 'updated_date',
+            get() {
+                return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss');
+            }
         }
     }, {
         // 如果为 true 则表的名称和 model 相同，即 user

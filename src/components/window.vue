@@ -1,15 +1,15 @@
 <template>
  <div v-if="windowdata.haswindow">
    <div class="window "><i class="col-md-1 iconfont icon-guanbi"  @click="windowdata.haswindow=false"></i>
-    <Row>
+    <Row class="pd-10">
        <Col span="2">标题</Col>
-       <Col span="10">
+       <Col span="22">
         <Input v-model="windowdata.title"/></Input>
        </Col>
     </Row>
-    <Row>
+    <Row class="pd-10">
        <Col span="2">说明</Col>
-       <Col span="10">
+       <Col span="22">
         <testeditor  :editordata="windowdata"></testeditor>
        </Col>
     </Row>

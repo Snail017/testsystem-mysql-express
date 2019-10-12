@@ -6,40 +6,79 @@ userExam.sync({ force: false });
 
 class userexamModel {
     static async create(res) {
-        let { user_id, exam_id } = res;
+        let { user_id, exam_id, status } = res;
         return userExam.create({
-            userid: user_id,
-            examid: exam_id,
+            user_id: user_id,
+            exam_id: exam_id,
+            status: status
         })
     }
-
-    static async delByExam(exam_id){
-        return userExam.destroy({
+    //修改答卷状态
+    static async alterAnswer(res){
+        let {exam_id,user_id,status}=res;
+        return await userExam.update({
+            status:status
+        },{
             where:{
-                examid:exam_id
+                exam_id:exam_id,
+                user_id:user_id,
+            }
+        })
+    }
+    //根据examid status 获得答卷人
+    static  async answerUser(res){
+        let {user_id,status,exam_id}=res;
+        return await userExam.findAll({
+            where:{
+                exam_id:exam_id,
+                status:status
+            }
+        })
+    }
+    //答卷列表
+    static async answerList(res) {
+        let { user_id, status, title, page, pagecount } = res;
+        return await userExam.findAll(
+            {
+                where: {
+                    user_id: user_id
+                },
+                offset: (Number(pagecount) - 1) * page,
+                limit: Number(page),
+                order: [
+                    ['exam_id', 'DESC']
+                ],
+            },
+        )
+    }
+    static async delByExam(exam_id) {
+        return userExam.destroy({
+            where: {
+                exam_id: exam_id
             }
         })
     }
 
-    static async delByUser(user_id){
+    static async delByUser(user_id) {
         return userExam.destroy({
-            where:{
-                userid:user_id
+            where: {
+                user_id: user_id
             }
         })
     }
 
     static async findUser(exam_id) {
-        return userExam.findAll({
-            where: {
-                examid: exam_id
-            }
-        })
+        return userExam.findAll( {
+                attributes: ['user_id'],
+                where: {
+                    exam_id: exam_id
+                }
+            })
     }
     static async findExam(user_id) {
         return userExam.findAll({
             where: {
-                userid: user_id
+                user_id: user_id
             }
         })
     }

@@ -2,7 +2,7 @@
   <div class="form-horizontal answer_body">
     <Row class="answer_head" :gutter="16">
       <Col :xs="{span:8}" :lg="{span:3}">
-       <router-link tag="Button" type="primary" to="/questionnaire">
+        <router-link tag="Button" type="primary" to="/questionnaire">
           <i class="iconfont icon-76xinzeng"></i>制作问卷
         </router-link>
       </Col>
@@ -12,7 +12,14 @@
         </router-link>
       </Col>
       <Col :lg="8" :xs="24" class="st_sear">
-        <Input type="text"  placeholder="请输入问卷名进行搜索..." size="large" v-model="title" @on-enter="Exam(1)" icon="ios-search" ></Input>
+        <Input
+          type="text"
+          placeholder="请输入问卷名进行搜索..."
+          size="large"
+          v-model="title"
+          @on-enter="Exam(1)"
+          icon="ios-search"
+        ></Input>
       </Col>
       <Col :lg="5" :xs="24">
         <Select v-model="examType" size="large">
@@ -29,19 +36,17 @@
       </Col>
     </Row>
     <template v-if="testdata!=''">
-      <div
-        class="form-group row answer_list"
+      <Row
+        class="answer_list"
         v-for="(item,index) in testdata"
         :class="{'bg_yellow':item.status==0,'bg_green':item.status==1}"
       >
-        <div class="col-sm-4 row">
-          <span class="col-sm-3">ID:{{item.id}}</span>
-          <span class="col-sm-8 st_title">{{item.title}}</span>
-        </div>
-        <div class="col-sm-8" style="text-align: right">
+        <Col :xs="6">ID:{{item.id}}[{{item.title}}]</Col>
+        <Col :xs="18" style="text-align: right">
           <span class="st_btn green" v-if="item.status==0" @click.stop="ExamStatus(item.id,1)">
             <i class="iconfont icon-weibiaoti--1"></i>发布考试
           </span>
+          
           <router-link
             tag="span"
             :to="{path:'/questionnaire',query:{id:item.id}}"
@@ -59,28 +64,28 @@
           >
             <i class="iconfont icon-yanjing"></i>答题情况
           </router-link>
-           <span class="st_btn lightgreen" v-if="item.status==1" @click.stop="ExamStatus(item.id,2)">
-            <i class="iconfont icon-weibiaoti--1"></i>考试作废
+          <span class="st_btn lightgreen" v-if="item.status==1" @click.stop="ExamStatus(item.id,2)">
+            <i class="iconfont icon-weibiaoti--1"></i>考试完成
           </span>
           <span class="st_btn blue" v-if="item.status==1" @click.stop="ExamStatus(item.id,0)">
             <i class="iconfont icon-weibiaoti--"></i>取消发布
           </span>
-          <span class="st_btn blue" @click.stop="ExamStatus(item.id,3)" v-if="item.status!=3&item.status!=1">
+          <span
+            class="st_btn blue"
+            @click.stop="ExamStatus(item.id,3)"
+            v-if="item.status!=3&item.status!=1"
+          >
             <i class="iconfont icon-huishouzhan"></i>加入回收站
           </span>
           <span class="st_btn blue" @click.stop="deleteExam(item.id,index)" v-if="item.status==3">
             <i class="iconfont icon-huishouzhan"></i>删除
           </span>
-          <span v-if="item.status=='1'">
-            <i class="iconfont icon-wancheng1"></i>
-            完成{{item.answer_count}}人
-          </span>&nbsp;
           <span>
             <i class="iconfont icon-shijian"></i>
             {{item.updatedAt}}
           </span>
-        </div>
-      </div>
+        </Col>
+      </Row>
       <pagenation v-if="pagedata.page_total>1" :pagedata="pagedata" @page="page"></pagenation>
     </template>
     <div class="st_null" v-if="testdata==''">
@@ -118,7 +123,7 @@ export default {
   watch: {
     examType: {
       handler(newVal) {
-        this.examTypeUrl ="/questionnaireList?status=" + this.examType;
+        this.examTypeUrl = "/questionnaireList?status=" + this.examType;
         this.Exam(1);
       },
       immediate: true
@@ -145,7 +150,7 @@ export default {
         ls_msg = "确定发布考试？";
       } else if (type == 2) {
         ls_msg = "确定作废本次试卷？";
-      }else if(type==3){
+      } else if (type == 3) {
         ls_msg = "确定删除试卷？";
       }
       _this.$confirm(ls_msg, {
@@ -227,7 +232,7 @@ export default {
           params: {
             pagecount: p,
             page: "10",
-            title:_this.title
+            title: _this.title
           }
         })
         .then(res => {
@@ -274,6 +279,7 @@ export default {
   background: #cfd6dd;
   color: #2d2525;
   padding: 10px;
+  margin: 10px 0;
   border-radius: 5px;
 }
 .answer_head {
@@ -284,7 +290,7 @@ export default {
   color: #fff;
   padding: 5px;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: pointer;margin-right: 5px;
 }
 .answer_list:hover {
   box-shadow: 0 0 3px #30a6f5;

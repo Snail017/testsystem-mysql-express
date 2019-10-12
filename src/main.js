@@ -10,9 +10,9 @@ import http from "@/http"
 import '@/assets/css/common.css'
 import '@/assets/css/iconfont.css'
 import zq from '@/assets/zq'
-// import zqlayer from '@/lib/index'
+import zqlayer from '@/lib/index'
 
-// Vue.use(zqlayer);
+Vue.use(zqlayer);
 Vue.use(zq);
 Vue.use(iView);
 Vue.use(crypto);

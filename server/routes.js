@@ -25,7 +25,7 @@ Routers.post("/Uploadpic",upload.single("img"),User.uploadImg);
 
 // 问卷接口
 Routers.post("/ExamTitle",Exam.create)
-Routers.post("/questions",Ques.create)
+Routers.post("/questions",Ques.create)   
 Routers.patch("/questions",Ques.patchQues)      
 Routers.get("/questionnaireList",Exam.getlist)
 Routers.get("/questions",  Ques.getQuestions)
@@ -35,8 +35,12 @@ Routers.patch("/Exam",Exam.patchExam)
 Routers.delete("/Exam",Exam.deleteExam)
 
 //答卷接口
-Routers.get("/answerList",Answer.answerList)
+Routers.patch("/answer",Answer.answerStatus)
+Routers.delete("/answer",Answer.deleteAnswer)
+Routers.get("/answerUser",Answer.answerUser)
+Routers.get("/answerList",Answer.answerList)   
 Routers.get("/personalPage",Answer.personalPage)
+Routers.post("/SubmitExam",Answer.submitExam)    //提交答卷
 
 /**
  * 上传token

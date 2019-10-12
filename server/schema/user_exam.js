@@ -1,21 +1,18 @@
 const moment = require('moment');
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define('tbUserExam', {
-        userid: {
+        user_id: {
             type: DataTypes.INTEGER.UNSIGNED,
+            field: 'userid',
             allowNull: false,
             primaryKey: true,
         },
         // 考试id
-        examid: {
+        exam_id: {
             type: DataTypes.INTEGER.UNSIGNED,
             field: 'examid',
             primaryKey: true,
             allowNull: false
-        },
-        respondid:{
-            type: DataTypes.INTEGER,
-            field: 'respondid'
         },
         createdAt: {
             type: DataTypes.DATE,
