@@ -12,7 +12,7 @@ class AnswerModel {
      * @param {*} res 
      */
     static async alterAnswer(res) {
-        let { exam_id, user_id, questions, status, } = res;
+        let { exam_id, user_id, questions, status} = res;
         questions = JSON.stringify(questions);
         await answer.findAll({
             where: {
@@ -32,13 +32,12 @@ class AnswerModel {
                         user_id: user_id,
                         questions: questions,
                         status: status,
-                        score:score,
                     })
                 })
             } else if (res.length == 1) {
                 res = res[0].dataValues;
                 answer.update({
-                    questions, status,score
+                    questions, status
                 }, {
                         where: {
                             exam_id: exam_id,
@@ -52,7 +51,6 @@ class AnswerModel {
                     user_id: user_id,
                     questions: questions,
                     status: status,
-                    score:score
                 })
             }
         })
@@ -63,11 +61,11 @@ class AnswerModel {
      * @param {} res 
      */
     static async findByExamid(res) {
-        let { exam_id ,status} = res;
+        let { exam_id, status } = res;
         return await answer.findOne({
             where: {
                 exam_id: exam_id,
-                status:status
+                status: status == -1 ? { [Op.lt]: 3 } : status,
             }
         })
     }

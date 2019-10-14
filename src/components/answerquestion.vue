@@ -19,6 +19,7 @@
       <div v-html="titledata.editorTxt" class="st_subtitile"></div>
     </div>
     <div v-for="(items,indexs) in questiondata">
+      {{items}}
       <div class="st_question_content clearfix">
         <div style="display: flex">
           <span v-if="!topdata.sort">{{indexs+1}}.</span>
@@ -36,8 +37,8 @@
                 :name="'radio'+indexs"
                 type="radio"
                 :value="index"
+                v-model='items.answer'
                 :disabled="Ispaper==1"
-                :checked="item.answer==index"
               />
               <span v-html="item.text"></span>
               <span v-html="item.introduce"></span>
@@ -55,7 +56,7 @@
                 :name="'judge'+indexs"
                 type="radio"
                 :disabled="Ispaper==1"
-                :checked="item.answer==index"
+                v-model='items.answer'
               />
               <span v-html="item.text"></span>
               <img v-if="item.img!=''" :src="item.img" alt />
@@ -68,7 +69,7 @@
             :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}"
           >
             <label>
-              <input type="checkbox" :disabled="Ispaper==1" :checked="item.answer.indexOf(index+'&')" />
+              <input type="checkbox" :disabled="Ispaper==1"  v-model="item.answer" />
               <span v-html="item.text"></span>
               <img v-if="item.img!=''" :src="item.img" alt />
             </label>

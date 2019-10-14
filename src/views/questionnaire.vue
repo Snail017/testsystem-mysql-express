@@ -26,8 +26,8 @@
       ></setquestion>
       <Msg v-if="hasMsg" :msg="msg"></Msg>
       <div v-if="!isPaper" style="background: #fff;text-align: center;padding: 30px;">
-          <Button type="primary" @click="!isPaper?topCofig.topShow=true:''">提交</Button>&nbsp;&nbsp;&nbsp;
-          <Button type="info" >取消</Button>
+        <Button type="primary" @click="!isPaper?topCofig.topShow=true:''">提交</Button>&nbsp;&nbsp;&nbsp;
+        <Button type="info">取消</Button>
       </div>
     </div>
     <!--{{pagedata}}-->
@@ -66,7 +66,7 @@ export default {
             note: "", //编辑提示
             analysis: "", //答案解析
             score: null, //题目分值
-            questionType: '1', //题目类型
+            questionType: "1", //题目类型
             navOperate: false,
             haswindow: false, //编辑窗口是否弹出
             question_id: 0, //题目ID
@@ -111,7 +111,7 @@ export default {
             note: "", //编辑提示
             analysis: "", //答案解析
             score: null, //题目分值
-            questionType: '1', //题目类型
+            questionType: "1", //题目类型
             navOperate: false,
             mustanswer: false,
             haswindow: false, //编辑窗口是否弹出
@@ -199,12 +199,12 @@ export default {
           data: {
             title: titledata.title,
             testtime: topdata.testTime,
-            status: topdata.opentest ? 1: 0,
+            status: topdata.opentest ? 1 : 0,
             explain: titledata.editorTxt,
             exam_id: topdata.exam_id,
             father: 0,
             sort: topdata.sort,
-            designated:topdata.designated
+            designated: topdata.designated
           }
         })
         .then(res => {
@@ -237,12 +237,12 @@ export default {
           switch (name) {
             case "analysis":
             case "note":
-            case "mustanswer":            
+            case "mustanswer":
               problemData[name] = value;
               break;
-              case "sort":
-                problemData[name]=Number(m);
-                break;
+            case "sort":
+              problemData[name] = Number(m);
+              break;
             case "answer":
               if (
                 value === "" &&
@@ -279,7 +279,7 @@ export default {
                 // 多选时需要循环optiondata将questiondata.answer相加为多个选项 n&m
                 if (this.pagedata.questiondata[m].questionType == 2) {
                   if (
-                    String(value[n].answer)== "true" ||
+                    String(value[n].answer) == "true" ||
                     String(value[n].answer) == "0"
                   ) {
                     problemData.answer += n + "&"; //答案
@@ -324,7 +324,7 @@ export default {
       for (let i in _this.pagedata.questiondata) {
         let ls_questiondata = _this.pagedata.questiondata[i];
         formdata.questions.push({
-          question_id: ls_questiondata.id,
+          question_id: ls_questiondata.question_id,
           answer: ""
         });
         if (ls_questiondata.questionType != 2) {
@@ -337,7 +337,7 @@ export default {
           for (let n in ls_questiondata.optiondata) {
             formdata.questions[i].answer +=
               ls_questiondata.optiondata[n].answer == true
-                ? Number(n) + 1 + "&"
+                ? Number(n) + "&"
                 : "";
           }
           formdata.questions[i].answer = formdata.questions[i].answer.substring(
@@ -346,11 +346,13 @@ export default {
           );
         }
       }
-      _this.$http({
-        method: "post",
-        url: "/SubmitExam",
-        data: formdata,
-      }).then(res=> {
+      _this
+        .$http({
+          method: "post",
+          url: "/SubmitExam",
+          data: formdata
+        })
+        .then(res => {
           res = res.data;
           if (res.code == 200) {
             _this.showmsg("试卷提交成功");
@@ -360,7 +362,7 @@ export default {
           } else {
             _this.showmsg(res.msg);
           }
-      })
+        });
     },
     /**
      * 从答卷列表进入  编辑答卷题目
@@ -369,24 +371,26 @@ export default {
      **/
     answerQuestion() {
       var _this = this,
-          paper_id=this.$match(window.location.hash, "paper_id");
+        paper_id = this.$match(window.location.hash, "paper_id");
       if (!paper_id) {
         return false;
       }
       _this.isPaper = true;
-      _this.$http({
-        method: "GET",
-        url: '/personalPage',
-        params:{
-          exam_id:paper_id
-        }
-      }).then(res=>{
-        res=res.data;
+      _this
+        .$http({
+          method: "GET",
+          url: "/personalPage",
+          params: {
+            exam_id: paper_id
+          }
+        })
+        .then(res => {
+          res = res.data;
           if (res.code == 200) {
             _this.pagedata.titledata.title = res.data.title;
             _this.pagedata.titledata.editorTxt = res.data.explain;
             _this.pagedata.topdata.exam_id = res.data.id;
-            _this.pagedata.topdata.testTime = res.data.testtime ;
+            _this.pagedata.topdata.testTime = res.data.testtime;
             _this.pagedata.topdata.sort = res.data.sort;
             _this.pagedata.topdata.opentest =
               res.data.status == 0 ? false : true;
@@ -394,7 +398,7 @@ export default {
             let questions = res.data.list;
             let ls_question = {};
             let ls_option = {
-              introduce: {}
+              introduce: {},
             };
             if (list != undefined && list.length < 1) {
               _this.pagedata.questiondata = [];
@@ -403,21 +407,26 @@ export default {
                 for (let name in list[i]) {
                   let value = list[i][name];
                   switch (name) {
-                    case "questionType": case "note": case "score":case "analysis":
-                      ls_question[name]=value;
-                       break;
+                    case "questionType":
+                    case "note":
+                    case "score":
+                    case "analysis":
                     case "question_id":
+                    case "answer":
                       ls_question[name] = value;
-                      ls_question.answer =
-                        questions != [] && questions[value] != undefined
-                          ? questions[value].answer
-                          : "";
-                      break;
-                    case "problem":
-                      ls_question.editorTxt = value;
                       break;
                     case "optiondata":
                       ls_question[name] = value;
+                      if (list[i].questionType == 2) {
+                        for (let n in value) {
+                          if (list[i].answer.indexOf(n + "&") != 1) {
+                            ls_question.optiondata[n].answer=true
+                          }
+                        }
+                      }
+                      break;
+                    case "problem":
+                      ls_question.editorTxt = value;
                       break;
                   }
                 }
@@ -436,7 +445,7 @@ export default {
           } else {
             _this.showmsg(res.msg);
           }
-      })
+        });
     },
     /**
      * 从问卷列表进入  编辑问卷题目
@@ -464,7 +473,7 @@ export default {
             _this.pagedata.topdata.exam_id = res.data.id;
             _this.pagedata.topdata.testTime = res.data.testtime;
             _this.pagedata.topdata.sort = res.data.sort;
-            _this.pagedata.topdata.designated=res.data.designated;
+            _this.pagedata.topdata.designated = res.data.designated;
             _this.pagedata.topdata.opentest =
               res.data.status == 0 ? false : true;
             let list = res.data.list;

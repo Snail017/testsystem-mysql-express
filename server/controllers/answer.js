@@ -102,21 +102,21 @@ class Answer {
                             title:examdata.title,
                             id:examdata.id,
                             updatedAt:examdata.updatedAt,
-                            status:answerdata==null?0:1
+                            status:answerdata==null?0:answerdata.status
                         });
                     }else if(params.status==0&&answerdata==null){
                         returndata.push({
                             title:examdata.title,
                             id:examdata.id,
                             updatedAt:examdata.updatedAt,
-                            status:0
+                            status:answerdata.status
                         });
                     }else if(answerdata!=null){
                         returndata.push({
                             title:examdata.title,
                             id:examdata.id,
                             updatedAt:examdata.updatedAt,
-                            status:status
+                            status:answerdata.status
                         });
                     }
                     
@@ -155,11 +155,21 @@ class Answer {
         try {
             if (title) {
                 let ls_title = title[0].dataValues, ls_question = [], ls_option = [];
+                const answerData=await answerModel.findByExamid({exam_id:params.exam_id,status:-1})
                 for (let i in questions) {   //获取问题选项
                     ls_question.push(questions[i].dataValues);
                     ls_option = await optionModel.findAllOption(questions[i].dataValues);
                     ls_question[i].optiondata = ls_option;
                     ls_question[i].question_id = questions[i].dataValues.id;
+                    if(answerData==null){
+                        ls_question[i].answer='';
+                    }else{
+                        for(let n in JSON.parse(answerData.questions)){
+                            if(ls_question[i].question_id==JSON.parse(answerData.questions)[n].question_id){
+                                ls_question[i].answer=JSON.parse(answerData.questions)[n].answer;
+                            }
+                        }
+                    }
                 }
                 ls_title.list = ls_question;
                 res.status = 200;
@@ -192,7 +202,6 @@ class Answer {
 
         try {
             await answerModel.alterAnswer(params);   //提交答卷答题情况
-
             res.status = 200;
             res.json({
                 code: 200,
@@ -204,7 +213,6 @@ class Answer {
                 code: 500,
                 data: err
             })
-            return false;
         }
 
     }

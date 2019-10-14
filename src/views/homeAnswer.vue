@@ -12,7 +12,7 @@
           placeholder="请输入问卷名进行搜索..."
           size="large"
           v-model="title"
-          @on-enter="Exam(1)"
+          @on-enter="answerList()"
           icon="ios-search"
         ></Input>
       </Col>
@@ -103,9 +103,8 @@ export default {
   watch: {
     examType: {
       handler(newVal) {
-        this.ExamStatus(null, newVal);
+        this.answerList();
       },
-      immediate: true
     }
   },
   mounted() {
