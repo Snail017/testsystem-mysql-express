@@ -85,6 +85,14 @@ export default new Router({
               }
         },
         {
+            path: '/review',
+            name: 'questionnaire',
+            component: questionnaire,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+              }
+        },
+        {
             path: '/answerpaper',
             name: 'questionnaire',
             component: questionnaire,

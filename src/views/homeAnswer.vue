@@ -53,7 +53,7 @@
             <i class="iconfont icon-huishouzhan"></i>删除
           </span>
           <router-link
-            :to="{path:'/checkpaper',query:{paper_id:item.id}}"
+            :to="{path:'/review',query:{paper_id:item.id}}"
             class="st_btn green"
             target="_blank"
             v-if="item.status==1"

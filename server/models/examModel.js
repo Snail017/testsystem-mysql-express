@@ -106,7 +106,16 @@ class ExamModel {
         })
         return sql
     }
-
+    static async findByuserExam(exam) {
+        let { exam_id ,user_id} = exam;
+        let sql = await Exam.findOne({
+            where: {
+                id: exam_id,
+                user_id:user_id
+            }
+        })
+        return sql
+    }
     static async deleteExam(exam_id) {
         await Exam.destroy({
             where: {

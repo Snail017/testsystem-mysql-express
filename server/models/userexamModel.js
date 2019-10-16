@@ -31,7 +31,6 @@ class userexamModel {
         return await userExam.findAll({
             where:{
                 exam_id:exam_id,
-                status:status
             }
         })
     }

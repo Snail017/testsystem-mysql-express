@@ -1,3 +1,4 @@
+const userModel = require('../models/userModel');
 const answerModel = require('../models/answerModel');
 const examModel = require('../models/examModel');
 const quesModel = require('../models/quesModel');
@@ -12,20 +13,20 @@ class Answer {
      * @param {*exam_id} req 
      * @param {*} res 
      */
-    static async deleteAnswer(req,res){
+    static async deleteAnswer(req, res) {
         let params = req.body;
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
         let errors = await common.checkData(params);
         if (!errors) return false;
-        try{
-            var answerUser=await userexamModel.alterAnswer(params);
+        try {
+            await userexamModel.alterAnswer(params);
             res.status = 200;
             res.json({
                 code: 200,
                 msg: err
             })
-        }catch(err){
+        } catch (err) {
             res.status = 412;
             res.json({
                 code: 500,
@@ -38,7 +39,7 @@ class Answer {
      * @param {*} req 
      * @param {*} res 
      */
-    static  async answerStatus(req,res){
+    static async answerStatus(req, res) {
         let params = req.query;
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
@@ -59,16 +60,25 @@ class Answer {
      * @param {*} req 
      * @param {*} res 
      */
-    static async answerUser(req,res){
+    static async answerUser(req, res) {
         let params = req.query;
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
         let errors = await common.checkData(params);
         if (!errors) return false;
-        try{
-            var answerUser=await userexamModel.answerUser(params);
+        try {
+            var answerUser = await userexamModel.answerUser(params);
+            for (let i in answerUser) {
+                let ls_user = await userModel.findNicknameById(answerUser[i].user_id);
+                answerUser[i].dataValues.Nickname = ls_user.Nickname;
+            }
+            res.status = 200;
+            res.json({
+                code: 200,
+                data: answerUser
+            })
 
-        }catch(err){
+        } catch (err) {
             res.status = 412;
             res.json({
                 code: 500,
@@ -92,34 +102,34 @@ class Answer {
         try {
             const answerList = await userexamModel.answerList(params);  //根据userid从tbuserExam得到问卷id
             let returndata = [];
-            for (let i in answerList) {  
+            for (let i in answerList) {
                 let value = answerList[i].dataValues;
                 let examdata = await examModel.getlistByExamid({ exam_id: value.exam_id, title: params.title, status: -1 });   //根据examid title status 得到问卷信息
-                let answerdata = await answerModel.findByExamid({exam_id:value.exam_id,status:params.status}); //得到答卷状态 进行判断  如果没有数据表明还没有作答
-                if (examdata != null&&examdata.status>0){
-                    if(params.status==-1){
+                let answerdata = await answerModel.findByExamid({ exam_id: value.exam_id, status: params.status }); //得到答卷状态 进行判断  如果没有数据表明还没有作答
+                if (examdata != null && examdata.status > 0) {
+                    if (params.status == -1) {
                         returndata.push({
-                            title:examdata.title,
-                            id:examdata.id,
-                            updatedAt:examdata.updatedAt,
-                            status:answerdata==null?0:answerdata.status
+                            title: examdata.title,
+                            id: examdata.id,
+                            updatedAt: examdata.updatedAt,
+                            status: answerdata == null ? 0 : answerdata.status
                         });
-                    }else if(params.status==0&&answerdata==null){
+                    } else if (params.status == 0 && answerdata == null) {
                         returndata.push({
-                            title:examdata.title,
-                            id:examdata.id,
-                            updatedAt:examdata.updatedAt,
-                            status:answerdata.status
+                            title: examdata.title,
+                            id: examdata.id,
+                            updatedAt: examdata.updatedAt,
+                            status: answerdata.status
                         });
-                    }else if(answerdata!=null){
+                    } else if (answerdata != null) {
                         returndata.push({
-                            title:examdata.title,
-                            id:examdata.id,
-                            updatedAt:examdata.updatedAt,
-                            status:answerdata.status
+                            title: examdata.title,
+                            id: examdata.id,
+                            updatedAt: examdata.updatedAt,
+                            status: answerdata.status
                         });
                     }
-                    
+
                 }
             }
             res.status = 200;
@@ -155,21 +165,23 @@ class Answer {
         try {
             if (title) {
                 let ls_title = title[0].dataValues, ls_question = [], ls_option = [];
-                const answerData=await answerModel.findByExamid({exam_id:params.exam_id,status:-1})
+                const answerData = await answerModel.findByExamid({ exam_id: params.exam_id, status: -1 })
                 for (let i in questions) {   //获取问题选项
                     ls_question.push(questions[i].dataValues);
                     ls_option = await optionModel.findAllOption(questions[i].dataValues);
                     ls_question[i].optiondata = ls_option;
                     ls_question[i].question_id = questions[i].dataValues.id;
-                    if(answerData==null){
-                        ls_question[i].answer='';
-                    }else{
-                        for(let n in JSON.parse(answerData.questions)){
-                            if(ls_question[i].question_id==JSON.parse(answerData.questions)[n].question_id){
-                                ls_question[i].answer=JSON.parse(answerData.questions)[n].answer;
+                    if (answerData != null) {       //当答卷库有数据表示此试卷已做答  才能返回正确答案
+                        ls_question[i].realAnswer = questions[i].dataValues.answer;
+                        for (let n in JSON.parse(answerData.questions)) {
+                            if (ls_question[i].question_id == JSON.parse(answerData.questions)[n].question_id) {
+                                ls_question[i].answer = JSON.parse(answerData.questions)[n].answer;
                             }
                         }
+                    } else {
+                        ls_question[i].answer = ''
                     }
+
                 }
                 ls_title.list = ls_question;
                 res.status = 200;
@@ -187,15 +199,53 @@ class Answer {
             return false;
         }
     }
+    /**
+     * 批改试卷
+     * @param {} req 
+     * @param {*} res 
+     */
+    static async checkAnswer(req, res) {
+        let params = req.body;
+        let token = await Token.checkToken(req.headers.authorization);
+        params.user_id = token.uid;
+        params.status=1;
+        // 检测参数是否存在为空
+        let errors = await common.checkData(params, res);
+        if (!errors) return false;
+        try{
+             //批阅试卷需要先检验用户权限
+             let flag=await examModel.findByuserExam({exam_id:params.exam_id,user_id:params.user_id});
+             if(flag==null){
+                res.status = 200;
+                res.json({
+                    code: 404,
+                    msg: '权限不够'
+                })
+             }else{
+                 await answerModel.alterAnswer(params);
+                 res.status = 200;
+                 res.json({
+                     code: 200,
+                     msg: '提交成功'
+                 })
+             }
+        }catch(err){
+            res.status = 500;
+            res.json({
+                code: 500,
+                data: err
+            })
+        }
+    }
 
     /**
-     * 
+     * 提交时间
      */
     static async submitExam(req, res) {
         let params = req.body;
         let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
-        params.status=1;
+        params.status = 1;
         // 检测参数是否存在为空
         let errors = await common.checkData(params, res);
         if (!errors) return false;

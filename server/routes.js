@@ -41,7 +41,7 @@ Routers.get("/answerUser",Answer.answerUser)
 Routers.get("/answerList",Answer.answerList)   
 Routers.get("/personalPage",Answer.personalPage)
 Routers.post("/SubmitExam",Answer.submitExam)    //提交答卷
-
+Routers.post("/checkAnswer",Answer.checkAnswer)  //试卷批阅提交
 /**
  * 上传token
  */

@@ -6,6 +6,9 @@
           <Button type="primary" @click="$emit('submitAnswer',1)">提交考试</Button>
         </div>
         <div class="fl" v-if="Ispaper==1">
+          <Button type="primary" @click="$emit('checkAnswer',1)">提交改卷</Button>
+        </div>
+        <div class="fr" v-if="Ispaper!=0">
           <p>试卷总分：{{topdata.score_sum}}</p>
         </div>
         <div class="fr">
@@ -18,15 +21,15 @@
       <h1 class="st_title">{{titledata.title}}</h1>
       <div v-html="titledata.editorTxt" class="st_subtitile"></div>
     </div>
-    <div v-for="(items,indexs) in questiondata">
-      {{items}}
+    <div v-for="(items,indexs) in questiondata">{{items}}
       <div class="st_question_content clearfix">
         <div style="display: flex">
           <span v-if="!topdata.sort">{{indexs+1}}.</span>
           <b v-if="topdata.sort" class="cl-red">*</b>
-          <span v-html="items.editorTxt"></span>
+          <span v-html="items.editorTxt"></span>({{items.score}}分)
+          <span style="color:red;margin-left:5px;" v-if="Ispaper!=0">得分：<input v-if="items.questionType==0" type="number" v-model="items.gainScore" :readonly="Ispaper==2?true:false"  style="width:80px;" :placeholder="'不超过'+items.score+'分'"/> <template v-else>{{items.gainScore}}</template>  </span>  
         </div>
-        <div class="form-group pdt-10 clearfix" v-html="items.note"></div>
+        <div class="pdt-10"  v-html="items.note"></div>
         <div v-if="items.questionType==1">
           <div
             v-for="(item,index) in items.optiondata"
@@ -38,7 +41,7 @@
                 type="radio"
                 :value="index"
                 v-model='items.answer'
-                :disabled="Ispaper==1"
+                :disabled="Ispaper!=0"
               />
               <span v-html="item.text"></span>
               <span v-html="item.introduce"></span>
@@ -55,7 +58,7 @@
               <input
                 :name="'judge'+indexs"
                 type="radio"
-                :disabled="Ispaper==1"
+                :disabled="Ispaper!=0"
                 v-model='items.answer'
               />
               <span v-html="item.text"></span>
@@ -69,7 +72,7 @@
             :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}"
           >
             <label>
-              <input type="checkbox" :disabled="Ispaper==1"  v-model="item.answer" />
+              <input type="checkbox" :disabled="Ispaper!=0"  v-model="item.answer" />
               <span v-html="item.text"></span>
               <img v-if="item.img!=''" :src="item.img" alt />
             </label>
@@ -77,13 +80,14 @@
           </div>
         </div>
         <!--简答-->
-        <Col span="20">
-          <Input v-if="items.questionType==0" type="textarea" v-model="items.answer" :readonly="Ispaper==1"></Input>
-        </Col>
-        <div class="form-group pd-10 clearfix" v-if="isExamAnswer">
+        <div>
+          <Input v-if="items.questionType==0" type="textarea" v-model="items.answer" :readonly="Ispaper!=0"></Input>
+        </div>
+        <div class="pd-10 clearfix" v-if="isExamAnswer">
           <span class="fl">题目解析：</span>
           <div class="fl" v-html="items.analysis"></div>
         </div>
+        <div v-if="Ispaper!=0">正确答案：<span v-if="items.questionType==0">{{items.realAnswer}}</span><span v-else-if="items.realAnswer!=null&&items.realAnswer!=''">第{{items.realAnswer}}选项</span></div>
       </div>
     </div>
   </div>
@@ -144,6 +148,7 @@ export default {
   margin: 0;
   padding: 0 10px;
   vertical-align: middle;
+  text-shadow: 3px 0px 3px #000;
 }
 .header label {
   vertical-align: middle;

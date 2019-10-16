@@ -8,22 +8,21 @@
           placeholder="请输入id或者用户名进行搜索..."
           @input="getanswerlist(ser_id)"
         >
-         <Button slot="append" icon="ios-search"  @click="getanswerlist(ser_id)"></Button>
+          <Button slot="append" icon="ios-search" @click="getanswerlist(ser_id)"></Button>
         </Input>
       </div>
-      <table v-if="listdata.length>0" border="1">
+      <table v-if="listdata.length>0" border="1" cellspacing="0" cellpadding="0">
         <tr>
           <th>用户ID</th>
           <th>用户名</th>
           <th>最后提交答卷时间</th>
           <th>考卷详情</th>
-          <th>答题数目</th>
           <th>成绩</th>
         </tr>
         <tr v-for="item in listdata">
-          <td>{{item.service_id}}</td>
-          <td>{{item.service_name}}</td>
-          <td>{{item.start_time}}</td>
+          <td>{{item.user_id}}</td>
+          <td>{{item.Nickname}}</td>
+          <td>{{item.updatedAt}}</td>
           <td @click="examDetail(item.service_id)">
             <router-link
               :to="{path:'/checkpaper',query:{service_id:item.service_id,paper_id:exam_id}}"
@@ -31,7 +30,6 @@
               class="btn btn-primary"
             >查看考卷</router-link>
           </td>
-          <td>{{item.answer_count}}</td>
           <td>{{item.score_sum}}</td>
         </tr>
       </table>
@@ -76,7 +74,7 @@ export default {
           url: "/answerUser",
           params: {
             exam_id: _this.match(window.location.hash, "exam_id"),
-            content: res,
+            content: res
           }
         })
         .then(res => {
@@ -100,11 +98,14 @@ export default {
 
 <style scoped>
 table {
-  border: 1px solid #ccc;
+  text-align: center;border: #f7f7ff;
 }
 table td,
 table th {
   padding: 5px 10px;
+}
+table tr:nth-of-type(1){
+  background: #ddd!important;
 }
 .st_null {
   text-align: center;

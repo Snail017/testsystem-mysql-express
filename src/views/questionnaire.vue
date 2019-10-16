@@ -14,6 +14,7 @@
       <answerquestion
         v-if="isPaper"
         @submitAnswer="submitAnswer"
+        @checkAnswer="checkAnswer"
         :isExamAnswer="isExamAnswer"
         :titledata="pagedata.titledata"
         :questiondata="pagedata.questiondata"
@@ -312,6 +313,37 @@ export default {
         }
       }
     },
+    //提交批阅的答卷
+    checkAnswer(){
+      var _this=this;
+      let data=[],ls_qus={};
+      for (let i in _this.pagedata.questiondata) {
+        if(_this.pagedata.questiondata[i].gainScore>_this.pagedata.questiondata[i].score){
+          _this.showmsg("第"+i+'题分数不能大于'+_this.pagedata.questiondata[i].score+'分');
+          return false;
+        }
+        for(let n in _this.pagedata.questiondata[i]){
+          let value=_this.pagedata.questiondata[i][n];
+          if(n=='question_id'||n=='answer'||n=='gainScore'){
+            ls_qus[n]=value;
+          }
+        }
+        data.push(ls_qus)
+      }
+      this.$http({
+        method:'post',
+        url:"/checkAnswer",
+        data:{
+          questions:data,
+          exam_id:_this.pagedata.topdata.exam_id
+        }
+      }).then(res=>{
+        res=res.data;
+        if(res.code==200){
+           _this.$router.push("/homeQuestion");
+        }
+      })
+    },
     /**
      * 上传答卷
      **/
@@ -398,38 +430,27 @@ export default {
             let questions = res.data.list;
             let ls_question = {};
             let ls_option = {
-              introduce: {},
+              introduce: {}
             };
             if (list != undefined && list.length < 1) {
               _this.pagedata.questiondata = [];
             } else {
               for (let i in list) {
-                for (let name in list[i]) {
-                  let value = list[i][name];
-                  switch (name) {
-                    case "questionType":
-                    case "note":
-                    case "score":
-                    case "analysis":
-                    case "question_id":
-                    case "answer":
-                      ls_question[name] = value;
-                      break;
-                    case "optiondata":
-                      ls_question[name] = value;
-                      if (list[i].questionType == 2) {
-                        for (let n in value) {
-                          if (list[i].answer.indexOf(n + "&") != 1) {
-                            ls_question.optiondata[n].answer=true
-                          }
-                        }
-                      }
-                      break;
-                    case "problem":
-                      ls_question.editorTxt = value;
-                      break;
+                ls_question = list[i];
+                if (list[i].answer == list[i].realAnswer) { 
+                  list[i].gainScore=list[i].score;
+                }else{
+                  list[i].gainScore=0
+                }
+                if (list[i].questionType == 2) {   //多选时答案是  n&m 需要转换格式匹配的每个选项
+                  for (let n in list[i].optiondata) {
+                    if (list[i].answer.indexOf(n + "&") != -1) {
+                      ls_question.optiondata[n].answer = true;
+                    }
                   }
                 }
+                
+                ls_question.editorTxt = list[i].problem;
                 _this.$set(
                   _this.pagedata.questiondata,
                   i,

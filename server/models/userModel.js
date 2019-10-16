@@ -83,8 +83,12 @@ class UserModel {
         })
     }
 
+    /**
+     * 查看用户名
+     * @param {user_id} user_id 
+     */
     static async findNicknameById(user_id) {
-        return await User.findAll({
+        return await User.findOne({
             where: {
                 id: user_id
             }
