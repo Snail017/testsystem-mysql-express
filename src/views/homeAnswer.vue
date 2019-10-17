@@ -24,7 +24,7 @@
         </Select>
       </Col>
       <Col :lg="5" :xs="24" style="float:right">
-        <Button type="info" @on-click="examType=2">
+        <Button type="info" @click="examType=2">
           <i class="iconfont icon-huishouzhan"></i>回收站
         </Button>
       </Col>
@@ -45,17 +45,12 @@
           >
             <i class="iconfont icon-weibiaoti--1"></i>开启考试
           </router-link>
-          <span class="st_btn green" v-if="item.status==1">
-            <i class="iconfont icon-wancheng1"></i>
-            {{item.score_sum}}分
-          </span>
-          <span class="st_btn blue" @click="deleteExam(item.id,index)" v-if="item.status==1">
+          <span class="st_btn blue" @click="deleteAnswer(item.id)" v-if="item.status==1">
             <i class="iconfont icon-huishouzhan"></i>删除
           </span>
           <router-link
             :to="{path:'/review',query:{paper_id:item.id}}"
             class="st_btn green"
-            target="_blank"
             v-if="item.status==1"
           >
             <i class="iconfont icon-yanjing"></i>查看
@@ -105,12 +100,35 @@ export default {
       handler(newVal) {
         this.answerList();
       },
+      immediate:true
     }
   },
-  mounted() {
-    this.answerList();
-  },
   methods: {
+    deleteAnswer(exam_id) {
+      var _this = this;
+      _this.$confirm('确定删除该试卷？', {
+        btn: ["确定", "取消"],
+        btnFun: [
+          function() {
+            _this
+              .$http({
+                method: "patch",
+                url: "/answer",
+                params: {
+                  exam_id: exam_id,
+                  status:2
+                }
+              })
+              .then(res => {
+                if (res.status == 200){
+                   _this.answerList();  _this.$hide();
+                   _this.$msg(res.data.msg)
+                }
+              });
+          },
+        ]
+      });
+    },
     answerList() {
       var _this = this;
       this.$http({
@@ -120,40 +138,11 @@ export default {
           pagecount: _this.pagedata.p,
           page: "10",
           title: _this.title,
-          status:_this.examType
+          status: _this.examType
         }
       }).then(res => {
-         res = res.data;
-         _this.testdata=res.data;
-      });
-    },
-    ExamStatus(exam_id, type) {
-      var _this = this;
-      var ls_msg = "";
-      _this.$confirm(ls_msg, {
-        btn: ["确定", "取消"],
-        btnFun: [
-          function() {
-            _this
-              .$http({
-                method: "patch",
-                url: "/answer",
-                data: {
-                  exam_id: exam_id,
-                  status: type
-                }
-              })
-              .then(res => {
-                if (res.status == 200) {
-                  _this.Exam(_this.pagedata.p);
-                }
-                _this.$msg(res.data.msg);
-              });
-          },
-          function() {
-            _this.$hide();
-          }
-        ]
+        res = res.data;
+        _this.testdata = res.data;
       });
     },
     page(res) {
@@ -167,7 +156,7 @@ export default {
         res = Number(this.pagedata.p) - 1;
       }
       if (res <= this.pagedata.page_total && res > 0) {
-        this.Exam(res, this.examType);
+        // this.answerList(res, this.examType);
       }
     }
   }

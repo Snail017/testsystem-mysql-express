@@ -9,34 +9,8 @@ const Token = require("../config/token.config")
 
 class Answer {
     /**
-     * 删除答卷
-     * @param {*exam_id} req 
-     * @param {*} res 
-     */
-    static async deleteAnswer(req, res) {
-        let params = req.body;
-        let token = await Token.checkToken(req.headers.authorization);
-        params.user_id = token.uid;
-        let errors = await common.checkData(params);
-        if (!errors) return false;
-        try {
-            await userexamModel.alterAnswer(params);
-            res.status = 200;
-            res.json({
-                code: 200,
-                msg: err
-            })
-        } catch (err) {
-            res.status = 412;
-            res.json({
-                code: 500,
-                msg: err
-            })
-        }
-    }
-    /**
      * 修改答卷状态
-     * @param {*} req 
+     * @param {*exam_id} req 
      * @param {*} res 
      */
     static async answerStatus(req, res) {
@@ -46,7 +20,21 @@ class Answer {
         let errors = await common.checkData(params);
         if (!errors) return false;
         try {
-            var answerStatus = await userexamModel.alterAnswer(params)
+            if(params.status==2){  //加入回收站
+                let a=await answerModel.AnswerStatus({exam_id:params.exam_id,user_id:params.user_id,status:2});
+                res.status = 200;
+                res.json({
+                    code: 200,
+                    msg: '成功加入回收站'
+                })
+            }else if(params.status==3) {//删除答卷
+                await answerModel.deleteAnswer();
+                res.status = 200;
+                res.json({
+                    code: 200,
+                    msg: '删除成功'
+                })
+            }
         } catch (err) {
             res.status = 412;
             res.json({
@@ -67,15 +55,24 @@ class Answer {
         let errors = await common.checkData(params);
         if (!errors) return false;
         try {
-            var answerUser = await userexamModel.answerUser(params);
+            let returndata=[];
+            var answerUser = await answerModel.findByExamid({exam_id:params.exam_id});
             for (let i in answerUser) {
                 let ls_user = await userModel.findNicknameById(answerUser[i].user_id);
                 answerUser[i].dataValues.Nickname = ls_user.Nickname;
+                //根据id和用户名筛选
+                if(params.content==''){
+                    returndata.push(answerUser[i]);
+                    returndata[i].Nickname=ls_user.Nickname;
+                }else if(params.content==ls_user.Nickname||params.content==answerUser[i].user_id){
+                    returndata.push(answerUser[i]);
+                    returndata[i].Nickname=ls_user.Nickname;
+                }
             }
             res.status = 200;
             res.json({
                 code: 200,
-                data: answerUser
+                data: returndata
             })
 
         } catch (err) {
@@ -105,28 +102,38 @@ class Answer {
             for (let i in answerList) {
                 let value = answerList[i].dataValues;
                 let examdata = await examModel.getlistByExamid({ exam_id: value.exam_id, title: params.title, status: -1 });   //根据examid title status 得到问卷信息
-                let answerdata = await answerModel.findByExamid({ exam_id: value.exam_id, status: params.status }); //得到答卷状态 进行判断  如果没有数据表明还没有作答
+                let answerdata = await answerModel.findByExamid({ exam_id: value.exam_id,user_id:params.user_id}); //得到答卷状态 进行判断  如果没有数据表明还没有作答
                 if (examdata != null && examdata.status > 0) {
                     if (params.status == -1) {
+                        if(answerdata.length>0&&answerdata[0].status<2){
+                            returndata.push({
+                                title: examdata.title,
+                                id: examdata.id,
+                                updatedAt: examdata.updatedAt,
+                                status:answerdata[0].status
+                            });
+                        }else if(answerdata.length==0){
+                            returndata.push({
+                                title: examdata.title,
+                                id: examdata.id,
+                                updatedAt: examdata.updatedAt,
+                                status: 0
+                            });
+                        }
+                        
+                    } else if (params.status == 0 && answerdata.length==0) {
                         returndata.push({
                             title: examdata.title,
                             id: examdata.id,
                             updatedAt: examdata.updatedAt,
-                            status: answerdata == null ? 0 : answerdata.status
+                            status: 0
                         });
-                    } else if (params.status == 0 && answerdata == null) {
+                    } else if (answerdata.length> 0&&params.status==answerdata[0].status) {
                         returndata.push({
                             title: examdata.title,
                             id: examdata.id,
                             updatedAt: examdata.updatedAt,
-                            status: answerdata.status
-                        });
-                    } else if (answerdata != null) {
-                        returndata.push({
-                            title: examdata.title,
-                            id: examdata.id,
-                            updatedAt: examdata.updatedAt,
-                            status: answerdata.status
+                            status: answerdata[0].status
                         });
                     }
 
@@ -165,17 +172,17 @@ class Answer {
         try {
             if (title) {
                 let ls_title = title[0].dataValues, ls_question = [], ls_option = [];
-                const answerData = await answerModel.findByExamid({ exam_id: params.exam_id, status: -1 })
+                const answerData = await answerModel.findByExamid({ exam_id: params.exam_id, status: -1 ,user_id:params.user_id})
                 for (let i in questions) {   //获取问题选项
                     ls_question.push(questions[i].dataValues);
                     ls_option = await optionModel.findAllOption(questions[i].dataValues);
                     ls_question[i].optiondata = ls_option;
                     ls_question[i].question_id = questions[i].dataValues.id;
-                    if (answerData != null) {       //当答卷库有数据表示此试卷已做答  才能返回正确答案
+                    if (answerData.length != 0) {       //当答卷库有数据表示此试卷已做答  才能返回正确答案
                         ls_question[i].realAnswer = questions[i].dataValues.answer;
-                        for (let n in JSON.parse(answerData.questions)) {
-                            if (ls_question[i].question_id == JSON.parse(answerData.questions)[n].question_id) {
-                                ls_question[i].answer = JSON.parse(answerData.questions)[n].answer;
+                        for (let n in JSON.parse(answerData[0].questions)) {
+                            if (ls_question[i].question_id == JSON.parse(answerData[0].questions)[n].question_id) {
+                                ls_question[i].answer = JSON.parse(answerData[0].questions)[n].answer;
                             }
                         }
                     } else {

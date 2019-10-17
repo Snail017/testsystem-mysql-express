@@ -1,14 +1,14 @@
 <template>
   <div class="st_answerlist">
-    <div>
+      <router-link to="/homeQuestion" tag="Button"><i class="ivu-icon ivu-icon-ios-undo"></i> 返回</router-link>
       <div class="st_sear">
         <Input
           type="text"
-          v-model="ser_id"
           placeholder="请输入id或者用户名进行搜索..."
-          @input="getanswerlist(ser_id)"
+          v-model="ser_id"
+          @on-enter="getanswerlist()"
         >
-          <Button slot="append" icon="ios-search" @click="getanswerlist(ser_id)"></Button>
+          <Button slot="append" icon="ios-search" @click="getanswerlist()"></Button>
         </Input>
       </div>
       <table v-if="listdata.length>0" border="1" cellspacing="0" cellpadding="0">
@@ -23,10 +23,9 @@
           <td>{{item.user_id}}</td>
           <td>{{item.Nickname}}</td>
           <td>{{item.updatedAt}}</td>
-          <td @click="examDetail(item.service_id)">
+          <td @click="examDetail(item.user_id)">
             <router-link
-              :to="{path:'/checkpaper',query:{service_id:item.service_id,paper_id:exam_id}}"
-              target="_blank"
+              :to="{path:'/checkpaper',query:{user_id:item.user_id,paper_id:exam_id}}"
               class="btn btn-primary"
             >查看考卷</router-link>
           </td>
@@ -38,7 +37,6 @@
         <p>暂无数据</p>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -52,7 +50,7 @@ export default {
     };
   },
   mounted() {
-    this.getanswerlist("");
+    this.getanswerlist();
   },
   methods: {
     examDetail(service_id) {
@@ -63,10 +61,12 @@ export default {
         data: {
           service_id: service_id,
           exam_id: _this.$match(window.location.hash, "exam_id")
-        }.then(res => {})
+        }.then(res => {
+
+        })
       });
     },
-    getanswerlist(res) {
+    getanswerlist() {
       var _this = this;
       _this
         .$http({
@@ -74,7 +74,7 @@ export default {
           url: "/answerUser",
           params: {
             exam_id: _this.match(window.location.hash, "exam_id"),
-            content: res
+            content: _this.ser_id
           }
         })
         .then(res => {
@@ -118,7 +118,7 @@ table tr:nth-of-type(1){
 .st_answerlist {
   width: 1000px;
   margin: auto;
-  padding: 40px 10px;
+  padding: 20px 10px;
   background: #fff;
   min-height: 100%;
 }

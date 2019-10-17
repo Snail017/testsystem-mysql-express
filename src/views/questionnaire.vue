@@ -31,7 +31,7 @@
         <Button type="info">取消</Button>
       </div>
     </div>
-    <!--{{pagedata}}-->
+    <Icon type="ios-undo" @click='$router.go(-1)' size="50" style="position:fixed;right:50%;margin-right:-450px;bottom:30px;color:#fff;text-shadow:3px 0 3px #000"></Icon>
   </div>
 </template>
 
@@ -91,6 +91,7 @@ export default {
         ],
         topdata: {
           gross_score: 0, //总分
+          score_sum: 0, //得分
           amount: 0, //题目数
           sort: false, //隐藏系统考题
           opentest: false, //是否发布
@@ -314,35 +315,45 @@ export default {
       }
     },
     //提交批阅的答卷
-    checkAnswer(){
-      var _this=this;
-      let data=[],ls_qus={};
+    checkAnswer() {
+      var _this = this;
+      let data = [],
+        ls_qus = {};
       for (let i in _this.pagedata.questiondata) {
-        if(_this.pagedata.questiondata[i].gainScore>_this.pagedata.questiondata[i].score){
-          _this.showmsg("第"+i+'题分数不能大于'+_this.pagedata.questiondata[i].score+'分');
+        if (
+          _this.pagedata.questiondata[i].gainScore >
+          _this.pagedata.questiondata[i].score
+        ) {
+          _this.showmsg(
+            "第" +
+              (Number(i) +1)+
+              "题分数不能大于" +
+              _this.pagedata.questiondata[i].score +
+              "分"
+          );
           return false;
         }
-        for(let n in _this.pagedata.questiondata[i]){
-          let value=_this.pagedata.questiondata[i][n];
-          if(n=='question_id'||n=='answer'||n=='gainScore'){
-            ls_qus[n]=value;
+        for (let n in _this.pagedata.questiondata[i]) {
+          let value = _this.pagedata.questiondata[i][n];
+          if (n == "question_id" || n == "answer" || n == "gainScore") {
+            ls_qus[n] = value;
           }
         }
-        data.push(ls_qus)
+        data.push(ls_qus);
       }
       this.$http({
-        method:'post',
-        url:"/checkAnswer",
-        data:{
-          questions:data,
-          exam_id:_this.pagedata.topdata.exam_id
+        method: "post",
+        url: "/checkAnswer",
+        data: {
+          questions: data,
+          exam_id: _this.pagedata.topdata.exam_id
         }
-      }).then(res=>{
-        res=res.data;
-        if(res.code==200){
-           _this.$router.push("/homeQuestion");
+      }).then(res => {
+        res = res.data;
+        if (res.code == 200) {
+          _this.$router.push("/homeQuestion");
         }
-      })
+      });
     },
     /**
      * 上传答卷
@@ -357,25 +368,15 @@ export default {
         let ls_questiondata = _this.pagedata.questiondata[i];
         formdata.questions.push({
           question_id: ls_questiondata.question_id,
-          answer: ""
+          answer: ls_questiondata.questionType == 2&&ls_questiondata.hasOwnProperty('answer')?'':ls_questiondata.answer
         });
-        if (ls_questiondata.questionType != 2) {
-          formdata.questions[i].answer = ls_questiondata.hasOwnProperty(
-            "answer"
-          )
-            ? ls_questiondata.answer
-            : "";
-        } else {
-          for (let n in ls_questiondata.optiondata) {
+        if (ls_questiondata.questionType == 2) {
+         for (let n in ls_questiondata.optiondata) {
             formdata.questions[i].answer +=
               ls_questiondata.optiondata[n].answer == true
                 ? Number(n) + "&"
                 : "";
           }
-          formdata.questions[i].answer = formdata.questions[i].answer.substring(
-            0,
-            formdata.questions[i].answer.length - 1
-          );
         }
       }
       _this
@@ -436,20 +437,23 @@ export default {
               _this.pagedata.questiondata = [];
             } else {
               for (let i in list) {
+                _this.pagedata.topdata.gross_score += Number(list[i].score);
                 ls_question = list[i];
-                if (list[i].answer == list[i].realAnswer) { 
-                  list[i].gainScore=list[i].score;
-                }else{
-                  list[i].gainScore=0
+                if (list[i].answer == list[i].realAnswer) {
+                  list[i].gainScore = list[i].score;
+                } else {
+                  list[i].gainScore = 0;
                 }
-                if (list[i].questionType == 2) {   //多选时答案是  n&m 需要转换格式匹配的每个选项
+                _this.pagedata.topdata.score_sum += Number(list[i].gainScore);
+                if (list[i].questionType == 2) {
+                  //多选时答案是  n&m 需要转换格式匹配的每个选项
                   for (let n in list[i].optiondata) {
                     if (list[i].answer.indexOf(n + "&") != -1) {
                       ls_question.optiondata[n].answer = true;
                     }
                   }
                 }
-                
+
                 ls_question.editorTxt = list[i].problem;
                 _this.$set(
                   _this.pagedata.questiondata,
@@ -506,49 +510,34 @@ export default {
               _this.pagedata.questiondata = [];
             } else {
               for (let i in list) {
-                for (let name in list[i]) {
-                  let value = list[i][name];
-                  switch (name) {
-                    case "question_id":
-                    case "score":
-                    case "answer":
-                    case "note":
-                    case "sort":
-                    case "analysis":
-                    case "questionType":
-                      ls_question[name] = value.toString();
-                      break;
-                    case "problem":
-                      ls_question.editorTxt = value;
-                      break;
-                    case "optiondata":
-                      ls_question.optiondata = [];
-                      value.forEach((currentValue, index, arr) => {
-                        ls_question.optiondata.push({
-                          answer:
-                            currentValue.answer == "true" ||
-                            currentValue.answer == true
-                              ? true
-                              : false,
-                          text: currentValue.text,
-                          img: currentValue.img,
-                          option_id: currentValue.id,
-                          introduce: {
-                            isUrl: currentValue.isUrl,
-                            url:
-                              currentValue.isUrl == 1
-                                ? currentValue.introduce
-                                : "",
-                            editorTxt:
-                              currentValue.isUrl == 0
-                                ? currentValue.introduce
-                                : ""
-                          }
-                        });
-                      });
-                      break;
+                ls_question = list[i];
+                if (list[i].answer == list[i].realAnswer) {
+                  list[i].gainScore = list[i].score;
+                } else {
+                  list[i].gainScore = 0;
+                }
+                _this.pagedata.topdata.score_sum += Number(list[i].gainScore);
+                if (list[i].questionType == 2) {
+                  //多选时答案是  n&m 需要转换格式匹配的每个选项
+                  for (let n in list[i].optiondata) {
+                    if (list[i].answer.indexOf(n + "&") != -1) {
+                      ls_question.optiondata[n].answer = true;
+                    }
+                    ls_question.optiondata[n].introduce = {
+                      isUrl: list[i].optiondata[n].isUrl,
+                      url:
+                        list[i].optiondata[n].isUrl == 1
+                          ? list[i].optiondata[n].introduce
+                          : "",
+                      editorTxt:
+                        list[i].optiondata[n].isUrl == 0
+                          ? list[i].optiondata[n].introduce
+                          : ""
+                    };
                   }
                 }
+                ls_question.editorTxt = list[i].problem;
+
                 _this.$set(
                   _this.pagedata.questiondata,
                   i,

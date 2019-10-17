@@ -12,7 +12,7 @@ class AnswerModel {
      * @param {*} res 
      */
     static async alterAnswer(res) {
-        let { exam_id, user_id, questions, status} = res;
+        let { exam_id, user_id, questions, status } = res;
         questions = JSON.stringify(questions);
         await answer.findAll({
             where: {
@@ -61,11 +61,34 @@ class AnswerModel {
      * @param {} res 
      */
     static async findByExamid(res) {
-        let { exam_id, status } = res;
-        return await answer.findOne({
+        let { exam_id, status, user_id } = res;
+        return await answer.findAll({
             where: {
                 exam_id: exam_id,
-                status: status == -1 ? { [Op.lt]: 3 } : status,
+                status: status == -1 || status == null ? { [Op.lt]: 3 } : status,
+                user_id: user_id == '' || user_id == null ? { [Op.gt]: -1 } : user_id
+            }
+        })
+    }
+    static async deleteAnswer(res) {
+        let { exam_id, user_id, status } = res;
+        return await answer.destroy({
+            where: {
+                exam_id: exam_id == '' || exam_id == null ? { [Op.gt]: -1 } : exam_id,
+                status: status == '' || status == null ? { [Op.lt]: 3 } : status,
+                user_id: user_id == '' || user_id == null ? { [Op.gt]: -1 } : user_id,
+            }
+        })
+    }
+    //修改答卷状态
+    static async AnswerStatus(res){
+        let { exam_id, user_id, status } = res;
+        return await answer.update({
+            status
+        },{
+            where: {
+                exam_id: exam_id == '' || exam_id == null ? { [Op.gt]: -1 } : exam_id,
+                user_id: user_id == '' || user_id == null ? { [Op.gt]: -1 } : user_id,
             }
         })
     }

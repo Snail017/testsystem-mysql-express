@@ -9,7 +9,7 @@
           <Button type="primary" @click="$emit('checkAnswer',1)">提交改卷</Button>
         </div>
         <div class="fr" v-if="Ispaper!=0">
-          <p>试卷总分：{{topdata.score_sum}}</p>
+          <p>试卷得分：{{topdata.score_sum}}/{{topdata.gross_score}}</p>
         </div>
         <div class="fr">
           <p v-if="Ispaper==0">试卷倒计时：{{topdata.testTime}}分钟</p>
@@ -21,13 +21,13 @@
       <h1 class="st_title">{{titledata.title}}</h1>
       <div v-html="titledata.editorTxt" class="st_subtitile"></div>
     </div>
-    <div v-for="(items,indexs) in questiondata">{{items}}
+    <div v-for="(items,indexs) in questiondata">
       <div class="st_question_content clearfix">
         <div style="display: flex">
           <span v-if="!topdata.sort">{{indexs+1}}.</span>
           <b v-if="topdata.sort" class="cl-red">*</b>
           <span v-html="items.editorTxt"></span>({{items.score}}分)
-          <span style="color:red;margin-left:5px;" v-if="Ispaper!=0">得分：<input v-if="items.questionType==0" type="number" v-model="items.gainScore" :readonly="Ispaper==2?true:false"  style="width:80px;" :placeholder="'不超过'+items.score+'分'"/> <template v-else>{{items.gainScore}}</template>  </span>  
+          <span style="color:red;margin-left:5px;" v-if="Ispaper!=0">得分：<input v-if="items.questionType==0&&Ispaper==1" type="number" v-model="items.gainScore" style="width:80px;" :placeholder="'不超过'+items.score+'分'"/> <template v-else>{{items.gainScore}}</template>  </span>  
         </div>
         <div class="pdt-10"  v-html="items.note"></div>
         <div v-if="items.questionType==1">

@@ -36,7 +36,6 @@ Routers.delete("/Exam",Exam.deleteExam)
 
 //答卷接口
 Routers.patch("/answer",Answer.answerStatus)
-Routers.delete("/answer",Answer.deleteAnswer)
 Routers.get("/answerUser",Answer.answerUser)
 Routers.get("/answerList",Answer.answerList)   
 Routers.get("/personalPage",Answer.personalPage)
