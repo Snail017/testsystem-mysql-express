@@ -17,14 +17,14 @@
         ></Input>
       </Col>
       <Col :lg="5" :xs="24">
-        <Select v-model="examType" size="large">
+        <Select @change="examType=$event; answerList()" size="large">
           <Option value="-1">全部</Option>
           <Option value="0">未考试</Option>
           <Option value="1">已完成</Option>
         </Select>
       </Col>
       <Col :lg="5" :xs="24" style="float:right">
-        <Button type="info" @click="examType=2">
+        <Button type="info" @click="examType=2;answerList()">
           <i class="iconfont icon-huishouzhan"></i>回收站
         </Button>
       </Col>
@@ -95,18 +95,13 @@ export default {
   components: {
     pagenation
   },
-  watch: {
-    examType: {
-      handler(newVal) {
-        this.answerList();
-      },
-      immediate:true
-    }
+  mounted() {
+    this.answerList();
   },
   methods: {
     deleteAnswer(exam_id) {
       var _this = this;
-      _this.$confirm('确定删除该试卷？', {
+      _this.$confirm("确定删除该试卷？", {
         btn: ["确定", "取消"],
         btnFun: [
           function() {
@@ -116,16 +111,17 @@ export default {
                 url: "/answer",
                 params: {
                   exam_id: exam_id,
-                  status:2
+                  status: 2
                 }
               })
               .then(res => {
-                if (res.status == 200){
-                   _this.answerList();  _this.$hide();
-                   _this.$msg(res.data.msg)
+                if (res.status == 200) {
+                  _this.answerList();
+                  _this.$hide();
+                  _this.$msg(res.data.msg);
                 }
               });
-          },
+          }
         ]
       });
     },

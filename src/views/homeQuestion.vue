@@ -22,7 +22,7 @@
         ></Input>
       </Col>
       <Col :lg="5" :xs="24">
-        <Select v-model="examType" size="large">
+        <Select @change="examType=$event; answerList()" size="large">
           <Option value="-1">全部</Option>
           <Option value="0">未发布</Option>
           <Option value="1">发布中</Option>
@@ -30,7 +30,7 @@
         </Select>
       </Col>
       <Col :xs="{span:5}" :lg="3">
-        <Button type="info" @click="examType=3">
+        <Button type="info" @click="examType=3;answerList()">
           <i class="iconfont icon-huishouzhan"></i>回收站
         </Button>
       </Col>
