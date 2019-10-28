@@ -5,7 +5,6 @@ const Answer = require('./controllers/answer')
 const Ques = require('./controllers/question')
 const Option = require('./controllers/option')
 const upload=require('./controllers/upload')
-// const UploadToken = require('../controllers/UploadToken')
 const Routers = express.Router();
 
 //  用户注册
@@ -44,6 +43,5 @@ Routers.post("/checkAnswer",Answer.checkAnswer)  //试卷批阅提交
 /**
  * 上传token
  */
-// Routers.get('/upload/token', UploadToken.token)
 
 module.exports = Routers

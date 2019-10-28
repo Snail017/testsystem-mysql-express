@@ -8,17 +8,14 @@ const bodyParser = require('body-parser');
 const cookieParase = require('cookie-parser');
 const redis = require('redis');
 const express = require('express');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const Token = require('./config/token.config.js')
 const app = express();
+const routes = require('./routes');
+const Token = require('./config/token.config.js')
 
-global.public_key = fs.readFileSync(__dirname+"/key/pub.key").toString();
-global.private_key = fs.readFileSync(__dirname+"/key/pri.key").toString();
+global.public_key=fs.readFileSync(__dirname+"/key/pub.key",'UTF-8');
+global.private_key=fs.readFileSync(__dirname+"/key/pri.key",'UTF-8');
 app.use(cookieParase());
 app.use(bodyParser.json());
-
-const routes = require(__dirname+'/routes');
- 
 //对接口过滤检验token
 app.all("*", async (req, res, next) => {
     res.header("Access-Control-Expose-Headers", "Authorization");
@@ -49,7 +46,13 @@ app.all("*", async (req, res, next) => {
     }
 })
 
-app.use('/', routes);  // 后端api路由
+// app.use('/', routes);  // 后端api路由
+
+// 监听端口
+app.listen(3000, 'localhost', function (err, res) {
+    if (err) console.log(err)
+    console.log('success listen at port:3000......')
+})
 
 //连接redis数据库
 
@@ -67,14 +70,4 @@ global.client.on("connect", function () {
 global.client.on('ready', function (res, req) {
     console.log("redis success.....")
 });
-
-// 连接数据库
-// global.conn = mysql.createConnection(models.mysql);
-// global.conn.connect();
-
-// 监听端口
-app.listen(3000, 'localhost', function (err, res) {
-    if (err) console.log(err)
-    console.log('success listen at port:3000......')
-})
 
