@@ -46,7 +46,7 @@ app.all("*", async (req, res, next) => {
     }
 })
 
-// app.use('/', routes);  // 后端api路由
+app.use('/', routes);  // 后端api路由
 
 // 监听端口
 app.listen(3000, 'localhost', function (err, res) {
