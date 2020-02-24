@@ -2,9 +2,9 @@
 module.exports = {
     // 打开哪个数据库
     mysql:{
-        host: '127.0.0.1',//95.169.20.53
+        host: '127.0.0.1',
         user: 'root',
-        password: '',  //Zq@574839
+        password: '',  
         database: 'zqq',
         port: '3306',
         // 数据表相关的全局配置
