@@ -51,6 +51,7 @@ module.exports = {
                 }
             ]
         ),
+        
         new CompressionWebpackPlugin({
             // asset: '[path].gz[query]',
             algorithm: 'gzip',
