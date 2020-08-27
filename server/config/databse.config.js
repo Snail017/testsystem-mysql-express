@@ -4,7 +4,7 @@ module.exports = {
     mysql:{
         host: '127.0.0.1',
         user: 'root',
-        password: '',  
+        password: '12345678',  
         database: 'zqq',
         port: '3306',
         // 数据表相关的全局配置
