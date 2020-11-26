@@ -7,12 +7,12 @@
     "build": "vue-cli-service build",
     "app": "node server/app.js"
   },
-  "bin":"server/app.js",
-  "pkg":{
-    "assets":[
+  "bin": "server/app.js",
+  "pkg": {
+    "assets": [
       "server/key/**/*"
     ],
-    "key":"server/key/*.key"
+    "key": "server/key/*.key"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -51,6 +51,8 @@
     "fs": "0.0.1-security",
     "fs-extra": "^8.1.0",
     "jquery": "^3.3.1",
+    "jsdom": "^16.4.0",
+    "jsdom-global": "^3.0.2",
     "path": "^0.12.7",
     "pkg": "^4.4.0",
     "plugin": "^0.3.3",
