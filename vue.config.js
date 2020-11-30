@@ -20,7 +20,9 @@ module.exports = {
     chainWebpack: config => {
         config.resolve.alias
             .set("@", resolve("src"))
-        const oneOfsMap = config.module.rule('scss').oneOfs.store
+		const oneOfsMap = config.module.rule('scss').oneOfs.store
+		
+		// 编译sass scss文件
         oneOfsMap.forEach(item => {
             item
                 .use('sass-resources-loader')
@@ -31,13 +33,15 @@ module.exports = {
                     ],
                 })
                 .end()
-        })
+		})
+		//压缩图片
         config.module.rule('images')
             .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
             .use('image-webpack-loader')
             .loader('image-webpack-loader')
-            .options({ bypassOnDebug: true })
-
+			.options({ bypassOnDebug: true })
+			
+		//压缩文件
         config.plugin('compressionPlugin')
             .use(new CompressionPlugin({
                 test: /\.js$|\.html$|\.css/,//匹配文件名 
