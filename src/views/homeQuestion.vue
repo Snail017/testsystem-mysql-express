@@ -1,12 +1,12 @@
 <template>
   <div class="form-horizontal answer_body">
     <Row class="answer_head" :gutter="16">
-      <Col :xs="{span:8}" :lg="{span:3}">
+      <Col :xs="8" :lg="3">
         <router-link tag="Button" type="primary" to="/questionnaire">
           <i class="iconfont icon-76xinzeng"></i>制作问卷
         </router-link>
       </Col>
-      <Col :xs="{span:8}" :lg="{span:3}">
+      <Col :xs="8" :lg="3">
         <router-link tag="Button" type="primary" to="/homeAnswer">
           <i class="iconfont icon-xierushujuku"></i>我的答卷
         </router-link>
@@ -29,16 +29,17 @@
           <Option value="2">已完成</Option>
         </Select>
       </Col>
-      <Col :xs="{span:5}" :lg="3">
+      <Col :xs="5" :lg="3">
         <Button type="info" @click="examType=3;answerList()">
           <i class="iconfont icon-huishouzhan"></i>回收站
         </Button>
       </Col>
     </Row>
-    <template v-if="testdata!=''">
+    <template v-if="!testdata">
       <Row
         class="answer_list"
         v-for="(item,index) in testdata"
+        :key="index"
         :class="{'bg_yellow':item.status==0,'bg_green':item.status==1}"
       >
         <Col :xs="6">ID:{{item.id}}[{{item.title}}]</Col>
@@ -248,7 +249,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .bg_yellow {
   background: #d4cbc0 !important;
 }
@@ -285,6 +286,9 @@ export default {
 .answer_head {
   border-bottom: 1px solid #ddd;
   padding-bottom: 30px;
+  /deep/.ivu-col{
+    margin: rem(10) 0;
+  }
 }
 .st_btn {
   color: #fff;
