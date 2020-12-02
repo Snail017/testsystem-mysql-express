@@ -36,3 +36,4 @@ html,body{height: 100%;font-size: 16px;}
 @media screen and (max-width: 800px){
     .window{width:80%;left: 50%;margin-left: -400px;}
 }
+

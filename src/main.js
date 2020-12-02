@@ -2,9 +2,7 @@ import Vue from 'vue'
 import App from '@/App'
 import router from '@/router'
 import crypto from 'crypto'
-import iView from 'iview'
-import 'iview/dist/styles/iview.css';
-
+import ViewUI from 'view-design';
 import http from "@/http"
 
 import '@/assets/css/common.css'
@@ -14,8 +12,8 @@ import zqlayer from '@/lib/index'
 
 Vue.use(zqlayer);
 Vue.use(zq);
-Vue.use(iView);
 Vue.use(crypto);
+Vue.use(ViewUI);
 
 Vue.prototype.crypto = crypto;
 Vue.prototype.$http = http;

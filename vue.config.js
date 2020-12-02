@@ -20,28 +20,43 @@ module.exports = {
     chainWebpack: config => {
         config.resolve.alias
             .set("@", resolve("src"))
-		const oneOfsMap = config.module.rule('scss').oneOfs.store
-		
-		// 编译sass scss文件
+        const oneOfsMap = config.module.rule('scss').oneOfs.store
+
+        // 编译sass scss文件
         oneOfsMap.forEach(item => {
             item
                 .use('sass-resources-loader')
                 .loader('sass-resources-loader')
                 .options({
                     resources: [
-						'./src/assets/common/common.scss'
+                        './src/assets/css/common.scss',
                     ],
                 })
                 .end()
-		})
-		//压缩图片
+        })
+        config.module
+            .rule('svg')
+            .exclude.add(resolve('src/icons'))
+            .end();
+
+        config.module
+            .rule('icons')
+            .test(/\.svg$/)
+            .include.add(resolve('src/icons'))
+            .end()
+            .use('svg-sprite-loader')
+            .loader('svg-sprite-loader')
+            .options({
+                symbolId: 'icon-[name]'
+            });
+        //压缩图片
         config.module.rule('images')
             .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
             .use('image-webpack-loader')
             .loader('image-webpack-loader')
-			.options({ bypassOnDebug: true })
-			
-		//压缩文件
+            .options({ bypassOnDebug: true })
+
+        //压缩文件
         config.plugin('compressionPlugin')
             .use(new CompressionPlugin({
                 test: /\.js$|\.html$|\.css/,//匹配文件名 
@@ -60,7 +75,7 @@ module.exports = {
                     name: 'pdf/[name].[hash:8].[ext]'
                 }
             }]
-		})
+        })
     },
 
     // vue-loader 配置项
@@ -89,20 +104,20 @@ module.exports = {
     // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
     pwa: {},
     // webpack-dev-server 相关配置
-	devServer: {
-		hot: true,
-		disableHostCheck: true,
-		// 设置代理
-		proxy: {
-			'/': {
-				ws: false,
-				target: 'http://localhost:3000',
-				changeOrigin: true,
-				pathRewrite: {
-					'^/': '/'
-				}
-			},
-		}
-	},
+    devServer: {
+        hot: true,
+        disableHostCheck: true,
+        // 设置代理
+        proxy: {
+            '/': {
+                ws: false,
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/': '/'
+                }
+            },
+        }
+    },
 
 };
