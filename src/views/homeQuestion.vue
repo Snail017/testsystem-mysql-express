@@ -248,7 +248,6 @@ export default {
   }
 };
 </script>
-
 <style scoped lang="scss">
 .bg_yellow {
   background: #d4cbc0 !important;
@@ -309,8 +308,8 @@ export default {
 }
 .st_null {
   text-align: center;
-  margin: auto;
-  font-size: 25px;
+  margin:rem(30) auto 0;
+  font-size: rem(50);
 }
 
 @media screen and (max-width: 800px) {

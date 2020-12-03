@@ -13,8 +13,8 @@
       <testTitle v-if="!isPaper" :titledata="pagedata.titledata"></testTitle>
       <answerquestion
         v-if="isPaper"
-        @submitAnswer="submitAnswer"
-        @checkAnswer="checkAnswer"
+        @submit-answer="submitAnswer"
+        @check-answer="checkAnswer"
         :isExamAnswer="isExamAnswer"
         :titledata="pagedata.titledata"
         :questiondata="pagedata.questiondata"
@@ -610,9 +610,6 @@ export default {
   }
   .body >>> .navtop {
     top: 0px;
-  }
-  .body >>> .title {
-    margin-top: 35px;
   }
 }
 .content {

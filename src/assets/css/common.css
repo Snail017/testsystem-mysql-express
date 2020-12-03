@@ -33,7 +33,3 @@ html,body{height: 100%;font-size: 16px;}
 .window{background:#fff;width: 800px;position: fixed;top:30%;left: 50%;margin-left:-400px;padding:1rem;border-radius: 5px;z-index: 3;}
 .window .icon-guanbi{position: absolute;right: 1px;font-size: 30px;top:-5px;color: grey;}
 .window input{border-radius: 3px;border:1px solid #ccc;}
-@media screen and (max-width: 800px){
-    .window{width:80%;left: 50%;margin-left: -400px;}
-}
-

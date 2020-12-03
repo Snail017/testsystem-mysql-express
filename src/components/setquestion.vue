@@ -1,79 +1,153 @@
 <template>
   <div>
     <div
-      v-for="(items,indexs) in questiondata"
-      @mouseenter="items.navOperate=true;"
-      @mouseleave="items.navOperate=false"
+      v-for="(items, indexs) in questiondata"
+      :key="indexs"
+      @mouseenter="items.navOperate = true"
+      @mouseleave="items.navOperate = false"
     >
-      <div class="st_question_content" @click.stop="items.isshow+=1;">
+      <div class="st_question_content" @click.stop="items.isshow += 1">
         <div style="display: flex">
-          <span v-if="!topdata.sort">{{indexs+1}}.</span>
+          <span v-if="!topdata.sort">{{ indexs + 1 }}.</span>
           <b v-if="topdata.sort" class="cl-red">*</b>
-          <span v-html="items.editorTxt==''?'请输入题目':items.editorTxt"></span>
+          <span
+            v-html="items.editorTxt == '' ? '请输入题目' : items.editorTxt"
+          ></span>
         </div>
-        <div class="form-group pdt-10 clearfix" v-if="items.note!=''" v-html="items.note"></div>
-        <div v-if="items.questionType==1">
+        <div
+          class="form-group pdt-10 clearfix"
+          v-if="items.note != ''"
+          v-html="items.note"
+        ></div>
+        <div v-if="items.questionType == 1">
           <div
-            v-for="(item,index) in items.optiondata"
-            :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}"
+            v-for="(item, index) in items.optiondata"
+            :key="index"
+            :class="{
+              optionBorder:
+                item.img != '' ||
+                (item.introduce.editorTxt != '' && item.introduce.url != ''),
+            }"
           >
             <label>
-              <input type="radio" :checked="items.answer==index">
-              <span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
-              <div v-if="item.img!=''"><img :src="item.img" alt></div>
+              <input type="radio" :checked="items.answer == index" />
+              <span
+                v-html="
+                  item.text == '' ? '请输入选项' + (index + 1) : item.text
+                "
+              ></span>
+              <div v-if="item.img != ''"><img :src="item.img" alt /></div>
             </label>
-            <span v-html="item.introduce.isUrl=='1'?item.introduce.url:item.introduce.editorTxt"></span>
+            <span
+              v-html="
+                item.introduce.isUrl == '1'
+                  ? item.introduce.url
+                  : item.introduce.editorTxt
+              "
+            ></span>
           </div>
         </div>
-        <div v-if="items.questionType==3">
+        <div v-if="items.questionType == 3">
           <div
-            v-for="(item,index) in items.optiondata"
-            :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}"
+            v-for="(item, index) in items.optiondata"
+            :key="index"
+            :class="{
+              optionBorder:
+                item.img != '' ||
+                (item.introduce.editorTxt != '' && item.introduce.url != ''),
+            }"
           >
             <label>
-              <input type="radio" :checked="items.answer==index">
-              <span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
-              <div v-if="item.img!=''"><img :src="item.img" alt></div>
+              <input type="radio" :checked="items.answer == index" />
+              <span
+                v-html="
+                  item.text == '' ? '请输入选项' + (index + 1) : item.text
+                "
+              ></span>
+              <div v-if="item.img != ''"><img :src="item.img" alt /></div>
             </label>
           </div>
         </div>
-        <div v-if="items.questionType==2">
+        <div v-if="items.questionType == 2">
           <div
-            v-for="(item,index) in items.optiondata"
-            :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}"
+            v-for="(item, index) in items.optiondata"
+            :key="index"
+            :class="{
+              optionBorder:
+                item.img != '' ||
+                (item.introduce.editorTxt != '' && item.introduce.url != ''),
+            }"
           >
             <label>
-              <input type="checkbox" v-model="item.answer">
-              <span v-html="item.text==''?'请输入选项'+(index+1):item.text"></span>
-              <img v-if="item.img!=''" :src="item.img" alt>
+              <input type="checkbox" v-model="item.answer" />
+              <span
+                v-html="
+                  item.text == '' ? '请输入选项' + (index + 1) : item.text
+                "
+              ></span>
+              <img v-if="item.img != ''" :src="item.img" alt />
             </label>
-            <span v-html="item.introduce.isUrl=='1'?item.introduce.url:item.introduce.editorTxt"></span>
+            <span
+              v-html="
+                item.introduce.isUrl == '1'
+                  ? item.introduce.url
+                  : item.introduce.editorTxt
+              "
+            ></span>
           </div>
         </div>
         <!--简答-->
-        <Input v-if="items.questionType==0" readonly type="textarea" class="pd-10"></Input>
-        <div class="pd-10 clearfix" v-if="items.analysis!=''">
+        <Input
+          v-if="items.questionType == 0"
+          readonly
+          type="textarea"
+          class="pd-10"
+        ></Input>
+        <div class="pd-10 clearfix" v-if="items.analysis != ''">
           <span class="fl">题目解析：</span>
           <div class="fl" v-html="items.analysis"></div>
         </div>
         <Row justify="end" type="flex">
-           <Button  type="primary" @click.stop="items.isshow+=1">编辑</Button> &nbsp;
-           <Button  type="primary" @click.stop="copy(items,indexs)">复制</Button>&nbsp;
-            <Button  type="primary" @click.stop="deleteQuestion(items.question_id,indexs)"
-            >删除</Button>&nbsp;
-            <Button type="primary" @click.stop="questiondata.length>1?($set(questiondata,indexs,questiondata[indexs-1]),$set(questiondata,indexs-1,items)):''"
-            >上移</Button> &nbsp;
-            <Button  type="primary"  @click.stop="questiondata.length>1?($set(questiondata,indexs,questiondata[indexs+1]),$set(questiondata,indexs+1,items)):''"
-            >下移</Button>&nbsp;
-            <Button type="primary" @click="first(items.indexs)">最前</Button>&nbsp;
-            <Button type="primary" @click="last(items,indexs)">最后</Button>
+          <Button type="primary" @click.stop="items.isshow += 1">编辑</Button>
+          &nbsp;
+          <Button type="primary" @click.stop="copy(items, indexs)">复制</Button
+          >&nbsp;
+          <Button
+            type="primary"
+            @click.stop="deleteQuestion(items.question_id, indexs)"
+            >删除</Button
+          >&nbsp;
+          <Button
+            type="primary"
+            @click.stop="
+              questiondata.length > 1
+                ? ($set(questiondata, indexs, questiondata[indexs - 1]),
+                  $set(questiondata, indexs - 1, items))
+                : ''
+            "
+            >上移</Button
+          >
+          &nbsp;
+          <Button
+            type="primary"
+            @click.stop="
+              questiondata.length > 1
+                ? ($set(questiondata, indexs, questiondata[indexs + 1]),
+                  $set(questiondata, indexs + 1, items))
+                : ''
+            "
+            >下移</Button
+          >&nbsp;
+          <Button type="primary" @click="first(items.indexs)">最前</Button
+          >&nbsp;
+          <Button type="primary" @click="last(items, indexs)">最后</Button>
         </Row>
       </div>
-      <div class="st_setquestion" v-if="items.isshow%2==1">
+      <div class="st_setquestion" v-if="items.isshow % 2 == 1">
         <testeditor :editordata="items"></testeditor>
-        <Row class="st_selecttype" :gutter="16"> 
+        <Row class="st_selecttype" :gutter="16">
           <Col :xs="12" :lg="6">
-           <Select v-model="items.questionType">
+            <Select v-model="items.questionType">
               <Option value="0" key="0">简答</Option>
               <Option value="1" key="1">单选</Option>
               <Option value="2" key="2">多选</Option>
@@ -81,41 +155,71 @@
             </Select>
           </Col>
           <Col :xs="12" :lg="4">
-            <input type="checkbox" class="form-check-input" v-model="items.mustanswer">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              v-model="items.mustanswer"
+            />
             <label class="form-check-label">必答</label>
             <span
               class="st_note"
-              @click="items.haswindow+=1;wintxt.editorTxt=items.note;items.windowtype='note'"
-            >编辑提示</span>
+              @click="
+                items.haswindow += 1;
+                wintxt.editorTxt = items.note;
+                items.windowtype = 'note';
+              "
+              >编辑提示</span
+            >
           </Col>
-           <Col :xs="24" :lg="10">
+          <Col :xs="24" :lg="10">
             <label>题目分数：</label>
-            <Input  style="width: 80px;" v-model="items.score"></Input>
+            <Input style="width: 80px" v-model="items.score"></Input>
             <span
               class="st_note"
-              @click="items.haswindow+=1;wintxt.editorTxt=items.analysis;items.windowtype='analysis'"
-            >设置答案解析</span>
+              @click="
+                items.haswindow += 1;
+                wintxt.editorTxt = items.analysis;
+                items.windowtype = 'analysis';
+              "
+              >设置答案解析</span
+            >
           </Col>
         </Row>
         <testOption
-          v-if="items.questionType!=0"
+          v-if="items.questionType != 0"
           :optiondata="items.optiondata"
           :questiondata="items"
           :index="indexs"
           :questiontype="items.questionType"
         ></testOption>
-        <Button  type="primary" long @click="items.isshow+=1">完成编辑</Button>
-        <div class="bg" v-if="items.haswindow%2==1" @click="items.haswindow+=1;"></div>
-        <div class="window" v-if="items.haswindow%2==1">
+        <Button type="primary" long @click="items.isshow += 1">完成编辑</Button>
+        <div
+          class="bg"
+          v-if="items.haswindow % 2 == 1"
+          @click="items.haswindow += 1"
+        ></div>
+        <div class="window" v-if="items.haswindow % 2 == 1">
           <Row>
-            <i class="iconfont icon-guanbi" @click="items.haswindow+=1;"></i>
+            <i class="iconfont icon-guanbi" @click="items.haswindow += 1"></i>
           </Row>
           <testeditor :editordata="wintxt"></testeditor>
           <Row type="flex" justify="center" class="pd-10">
-              <Button type="info" size="large" @click="items.haswindow+=1;">取消</Button> &nbsp;
-              <Button type="primary" size="large" @click="items.windowtype=='note'?items.note=wintxt.editorTxt:items.analysis=wintxt.editorTxt;items.haswindow+=1;"
-              >确定</Button>
-          </Row> 
+            <Button type="info" size="large" @click="items.haswindow += 1"
+              >取消</Button
+            >
+            &nbsp;
+            <Button
+              type="primary"
+              size="large"
+              @click="
+                items.windowtype == 'note'
+                  ? (items.note = wintxt.editorTxt)
+                  : (items.analysis = wintxt.editorTxt);
+                items.haswindow += 1;
+              "
+              >确定</Button
+            >
+          </Row>
         </div>
       </div>
     </div>
@@ -130,7 +234,7 @@ export default {
   name: "setquestion",
   components: {
     testOption,
-    testeditor
+    testeditor,
   },
   props: ["questiondata", "topdata"],
   data() {
@@ -138,11 +242,11 @@ export default {
       haswindow: 0,
       wintxt: {
         //给编辑模板页使用，编辑子模板无法直接对父模板data进行操作，但是可以控制data中数组的子数据
-        editorTxt: ""
+        editorTxt: "",
       },
       windowtype: "",
       score: 0,
-      isshow: 0
+      isshow: 0,
     };
   },
   watch: {
@@ -156,8 +260,8 @@ export default {
         }
       },
       immediate: true,
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
     deleteQuestion(id, indexs) {
@@ -173,12 +277,12 @@ export default {
           method: "delete",
           url: "/questions",
           data: {
-            id: id
-          }
+            id: id,
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.status == 200) {
-            _this.questiondata.splice(indexs, 1)
+            _this.questiondata.splice(indexs, 1);
           }
         });
     },
@@ -203,19 +307,22 @@ export default {
         this.questiondata.splice(this.questiondata.length, 1);
         this.questiondata.push(ls_data);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
+/deep/.ivu-btn{
+  margin: rem(5);
+}
 .optionBorder {
   border: 1px solid #ccc;
   margin: 10px 0;
   padding: 5px;
 }
 .st_question_content {
-  padding: 10px 100px;
+  padding: rem(20);
   background: #fff;
   border-bottom: 1px solid #ddd;
 }
@@ -226,6 +333,7 @@ input:disabled {
   color: #999;
 }
 .st_setquestion .st_note {
+
   text-decoration: underline;
   color: #0a6ebd;
   cursor: pointer;
@@ -238,7 +346,7 @@ input:disabled {
 .st_setquestion {
   background: #fafafa;
   width: 100%;
-  padding: 20px 40px;
+  padding:rem(20);
   position: relative;
 }
 
@@ -265,9 +373,6 @@ input:disabled {
 @media screen and (max-width: 850px) {
   .btn {
     padding: 5px 3px;
-  }
-  .st_question_content {
-    padding: 10px 30px;
   }
 }
 </style>

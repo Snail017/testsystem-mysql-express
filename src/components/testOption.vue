@@ -9,7 +9,7 @@
         <td>上移下移</td>
         <td>删除</td>
       </tr>
-      <tr v-for="(items,indexs) in optiondata">
+      <tr v-for="(items,indexs) in optiondata" :key=indexs>
         <td>
           <input type="hidden" v-model="items.sort=indexs">
           <Input type="text" class="form-control" v-model="items.text"></Input>
@@ -77,8 +77,8 @@
     ></div>
     <div class="imgcontent container-fluid" v-if="windowdata.has_img_window">
       <Row class="bg-ddd cont_head">
-        <Col span="23">{{windowdata.text}}&nbsp;</Col>
-        <Col span="1">
+        <Col span="22">{{windowdata.text}}</Col>
+        <Col span="2">
            <i @click="windowdata.has_img_window=false" class=" iconfont icon-guanbi"></i>
         </Col> 
       </Row>
@@ -108,10 +108,10 @@
         </Col>
       </Row>
       <Row class="pd-10" type="flex" justify="center">
-        <Col span="2">
+        <Col :md="2" :xs=6>
           <Button type="info" size="large" @click="windowdata.has_img_window=false">取消</Button>
         </Col>
-        <Col span="2">
+        <Col :md="2" :xs=6>
           <Button type="primary" size="large"  @click="windowImg();windowdata.has_img_window=false">确定</Button>
         </Col>
       </Row>
@@ -262,7 +262,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .st_testradio .iconfont.icon-jiazaizhong1 {
   color: #fff;
   animation: circle 3s linear infinite;
@@ -279,7 +279,6 @@ export default {
 .st_testradio .iconfont {
   vertical-align: middle;
   font-size: 25px;
-  line-height: 15px;
   color: gray;
 }
 .st_testradio td {
@@ -306,9 +305,9 @@ export default {
   top: 30%;
   z-index: 3;
   background: #fff;
-  width: 800px;
+  width: rem(1400);
   left: 50%;
-  margin-left: -400px;
+  margin-left: -rem(1400/2);
 }
 .cont_head {
   border-radius: 5px 5px 0 0;
@@ -320,7 +319,7 @@ export default {
 }
 .cont_head > div {
   vertical-align: middle;
-  line-height: 38px;
+  height: 38px;
   overflow: hidden;
   white-space: pre-line;
   text-overflow: ellipsis;
@@ -350,6 +349,14 @@ export default {
 @media screen and(max-width: 1000px) {
   .imgcontent {
     width: 80%;
+  }
+  .imgcontent {
+    position: fixed;
+    top: 30%;
+    z-index: 3;
+    background: #fff;
+    width: 96%;
+    left: 2%;
   }
 }
 </style>

@@ -20,6 +20,9 @@ module.exports = {
     chainWebpack: config => {
         config.resolve.alias
             .set("@", resolve("src"))
+            .set("_A", resolve("src/assets"))
+            .set("_CSS", resolve("src/assets/css"))
+            .set("_IMG", resolve("src/assets/images"))
         const oneOfsMap = config.module.rule('scss').oneOfs.store
 
         // 编译sass scss文件
@@ -92,7 +95,7 @@ module.exports = {
         // css预设器配置项
         loaderOptions: {},
         // 启用 CSS modules for all css / pre-processor files.
-        requireModuleExtension: false
+        modules: false
     },
     // use thread-loader for babel & TS in production build
     // enabled by default if the machine has more than 1 cores

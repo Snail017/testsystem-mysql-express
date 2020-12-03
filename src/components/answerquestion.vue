@@ -3,10 +3,10 @@
     <div class="st_top_content">
       <div class="header clearfix">
         <div class="fl" v-if="Ispaper==0">
-          <Button type="primary" @click="$emit('submitAnswer',1)">提交考试</Button>
+          <Button type="primary" @click="$emit('submit-answer',1)">提交考试</Button>
         </div>
         <div class="fl" v-if="Ispaper==1">
-          <Button type="primary" @click="$emit('checkAnswer',1)">提交改卷</Button>
+          <Button type="primary" @click="$emit('check-answer',1)">提交改卷</Button>
         </div>
         <div class="fr" v-if="Ispaper!=0">
           <p>试卷得分：{{topdata.score_sum}}/{{topdata.gross_score}}</p>
@@ -21,7 +21,7 @@
       <h1 class="st_title">{{titledata.title}}</h1>
       <div v-html="titledata.editorTxt" class="st_subtitile"></div>
     </div>
-    <div v-for="(items,indexs) in questiondata">
+    <div v-for="(items,indexs) in questiondata" :key=indexs>
       <div class="st_question_content clearfix">
         <div style="display: flex">
           <span v-if="!topdata.sort">{{indexs+1}}.</span>
@@ -33,6 +33,7 @@
         <div v-if="items.questionType==1">
           <div
             v-for="(item,index) in items.optiondata"
+            :key=index
             :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}"
           >
             <label>
@@ -53,7 +54,7 @@
           </div>
         </div>
         <div v-if="items.questionType==3">
-          <div v-for="(item,index) in items.optiondata">
+          <div v-for="(item,index) in items.optiondata" :key=index>
             <label @focus="items.answer+'&'+(index+1)">
               <input
                 :name="'judge'+indexs"
@@ -69,6 +70,7 @@
         <div v-if="items.questionType==2">
           <div
             v-for="(item,index) in items.optiondata"
+            :key=index
             :class="{'optionBorder':(item.img!=''||(item.introduce.editorTxt!=''&&item.introduce.url!=''))}"
           >
             <label>
