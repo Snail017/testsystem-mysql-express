@@ -13,8 +13,7 @@ import zqlayer from '@/lib/index'
 Vue.use(zqlayer);
 Vue.use(zq);
 Vue.use(crypto);
-Vue.use(ViewUI);
-
+Vue.use(ViewUI)
 Vue.prototype.crypto = crypto;
 Vue.prototype.$http = http;
 Vue.config.productionTip = false;
