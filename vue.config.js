@@ -23,20 +23,20 @@ module.exports = {
             .set("_A", resolve("src/assets"))
             .set("_CSS", resolve("src/assets/css"))
             .set("_IMG", resolve("src/assets/images"))
-        const oneOfsMap = config.module.rule('scss').oneOfs.store
+        // const oneOfsMap = config.module.rule('scss').oneOfs.store
 
         // 编译sass scss文件
-        oneOfsMap.forEach(item => {
-            item
-                .use('sass-resources-loader')
-                .loader('sass-resources-loader')
-                .options({
-                    resources: [
-                        './src/assets/css/config.scss',
-                    ],
-                })
-                .end()
-        })
+        // oneOfsMap.forEach(item => {
+        //     item
+        //         .use('sass-resources-loader')
+        //         .loader('sass-resources-loader')
+        //         .options({
+        //             resources: [
+        //                 './src/assets/css/config.scss',
+        //             ],
+        //         })
+        //         .end()
+        // })
         config.module
             .rule('svg')
             .exclude.add(resolve('src/icons'))
@@ -93,9 +93,14 @@ module.exports = {
         // 开启 CSS source maps?
         sourceMap: false,
         // css预设器配置项
-        loaderOptions: {},
+        loaderOptions: {
+            //向所有 Sass/Less 样式传入共享的全局变量
+            scss:{
+                additionalData:'@import "~@/assets/css/config.scss";'
+            },
+        },
         // 启用 CSS modules for all css / pre-processor files.
-        requireModuleExtension: false,
+        requireModuleExtension: true,
     },
     // use thread-loader for babel & TS in production build
     // enabled by default if the machine has more than 1 cores

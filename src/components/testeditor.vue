@@ -5,12 +5,10 @@
     v-model="editordata.editorTxt"
   ></quill-editor>
 </template>
-<style lang="scss" scoped>
-@import "~quill/dist/quill.core.css";
-@import "~quill/dist/quill.snow.css";
-@import "~quill/dist/quill.bubble.css";
-</style>
 <script>
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
 import { quillEditor, Quill } from "vue-quill-editor";
 import { container, ImageExtend, QuillWatch } from "quill-image-extend-module";
 Quill.register("modules/ImageExtend", ImageExtend);

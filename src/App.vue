@@ -4,8 +4,7 @@
   </div>
 </template>
 <style lang="scss">
-@import "~@/assets/css/common.scss";
-@import "~@/assets/css/iconfont.css";
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
