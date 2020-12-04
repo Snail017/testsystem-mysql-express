@@ -2,11 +2,8 @@ import Vue from 'vue'
 import App from '@/App'
 import router from '@/router'
 import crypto from 'crypto'
-import ViewUI from 'view-design';
+import ViewUI from 'view-design'
 import http from "@/http"
-
-import '@/assets/css/common.css'
-import '@/assets/css/iconfont.css'
 import zq from '@/assets/zq'
 import zqlayer from '@/lib/index'
 

@@ -1,128 +1,35 @@
-
-@function rem ($px) {
-    @return $px / 25+rem;
+.clearfix{overflow:auto;_height:1%}
+.fl{float: left;}
+.fr{float: right;}
+p{margin: 0;padding:0;}
+ul{padding: 0;}
+label{margin: 0;}
+html{
+    scrollbar-base-color: #fff;
+    scrollbar-base-color: #fff;
+    scrollbar-3dlight-color: #fff;
+    scrollbar-highlight-color: #fff;
+    scrollbar-track-color: #fff;
+    scrollbar-arrow-color: #fff;
+    scrollbar-shadow-color: #fff;
+    scrollbar-dark-shadow-color: #fff;
 }
-
-@mixin wh($len) {
-    width: rem($len);
-    height: rem($len);
-}
-
-@mixin wh1($w,$h) {
-    width: rem($w);
-    height: rem($h);
-}
-@mixin flexCenter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-@mixin fac {
-    display: flex;
-    align-items: center;
-}
-@mixin fsb {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-@mixin bd($color, $width: 1px) {
-    border: $width solid $color;
-}
-
-@mixin bgz ($size1, $size2) {
-    -webkit-background-size: rem($size1) rem($size2);
-    -moz-background-size: rem($size1) rem($size2);
-    -ms-background-size: rem($size1) rem($size2);
-    -o-background-size: rem($size1) rem($size2);
-    background-size: rem($size1) rem($size2);
-}
-
-@mixin lh ($height) {
-    height: rem($height);
-    line-height: rem($height);
-}
-
-@mixin lhc ($height) {
-    height: rem($height);
-    line-height: rem($height);
-    text-align: center;
-}
-
-@mixin lhcf($height, $color, $fz) {
-    height: rem($height);
-    line-height: rem($height);
-    color: $color;
-    font-size: rem($fz);
-}
-
-@mixin lhcfc($height, $color, $fz) {
-    height: rem($height);
-    line-height: rem($height);
-    color: $color;
-    font-size: rem($fz);
-    text-align: center;
-}
-
-@mixin cs($color, $size) {
-    color: $color;
-    font-size: rem($size);
-}
-
-@mixin em ($line) {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: rem($line);
-    -webkit-box-orient: vertical;
-}
-
-@mixin op ($opacity) {
-    opacity: $opacity * 0.01;
-    filter: alpha(opacity=$opacity);
-}
-
-@mixin bra ($radius: 50%) {
-    -webkit-border-radius: $radius;
-    -moz-border-radius: $radius;
-    -ms-border-radius: $radius;
-    -o-border-radius: $radius;
-    border-radius: $radius;
-}
-
-@mixin bs1 ($shadow) {
-    -webkit-box-shadow: $shadow;
-    -moz-box-shadow: $shadow;
-    -ms-box-shadow: $shadow;
-    -o-box-shadow: $shadow;
-    box-shadow: $shadow;
-}
-
-@mixin bs2 ($s1, $s2) {
-    -webkit-box-shadow: $s1, $s2;
-    -moz-box-shadow: $s1, $s2;
-    -ms-box-shadow: $s1, $s2;
-    -o-box-shadow: $s1, $s2;
-    box-shadow: $s1, $s2;
-}
-
-@mixin ove () {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-break: keep-all;
-}
-@media screen and (max-width: 340px){
-    .el-message-box__wrapper .el-message-box{width: 90%!important;}
-    .el-message{max-width: 100%!important;min-width: 100%!important;}
-}
-
-@keyframes roller {
-    0%{
-        transform:rotateZ(0)
-    }
-    100%{
-        transform:rotateZ(360deg)
-    }
+html::-webkit-scrollbar {width: 0px;}
+html,body{height: 100%;font-size: 16px;}
+.green{background: #0a6ebd;}
+.blue{background: #6b6bed;}
+.lightgreen{background: #589ab1;}
+.clr-red{color: #f62727;}
+.ql-container{background:#fff;}
+.ql-toolbar{background:#ddd;}
+.cl-red{color:red;font-weight:400;}
+.bg{background: #0000009e;position: fixed;top:0;left: 0;right: 0;bottom: 0;z-index: 2;color: #f4d290;text-align: center;padding-top: 15%;font-size: 20px;font-weight: bold;cursor: default;}
+.bg-ddd{background: #ddd;}
+.pd-10{padding:10px;}
+.pdt-10{padding-top: 10px;}
+.pdb-10{padding-bottom: 10px;}
+.mg-0{margin: 0;}
+.btn{margin-left: 5px;}
+.ivu-row{
+    margin: rem(10) 0;
 }

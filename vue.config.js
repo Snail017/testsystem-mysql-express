@@ -32,7 +32,7 @@ module.exports = {
                 .loader('sass-resources-loader')
                 .options({
                     resources: [
-                        './src/assets/css/common.scss',
+                        './src/assets/css/config.scss',
                     ],
                 })
                 .end()
