@@ -1,14 +1,4 @@
-/**
- * AppButton组件
- * 单元测试内容包括以下
- * props
- * computed
- * func
- * $emit
- * slots（普通插槽和命名插槽）
- * DOM测试
- */
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import login from '@/views/login.vue'
 
 describe('AppButton.vue', () => {
@@ -31,7 +21,7 @@ describe('AppButton.vue', () => {
         IsOk:false,
         codeData:{}
     }
-    const wrapper = shallowMount(login, {
+    const wrapper = mount(login, {
       data: buttonProps
     })
     // 断言已经获取到props
