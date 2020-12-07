@@ -22,7 +22,7 @@
             {{note}}
         </p>
         <Row>
-            <Button type="success"  :disabled="IsOk==false"  long  @click="login()">登录</Button>
+            <Button type="success" :disabled="!IsOk"  long  @click="login()">登录</Button>
         </Row>
         <Row>
             <router-link to="/register" style="float: right">注册</router-link>
@@ -49,11 +49,10 @@
         },
         mounted(){
             var _this=this;
-            _this.getCode();
+            // _this.getCode();
         },
         methods:{
             getCode(){
-                console.log("getcode");
                 var _this=this;
                 this.$http({
                     method:"get",

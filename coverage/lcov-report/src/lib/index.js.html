@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/lib/index.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/lib</a> index.js
+    </h1>
+    <div class='clearfix'>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import confirm from './components/confirm'</span>
+<span class="cstat-no" title="statement not covered" >import msg from './components/msg'</span>
+let zq = <span class="cstat-no" title="statement not covered" >{</span>
+    install(Vue, option) {
+        // 不重复install
+<span class="cstat-no" title="statement not covered" >        if (zq.installed) <span class="cstat-no" title="statement not covered" >r</span>eturn</span>
+<span class="cstat-no" title="statement not covered" >        zq.installed = true;</span>
+        // 扩展构造对象
+        let $vm;// 存储Vue实例
+        // 1. 添加全局方法或属性
+<span class="cstat-no" title="statement not covered" >        Vue.myGlobalMethod = <span class="fstat-no" title="function not covered" >function () </span>{}</span>
+&nbsp;
+        // 2. 添加全局资源
+<span class="cstat-no" title="statement not covered" >        Vue.directive('my-directive', {})</span>
+        // 3. 通过全局mixin方法添加一些组件选项
+<span class="cstat-no" title="statement not covered" >        Vue.mixin({})</span>
+        // 4. 添加实例方法
+&nbsp;
+        /**
+         * 实例化组件方法
+         **/
+<span class="cstat-no" title="statement not covered" >        Vue.$instance=<span class="fstat-no" title="function not covered" >function(</span>component){</span>
+            let Ext = <span class="cstat-no" title="statement not covered" >Vue.extend(component);</span>
+<span class="cstat-no" title="statement not covered" >            $vm = new Ext({</span>
+                el: document.createElement('div')
+            })
+            // 挂载到dom中
+<span class="cstat-no" title="statement not covered" >            document.body.appendChild($vm.$el);</span>
+        },
+            Vue.prototype.$hide = <span class="fstat-no" title="function not covered" >function () </span>{
+<span class="cstat-no" title="statement not covered" >                $vm.show = false;</span>
+            },
+            Vue.prototype.$msg=<span class="fstat-no" title="function not covered" >function(</span>message, options){
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                if($vm){</span>
+<span class="cstat-no" title="statement not covered" >                    $vm.show = false;</span>
+                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                Vue.$instance(msg)</span>
+<span class="cstat-no" title="statement not covered" >                $vm.message = message;</span>
+                var type = <span class="cstat-no" title="statement not covered" >typeof options === 'object';</span>
+<span class="cstat-no" title="statement not covered" >                console.log($vm);</span>
+<span class="cstat-no" title="statement not covered" >                if (type) {</span>
+                    // 给对象赋值
+<span class="cstat-no" title="statement not covered" >                    $vm.Zindex = options.Zindex||999;</span>
+<span class="cstat-no" title="statement not covered" >                    $vm.duration = options.duration||3000;</span>
+<span class="cstat-no" title="statement not covered" >                    $vm.masked=options.masked||false;</span>
+                }
+<span class="cstat-no" title="statement not covered" >                setTimeout(<span class="fstat-no" title="function not covered" >()=&gt;</span>{</span>
+<span class="cstat-no" title="statement not covered" >                    $vm.show =false;</span>
+                },$vm.duration)
+<span class="cstat-no" title="statement not covered" >                $vm.show = true;</span>
+&nbsp;
+            },
+            Vue.prototype.$confirm = <span class="fstat-no" title="function not covered" >function (</span>message, options) {
+<span class="cstat-no" title="statement not covered" >                Vue.$instance(confirm)</span>
+&nbsp;
+                var type = <span class="cstat-no" title="statement not covered" >typeof options === 'object';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                if (type) {</span>
+<span class="cstat-no" title="statement not covered" >                    $vm.btn = options.btn || ['确定', '取消'];</span>
+<span class="cstat-no" title="statement not covered" >                    for (let value in options.btnFun) {</span>
+<span class="cstat-no" title="statement not covered" >                        console.log(value);</span>
+<span class="cstat-no" title="statement not covered" >                        $vm.btnFun = <span class="fstat-no" title="function not covered" >function (</span>e, index) {</span>
+                            let ty = <span class="cstat-no" title="statement not covered" >typeof options.btnFun[index] == 'function';</span>
+<span class="cstat-no" title="statement not covered" >                            if (ty) {</span>
+<span class="cstat-no" title="statement not covered" >                                options.btnFun[index]();</span>
+                            }
+                        }
+                    }
+                }
+                ;
+                // 给对象赋值
+<span class="cstat-no" title="statement not covered" >                $vm.Zindex = options.Zindex || 999;</span>
+<span class="cstat-no" title="statement not covered" >                $vm.message = message || 'message';</span>
+<span class="cstat-no" title="statement not covered" >                $vm.show = true;</span>
+            }
+&nbsp;
+    }
+};
+&nbsp;
+export default zq;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 07 2020 14:51:12 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

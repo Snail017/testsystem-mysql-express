@@ -33,6 +33,7 @@
       <Row
         class="answer_list"
         v-for="(item,index) in testdata"
+        :key=index
         :class="{'bg_yellow':item.save==0,'bg_green':item.status==1}"
       >
         <Col :xs="10">ID:{{item.hasOwnProperty('status')?item.id:item.exam_id}}[{{item.title}}]</Col>
