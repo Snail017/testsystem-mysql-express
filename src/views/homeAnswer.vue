@@ -1,11 +1,6 @@
 <template>
   <div class="form-horizontal answer_body">
     <Row class="answer_head" :gutter="16">
-      <Col :xs="{span:8}" :lg="{span:3}">
-        <router-link tag="Button" to="/homeQuestion">
-          <i class="iconfont icon-xierushujuku"></i>我的问卷
-        </router-link>
-      </Col>
       <Col :lg="8" :xs="24" class="st_sear">
         <Input
           type="text"
@@ -13,7 +8,6 @@
           size="large"
           v-model="title"
           @on-enter="answerList()"
-          icon="ios-search"
         ></Input>
       </Col>
       <Col :lg="5" :xs="24">
@@ -64,7 +58,7 @@
       </Row>
       <pagenation v-if="pagedata.page_total>1" :pagedata="pagedata" @page="page"></pagenation>
     </template>
-    <div class="st_null" v-if="testdata==''">
+    <div class="st_null" v-if="!testdata">
       <i class="iconfont icon-wushuju"></i>
       <p>暂无数据</p>
     </div>
@@ -160,72 +154,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.bg_yellow {
-  background: #d4cbc0 !important;
-}
-.bg_green {
-  background: #b5dcd7 !important;
-}
-.icon-xierushujuku {
-  margin: 0 5px;
-  font-weight: bold;
-}
-.answer_body {
-  width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-  background: #fff;
-  min-height: 100%;
-}
-.st_sear {
-  position: relative;
-}
-.icon-chazhao {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  margin-top: -15px;
-  font-size: 20px;
-}
-.answer_list {
-  background: #cfd6dd;
-  color: #2d2525;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-}
-.answer_head {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 30px;
-}
-.st_btn {
-  color: #fff;
-  padding: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 5px;
-}
-.answer_list:hover {
-  box-shadow: 0 0 3px #30a6f5;
-}
-.st_title {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.icon-wushuju {
-  font-size: 100px;
-}
-.st_null {
-  text-align: center;
-  margin: auto;
-  font-size: 25px;
-}
-
-@media screen and(max-width: 1000px) {
-  .answer_body {
-    width: 100%;
-  }
-}
+<style scoped lang="scss">
+@import '_CSS/homeAQ.scss';
 </style>

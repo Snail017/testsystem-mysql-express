@@ -12,8 +12,8 @@ const app = express();
 const routes = require('./routes');
 const Token = require('./config/token.config.js')
 
-global.public_key=fs.readFileSync('./key/pub.key','UTF-8');
-global.private_key=fs.readFileSync('./key/pri.key','UTF-8');
+global.public_key=fs.readFileSync('./server/key/pub.key','UTF-8');
+global.private_key=fs.readFileSync('./server/key/pri.key','UTF-8');
 app.use(cookieParase());
 app.use(bodyParser.json());
 //对接口过滤检验token

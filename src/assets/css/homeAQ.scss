@@ -1,0 +1,86 @@
+.bg_yellow {
+    background: #d4cbc0 !important;
+}
+
+.bg_green {
+    background: #b5dcd7 !important;
+}
+
+.icon-76xinzeng {
+    margin: 0 5px;
+}
+
+.answer_body {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100%;
+}
+
+.st_sear {
+    position: relative;
+}
+
+.icon-chazhao {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    margin-top: -15px;
+    font-size: 20px;
+}
+
+.answer_list {
+    background: #cfd6dd;
+    color: #2d2525;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.answer_head {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 30px;
+
+    /deep/.ivu-col {
+        margin: rem(10) 0;
+    }
+}
+
+.st_btn {
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.answer_list:hover {
+    box-shadow: 0 0 3px #30a6f5;
+}
+
+.st_title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.icon-wushuju {
+    font-size: 100px;
+}
+
+.st_null {
+    text-align: center;
+    font-size: rem(50);
+}
+
+@media screen and (max-width: 1000px) {
+    .answer_body {
+        width: 100%;
+        padding: 10px;
+        margin: 0;
+    }
+
+    .answer_head {
+        display: none;
+    }
+}

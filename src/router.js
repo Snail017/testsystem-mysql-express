@@ -57,7 +57,7 @@ export const routes = [
         }
     },
     {
-        path: '/paper',
+        path: '/questionnaire',
         name: 'questionnaire',
         component: ()=>import('@/views/questionnaire'),
         meta: {

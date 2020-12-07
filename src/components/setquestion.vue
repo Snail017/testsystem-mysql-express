@@ -107,40 +107,36 @@
           <span class="fl">题目解析：</span>
           <div class="fl" v-html="items.analysis"></div>
         </div>
-        <Row justify="end" type="flex">
-          <Button type="primary" @click.stop="items.isshow += 1">编辑</Button>
-          &nbsp;
-          <Button type="primary" @click.stop="copy(items, indexs)">复制</Button
-          >&nbsp;
-          <Button
-            type="primary"
-            @click.stop="deleteQuestion(items.question_id, indexs)"
-            >删除</Button
-          >&nbsp;
-          <Button
-            type="primary"
-            @click.stop="
-              questiondata.length > 1
-                ? ($set(questiondata, indexs, questiondata[indexs - 1]),
-                  $set(questiondata, indexs - 1, items))
-                : ''
-            "
-            >上移</Button
-          >
-          &nbsp;
-          <Button
-            type="primary"
-            @click.stop="
-              questiondata.length > 1
-                ? ($set(questiondata, indexs, questiondata[indexs + 1]),
-                  $set(questiondata, indexs + 1, items))
-                : ''
-            "
-            >下移</Button
-          >&nbsp;
-          <Button type="primary" @click="first(items.indexs)">最前</Button
-          >&nbsp;
-          <Button type="primary" @click="last(items, indexs)">最后</Button>
+        <Row justify="end" type="flex" gutter="16" class-name="st-btn-box">
+            <i class="iconfont icon-bianji" @click.stop="items.isshow += 1"></i>
+            <i
+              class="iconfont icon-fuzhi"
+              @click.stop="copy(items, indexs)"
+            ></i>
+            <i
+              class="iconfont icon-huishouzhan"
+              @click.stop="deleteQuestion(items.question_id, indexs)"
+            ></i>
+            <i
+              class="iconfont icon-shangyi1"
+              @click.stop="
+                questiondata.length > 1
+                  ? ($set(questiondata, indexs, questiondata[indexs - 1]),
+                    $set(questiondata, indexs - 1, items))
+                  : ''
+              "
+            ></i>
+            <i
+              class="iconfont icon-xiayi1"
+              @click.stop="
+                questiondata.length > 1
+                  ? ($set(questiondata, indexs, questiondata[indexs + 1]),
+                    $set(questiondata, indexs + 1, items))
+                  : ''
+              "
+            ></i>
+            <i class="iconfont icon-zuiqian" @click="first(items.indexs)"></i>
+            <i class="iconfont icon-zuihou" @click="last(items, indexs)"></i>
         </Row>
       </div>
       <div class="st_setquestion" v-if="items.isshow % 2 == 1">
@@ -313,7 +309,7 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-/deep/.ivu-btn{
+/deep/.ivu-btn {
   margin: rem(5);
 }
 .optionBorder {
@@ -333,7 +329,6 @@ input:disabled {
   color: #999;
 }
 .st_setquestion .st_note {
-
   text-decoration: underline;
   color: #0a6ebd;
   cursor: pointer;
@@ -346,10 +341,14 @@ input:disabled {
 .st_setquestion {
   background: #fafafa;
   width: 100%;
-  padding:rem(20);
+  padding: rem(20);
   position: relative;
 }
-
+.st-btn-box{
+  .iconfont{
+    margin:0 rem(5)
+  }
+}
 .st_setquestion:before {
   content: "";
   display: block;

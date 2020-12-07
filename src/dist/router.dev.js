@@ -95,7 +95,7 @@ var routes = [{
 
   }
 }, {
-  path: '/paper',
+  path: '/questionnaire',
   name: 'questionnaire',
   component: function component() {
     return Promise.resolve().then(function () {

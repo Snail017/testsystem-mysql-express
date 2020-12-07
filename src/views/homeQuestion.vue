@@ -1,16 +1,6 @@
 <template>
   <div class="form-horizontal answer_body">
     <Row class="answer_head" :gutter="16">
-      <Col :xs="8" :lg="3">
-        <router-link tag="Button" type="primary" to="/questionnaire">
-          <i class="iconfont icon-76xinzeng"></i>制作问卷
-        </router-link>
-      </Col>
-      <Col :xs="8" :lg="3">
-        <router-link tag="Button" type="primary" to="/homeAnswer">
-          <i class="iconfont icon-xierushujuku"></i>我的答卷
-        </router-link>
-      </Col>
       <Col :lg="8" :xs="24" class="st_sear">
         <Input
           type="text"
@@ -18,7 +8,6 @@
           size="large"
           v-model="title"
           @on-enter="Exam(1)"
-          icon="ios-search"
         ></Input>
       </Col>
       <Col :lg="5" :xs="24">
@@ -29,7 +18,7 @@
           <Option value="2">已完成</Option>
         </Select>
       </Col>
-      <Col :xs="5" :lg="3">
+      <Col :xs="5" :md="3"  style="float:right">
         <Button type="info" @click="examType=3;answerList()">
           <i class="iconfont icon-huishouzhan"></i>回收站
         </Button>
@@ -249,74 +238,5 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.bg_yellow {
-  background: #d4cbc0 !important;
-}
-.bg_green {
-  background: #b5dcd7 !important;
-}
-.icon-76xinzeng {
-  margin: 0 5px;
-}
-.answer_body {
-  width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-  background: #fff;
-  min-height: 100%;
-}
-.st_sear {
-  position: relative;
-}
-.icon-chazhao {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  margin-top: -15px;
-  font-size: 20px;
-}
-.answer_list {
-  background: #cfd6dd;
-  color: #2d2525;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-}
-.answer_head {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 30px;
-  /deep/.ivu-col{
-    margin: rem(10) 0;
-  }
-}
-.st_btn {
-  color: #fff;
-  padding: 5px;
-  border-radius: 5px;
-  cursor: pointer;margin-right: 5px;
-}
-.answer_list:hover {
-  box-shadow: 0 0 3px #30a6f5;
-}
-.st_title {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.icon-wushuju {
-  font-size: 100px;
-}
-.st_null {
-  text-align: center;
-  margin:rem(30) auto 0;
-  font-size: rem(50);
-}
-
-@media screen and (max-width: 800px) {
-  .answer_body {
-    width: 100%;
-    padding: 10px;
-    margin: 0;
-  }
-}
+@import '_CSS/homeAQ.scss';
 </style>

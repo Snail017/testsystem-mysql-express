@@ -3,9 +3,9 @@ import App from '@/App'
 import router from '@/router'
 import crypto from 'crypto'
 import ViewUI from 'view-design'
-import "@/assets/css/common.scss";
 import "@/assets/css/iconfont.css";
 import 'view-design/dist/styles/iview.css'
+import "@/assets/css/common.scss";
 import http from "@/http"
 import zq from '@/assets/zq'
 import zqlayer from '@/lib/index'

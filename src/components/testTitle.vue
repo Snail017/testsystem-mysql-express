@@ -31,7 +31,7 @@ export default {
   cursor: pointer;
   background: #fff;
   width: 1000px;
-  margin:rem(20) auto;
+  margin:0 auto;
   border-bottom: 1px solid #ddd;
 }
 .st_subtitile {
