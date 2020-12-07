@@ -1,5 +1,5 @@
 const db = require('../config/sequelize.config')
-const Sequelize = db.sequelize;
+const Sequelize = db.sequelize
 const User = Sequelize.import('../schema/user.js')
 
 User.sync({ force: false });
