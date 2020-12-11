@@ -146,7 +146,7 @@ export default {
     margin: 0 rem(10);
     padding: rem(5) 0;
     &.active_tab {
-      background: linear-gradient(52deg, #2d6ac7 0%, #82aef0 100%);
+      background: linear-gradient(52deg, #033786 0%, #5d7eaf 100%);
       color: #e6e6ec;
       box-shadow: 2px 2px 3px #cab3b3;
     }

@@ -120,8 +120,7 @@ export default {
     }
   },
   mounted() {
-    // this.$loading.show();
-    var ls_examType = this.$match(window.location.hash, "examType");
+    var ls_examType = this.$route.query.examType
     if (
       ls_examType == "doing" ||
       ls_examType == "unfinish" ||

@@ -7,11 +7,9 @@ import "@/assets/css/iconfont.css";
 import 'view-design/dist/styles/iview.css'
 import "@/assets/css/common.scss";
 import http from "@/http"
-import zq from '@/assets/zq'
 import zqlayer from '@/lib/index'
 
 Vue.use(zqlayer);
-Vue.use(zq);
 Vue.use(crypto);
 Vue.use(ViewUI)
 Vue.prototype.crypto = crypto;
