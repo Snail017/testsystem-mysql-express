@@ -37,17 +37,17 @@ export default {
 .st_subtitile {
   color: #555555;
   text-align: left;
-  font-size: rem(28);
-  margin: rem(10);
+  font-size: rem1(28);
+  margin: rem1(10);
   text-align: center;
 }
 .st_title {
-  font-size: rem(30);
+  font-size: rem1(30);
   font-weight: bold;
   color: #f53d05;
   vertical-align: middle;
   text-align: center;
-  margin: rem(10) 0;
+  margin: rem1(10) 0;
   padding: 0;
   line-height: 24px;
 }

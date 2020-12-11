@@ -41,17 +41,17 @@ export default {
 .swap_tabs {
     display: flex;
     justify-content: center;
-    padding-top: rem(20);
+    padding-top: rem1(20);
 
     span {
         width: 25%;
-        height: rem(60);
-        border-radius: rem(4);
+        height: rem1(60);
+        border-radius: rem1(4);
         border: 1px solid #DCDEE2;
         color: #838383;
         text-align: center;
-        line-height: rem(60);
-        font-size: rem(26);
+        line-height: rem1(60);
+        font-size: rem1(26);
 
         &.active_tab {
             border-color: #1D51E0;

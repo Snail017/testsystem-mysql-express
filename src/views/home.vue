@@ -77,27 +77,27 @@ export default {
 <style scoped lang="scss">
 .content {
   width: 1000px;
-  margin: rem(20) auto 0;
+  margin: rem1(20) auto 0;
   text-align: center;
 }
 .s-seach{
     position: absolute;
-    top: rem(60);
-    right: rem(20);
-    width: rem(220);
-    padding: 0 rem(20);
+    top: rem1(60);
+    right: rem1(20);
+    width: rem1(220);
+    padding: 0 rem1(20);
     background: #fff;       
-    box-shadow: 0px rem(4) rem(20) 0px rgba(219, 219, 219, 0.61);
-    border-radius: rem(8);
+    box-shadow: 0px rem1(4) rem1(20) 0px rgba(219, 219, 219, 0.61);
+    border-radius: rem1(8);
     z-index: 3;
-    font-size: rem(26);
+    font-size: rem1(26);
     >div{
       display: flex;;
       align-items:center;
-      margin: rem(10) 0;
+      margin: rem1(10) 0;
     }
     span {
-        width: rem(150);
+        width: rem1(150);
         text-align: left;
         @include cs(#191A27,28);
         &.blue_color {
@@ -106,18 +106,18 @@ export default {
     }
     .iconfont.icon-wancheng1{
         color: #1D51E0;
-        font-size: rem(28);
+        font-size: rem1(28);
     }
 }
 .st_tih3 {
   position: relative;
   align-items:center;
-  margin: rem(10) 0;
-  padding:0 rem(20);
+  margin: rem1(10) 0;
+  padding:0 rem1(20);
   display: none;
   > span {
     flex: 3;
-    font-size: rem(24);
+    font-size: rem1(24);
     color: #000;
     align-content: center;
     text-align: left;
@@ -127,24 +127,24 @@ export default {
     text-align: right;
     > img {
       @include wh(40);
-      margin: 0 rem(10);
+      margin: 0 rem1(10);
     }
     .iconfont {
-      font-size: rem(35);
+      font-size: rem1(35);
       color: #353535;
       vertical-align: middle;
-      margin: 0 rem(10);
+      margin: 0 rem1(10);
     }
   }
 }
 .swap_tabs {
   div {
-    border-radius: rem(4);
+    border-radius: rem1(4);
     color: #fff;
-    font-size: rem(26);
+    font-size: rem1(26);
     background: linear-gradient(52deg, #99b2ee 0%, #d3d3e0 100%);
-    margin: 0 rem(10);
-    padding: rem(5) 0;
+    margin: 0 rem1(10);
+    padding: rem1(5) 0;
     &.active_tab {
       background: linear-gradient(52deg, #033786 0%, #5d7eaf 100%);
       color: #e6e6ec;

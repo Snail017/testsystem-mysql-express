@@ -305,9 +305,9 @@ export default {
   top: 30%;
   z-index: 3;
   background: #fff;
-  width: rem(1400);
+  width: rem1(1400);
   left: 50%;
-  margin-left: -rem(1400/2);
+  margin-left: -rem1(1400/2);
 }
 .cont_head {
   border-radius: 5px 5px 0 0;

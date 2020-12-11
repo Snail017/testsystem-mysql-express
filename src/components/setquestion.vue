@@ -310,7 +310,7 @@ export default {
 
 <style scoped lang='scss'>
 /deep/.ivu-btn {
-  margin: rem(5);
+  margin: rem1(5);
 }
 .optionBorder {
   border: 1px solid #ccc;
@@ -318,7 +318,7 @@ export default {
   padding: 5px;
 }
 .st_question_content {
-  padding: rem(20);
+  padding: rem1(20);
   background: #fff;
   border-bottom: 1px solid #ddd;
 }
@@ -341,12 +341,12 @@ input:disabled {
 .st_setquestion {
   background: #fafafa;
   width: 100%;
-  padding: rem(20);
+  padding: rem1(20);
   position: relative;
 }
 .st-btn-box{
   .iconfont{
-    margin:0 rem(5)
+    margin:0 rem1(5)
   }
 }
 .st_setquestion:before {

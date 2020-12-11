@@ -57,9 +57,9 @@ export default {
 .window .icon-guanbi {
   position: absolute;
   right: 0px;
-  font-size: rem(30);
-  top: rem(-10);
-  padding: rem(10);
+  font-size: rem1(30);
+  top: rem1(-10);
+  padding: rem1(10);
   color: grey;
 }
 .window input {
@@ -68,10 +68,10 @@ export default {
 }
 @media screen and (max-width: 800px) {
   .window{
-    top:rem(20);
+    top:rem1(20);
     width: 95%;
     left: 2.5%;
-    padding: 0 rem(10);
+    padding: 0 rem1(10);
   }
 }
 </style>

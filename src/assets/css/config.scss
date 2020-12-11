@@ -1,8 +1,10 @@
 
-@function rem ($px) {
+@function rem1 ($px) {
     @return $px / 25+rem;
 }
-
+@function rem ($px) {
+    @return $px / 12.5 +rem;
+}
 @mixin wh($len) {
     width: rem($len);
     height: rem($len);
@@ -112,10 +114,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: keep-all;
-}
-@media screen and (max-width: 340px){
-    .el-message-box__wrapper .el-message-box{width: 90%!important;}
-    .el-message{max-width: 100%!important;min-width: 100%!important;}
 }
 
 @keyframes roller {
