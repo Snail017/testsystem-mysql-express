@@ -18,40 +18,29 @@ module.exports = {
     // webpack配置
     // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
     chainWebpack: config => {
+
         config.resolve.alias
             .set("@", resolve("src"))
             .set("_A", resolve("src/assets"))
             .set("_CSS", resolve("src/assets/css"))
             .set("_IMG", resolve("src/assets/images"))
-        const oneOfsMap = config.module.rule('scss').oneOfs.store
 
-        // 编译sass scss文件
-        oneOfsMap.forEach(item => {
-            item
-                .use('sass-resources-loader')
-                .loader('sass-resources-loader')
-                .options({
-                    resources: [
-                        './src/assets/css/config.scss',
-                    ],
-                })
-                .end()
-        })
         config.module
-            .rule('svg')
-            .exclude.add(resolve('src/icons'))
+            .rule('svg')          //找个配置rule规则里面的svg
+            .exclude.add(resolve('src/icons')) //排除src/icons下的.svg文件
             .end();
 
         config.module
-            .rule('icons')
-            .test(/\.svg$/)
-            .include.add(resolve('src/icons'))
+            .rule('icons')     //配置rule规则里面新增的icons规则
+            .test(/\.svg$/)    //icons规则里匹配到.svg结尾的文件
+            .include.add(resolve('src/icons'))    //包含src/icons下的.svg文件
             .end()
             .use('svg-sprite-loader')
             .loader('svg-sprite-loader')
             .options({
-                symbolId: 'icon-[name]'
+                symbolId: 'icon-[name]'           //class名
             });
+
         //压缩图片
         config.module.rule('images')
             .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
@@ -95,8 +84,10 @@ module.exports = {
         // css预设器配置项
         loaderOptions: {
             //向所有 Sass/Less 样式传入共享的全局变量
-            scss:{
-                additionalData:'@import "~@/assets/css/config.scss";'
+            scss: {
+                // 如果 sass-loader 版本 = 8，这里使用 `prependData` 字段
+                // 如果 sass-loader 版本 < 8，这里使用 `data` 字段
+                additionalData: '@import "~@/assets/css/config.scss";'
             },
         },
         // 启用 CSS modules for all css / pre-processor files.
