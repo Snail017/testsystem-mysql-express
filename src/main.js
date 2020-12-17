@@ -6,7 +6,7 @@ import ViewUI from 'view-design'
 import "@/assets/css/iconfont.css";
 import 'view-design/dist/styles/iview.css'
 import "@/assets/css/common.scss";
-import http from "@/http"
+import http from "@/api/httpServer"
 import zqlayer from '@/lib/index'
 
 Vue.use(zqlayer);

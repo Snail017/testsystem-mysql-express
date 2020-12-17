@@ -24,29 +24,29 @@ app.all("*", async (req, res, next) => {
     res.header("Access-Control-Expose-Headers", "Authorization");
     res.header('Cache-Control', 'no-store');
 
-    if (req.path != "/publicKey" && req.path != "/captcha" && req.path != '/login' && req.path != "/register") {
-        const token = await Token.checkToken(req.headers.authorization);
-        try {
-            if (token.status == 404) {
-                res.json({
-                    code: 401,
-                    msg: "token已过期，请重新登录"
-                })
-            } else {
-                if (token.status == 202) {
-                    res.header("Authorization", token.access_token);
-                }
-                next();
-            }
-        } catch (err) {
-            res.json({
-                code: 500,
-                msg: err
-            })
-        }
-    } else {
+    // if (req.path != "/publicKey" && req.path != "/captcha" && req.path != '/login' && req.path != "/register") {
+    //     const token = await Token.checkToken(req.headers.authorization);
+    //     try {
+    //         if (token.status == 404) {
+    //             res.json({
+    //                 code: 401,
+    //                 msg: "token已过期，请重新登录"
+    //             })
+    //         } else {
+    //             if (token.status == 202) {
+    //                 res.header("Authorization", token.access_token);
+    //             }
+    //             next();
+    //         }
+    //     } catch (err) {
+    //         res.json({
+    //             code: 500,
+    //             msg: err
+    //         })
+    //     }
+    // } else {
         next()
-    }
+    // }
 })
 
 app.use('/', routes);  // 后端api路由

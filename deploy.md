@@ -122,7 +122,11 @@ module.exports = SERVER_LIST[SERVER_ID];
 
 ## 四 编译自动化部署脚本
 
-在项目根目录下, 创建 deploy/index.js 文件
+在项目根目录下, 创建 deploy/index.js 文件.
+1. 先删除服务器之前的文件。防止一直上传导致冗余文件过多。
+2. 再上传新的文件到服务器，替换到原来的文件夹下。
+
+问题：在文件上传的过程中，如果文件过大，上传时间过久。会导致服务器有一段时间差打不开。
 
 ```
 const scpClient = require('scp2');
@@ -141,7 +145,7 @@ var conn = new Client();
 conn
   .on('ready', function() {
     // rm 删除dist文件，\n 是换行 换行执行 重启nginx命令 我这里是用docker重启nginx
-    conn.exec('rm -rf '+server.pa+'\ndocker restart nginx', function(
+    conn.exec('rm -rf '+server.path+'\ndocker restart nginx', function(
       err,
       stream
     ) {
@@ -211,6 +215,71 @@ conn
     "deploy:prod": "npm run build && cross-env VUE_APP_CURRENTMODE=prod node ./deploy",
     "test:unit": "vue-cli-service test:unit"
   },
+```
+
+## 六 优化版编译自动化部署脚本：为了解决上传过程中服务器打不开的问题
+1. 先安装compressing插件，将打包文件夹压缩。
+  ```
+  npm i compressing --save-dev
+  ```
+2. 再将压缩文件上传服务器。
+3. 最后链接服务器，将原文件删除后，解压最新上传的文件。
+```
+const scpClient = require('scp2');
+const chalk = require('chalk');
+const server = require('./products');
+const Client = require('ssh2').Client;
+const conn = new Client();
+const ora = require('ora');
+var compressing = require("compressing");
+const { localpath } = require('./products');
+const environment = server.path+server.localpath
+const spinner = ora('正在发布到' + environment + '服务器...');
+const ziping = ora('正在压缩' + environment);
+//压缩
+ziping.start()
+compressing.zip.compressDir( server.localpath + "/", "dist.zip")
+  .then((e) => {
+    console.log(chalk.green('压缩成功'));
+    ziping.stop()
+    spinner.start();
+    scpClient.scp(
+      'dist.zip',
+      {
+        host: server.host,
+        // port: server.port,
+        username: server.username,
+        password: server.password,
+        path: server.path
+      },
+      (err) => {
+        spinner.stop();
+        if (err) {
+          console.log(chalk.red('发布失败.\n'));
+          throw err;
+        } else {
+          conn.on('ready', () => {
+            conn.exec('cd '+server.path+' \nrm -rf '+server.localpath+'\nunzip -o dist.zip', (err, stream) => {
+              if (err) throw err;
+              console.log(chalk.green('Success! 成功发布到' + environment + '服务器! \n'));
+              conn.end()
+            })
+          }).connect({
+            host: server.host,
+            // port: server.port,
+            username: server.username,
+            password: server.password
+            //privateKey: require('fs').readFileSync('/home/admin/.ssh/id_dsa')
+          });
+        }
+      }
+    );
+  })
+  .catch(err => {
+    console.error('zip', err);
+  });
+
+
 ```
 
 ---

@@ -1,4 +1,15 @@
 # 问卷系统开发  ---前端
+
+## 手机端调试组件
+在index.html文件内加上代码
+```
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    // 手机端模拟console
+    eruda.init();
+    // console.log(navigator.language)
+</script>
+```
 ## rem适配
 1. 在assets目录下加入flexible.js文件。flexible.js为阿里团队开源的一个库。根据屏幕宽度，给根元素确定一个px字号，页面中的制作稿则统一使用rem这个单位来制作。使用flexible.js轻松搞定各种不同的移动端设备兼容自适应问题。
 2. 在assets/css目录下创建config.scss。在config.scss里编写需要使用的scss方法，混入,变量等等.
@@ -120,3 +131,9 @@ router.afterEach((to,from,next) => {
     window.scrollTo(0,0)
 });
 ```
+
+## http路由
+
+
+## 页面弹窗插件化
+为了方便弹窗的调用，同时减轻冗余代码，提高代码复用性。在开发过程中将用到的弹窗封装成插件。学习element插件封装方式，使插件既能全部引入，也能局部引入。

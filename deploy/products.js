@@ -50,7 +50,7 @@ const SERVER_LIST = [
     "port": '80',            // 服务器端口
     "username": 'root',       // 用户名
     "password": '*******',     // 密码
-    "path": '/home/project/landingpage/'  ,
+    "path": '/home/project/'  ,
     'localfile':envObj.VUE_APP_DEV   //本地打包文件名
   },
   {
@@ -60,7 +60,7 @@ const SERVER_LIST = [
     "port": '443',            // 服务器端口
     "username": 'root',       // 用户名
     "password": '******',     // 密码
-    "path": '/home/project/landingpage/'  ,
+    "path": '/home/project/'  ,
     'localfile':envObj.VUE_APP_DEV   //本地打包文件名
   },
 ];

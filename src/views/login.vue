@@ -48,8 +48,7 @@
             }
         },
         mounted(){
-            var _this=this;
-            // _this.getCode();
+            this.getCode();
         },
         methods:{
             getCode(){

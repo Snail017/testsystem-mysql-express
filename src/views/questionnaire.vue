@@ -42,6 +42,7 @@ import Navtop from "@/components/navtop";
 import testTitle from "@/components/testTitle";
 import setquestion from "@/components/setquestion";
 import answerquestion from "@/components/answerquestion";
+import {ExamTitle,setQuestions} from '@/api'
 export default {
   name: "questionnaire",
   components: {
@@ -194,11 +195,8 @@ export default {
         this.showmsg("请填写答题时间");
         return false;
       }
-      _this
-        .$http({
-          method: "post",
-          url: "/ExamTitle",
-          data: {
+      ExamTitle({
+        data: {
             title: titledata.title,
             testtime: topdata.testTime,
             status: topdata.opentest ? 1 : 0,
@@ -208,7 +206,7 @@ export default {
             sort: topdata.sort,
             designated: topdata.designated
           }
-        })
+      })
         .then(res => {
           res = res.data;
           if (res.code == 200) {
@@ -295,21 +293,15 @@ export default {
         problemData.father_number = 1; //father_number  父标题序号  固定为1  放在最前面
         if (this.flag) {
           if (problemData.question_id == 0) {
-            _this
-              .$http({
+            setQuestions({
                 method: "post",
-                url: "/questions",
                 data: problemData
-              })
-              .then(res => {});
+            })
           } else {
-            _this
-              .$http({
+             setQuestions({
                 method: "patch",
-                url: "/questions",
                 data: problemData
-              })
-              .then(res => {});
+            })
           }
         }
       }
@@ -403,13 +395,12 @@ export default {
      * 根据 url 得到paper_id  请求ajax获取设置好的题目
      **/
     answerQuestion() {
-      var _this = this,
-        paper_id = this.$match(window.location.hash, "paper_id");
-      if (!paper_id) {
+      var _this = this;
+      if(!this.$route.query.paper_id){
         return false;
       }
-      _this.isPaper = true;
-      _this
+      this.isPaper = true;
+      this
         .$http({
           method: "GET",
           url: "/personalPage",
@@ -479,7 +470,7 @@ export default {
      **/
     getQuestion() {
       var _this = this;
-      if (_this.$match(window.location.href, "id") == null) {
+      if (!this.$route.query.id) {
         return false;
       }
       _this
@@ -487,7 +478,7 @@ export default {
           method: "get",
           url:
             "/questions?exam_id=" +
-            _this.$match(window.location.href, "id") +
+            _this.$route.query.id+
             ""
         })
         .then(res => {

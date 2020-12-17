@@ -107,7 +107,7 @@
           <span class="fl">题目解析：</span>
           <div class="fl" v-html="items.analysis"></div>
         </div>
-        <Row justify="end" type="flex" gutter="16" class-name="st-btn-box">
+        <Row justify="end" type="flex" :gutter="16" class-name="st-btn-box">
             <i class="iconfont icon-bianji" @click.stop="items.isshow += 1"></i>
             <i
               class="iconfont icon-fuzhi"

@@ -8,7 +8,7 @@ let zq = {
         // 扩展构造对象
         let $vm;// 存储Vue实例
         // 1. 添加全局方法或属性
-        Vue.myGlobalMethod = function () {}
+        Vue.myGlobalMethod = function () { }
 
         // 2. 添加全局资源
         Vue.directive('my-directive', {})
@@ -19,7 +19,7 @@ let zq = {
         /**
          * 实例化组件方法
          **/
-        Vue.$instance=function(component){
+        Vue.$instance = function (component) {
             let Ext = Vue.extend(component);
             $vm = new Ext({
                 el: document.createElement('div')
@@ -27,54 +27,54 @@ let zq = {
             // 挂载到dom中
             document.body.appendChild($vm.$el);
         },
-            Vue.prototype.$hide = function () {
+        Vue.prototype.$hide = function () {
+            $vm.show = false;
+        },
+        Vue.prototype.$msg = function (message, options) {
+
+            if ($vm) {
                 $vm.show = false;
-            },
-            Vue.prototype.$msg=function(message, options){
+            }
 
-                if($vm){
-                    $vm.show = false;
-                }
+            Vue.$instance(msg)
+            $vm.message = message;
+            var type = typeof options === 'object';
+            console.log($vm);
+            if (type) {
+                // 给对象赋值
+                $vm.Zindex = options.Zindex || 999;
+                $vm.duration = options.duration || 3000;
+                $vm.masked = options.masked || false;
+            }
+            setTimeout(() => {
+                $vm.show = false;
+            }, $vm.duration)
+            $vm.show = true;
 
-                Vue.$instance(msg)
-                $vm.message = message;
-                var type = typeof options === 'object';
-                console.log($vm);
-                if (type) {
-                    // 给对象赋值
-                    $vm.Zindex = options.Zindex||999;
-                    $vm.duration = options.duration||3000;
-                    $vm.masked=options.masked||false;
-                }
-                setTimeout(()=>{
-                    $vm.show =false;
-                },$vm.duration)
-                $vm.show = true;
+        },
+        Vue.prototype.$confirm = function (message, options) {
+            Vue.$instance(confirm)
 
-            },
-            Vue.prototype.$confirm = function (message, options) {
-                Vue.$instance(confirm)
+            var type = typeof options === 'object';
 
-                var type = typeof options === 'object';
-
-                if (type) {
-                    $vm.btn = options.btn || ['确定', '取消'];
-                    for (let value in options.btnFun) {
-                        console.log(value);
-                        $vm.btnFun = function (e, index) {
-                            let ty = typeof options.btnFun[index] == 'function';
-                            if (ty) {
-                                options.btnFun[index]();
-                            }
+            if (type) {
+                $vm.btn = options.btn || ['确定', '取消'];
+                for (let value in options.btnFun) {
+                    console.log(value);
+                    $vm.btnFun = function (e, index) {
+                        let ty = typeof options.btnFun[index] == 'function';
+                        if (ty) {
+                            options.btnFun[index]();
                         }
                     }
                 }
-                ;
-                // 给对象赋值
-                $vm.Zindex = options.Zindex || 999;
-                $vm.message = message || 'message';
-                $vm.show = true;
             }
+            ;
+            // 给对象赋值
+            $vm.Zindex = options.Zindex || 999;
+            $vm.message = message || 'message';
+            $vm.show = true;
+        }
 
     }
 };
