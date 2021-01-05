@@ -1,22 +1,15 @@
-import http from "@/api/httpServer.js";
-
-// 暴露接口
-/**
- * 提交试卷名
- * @param {*} data 
- */
-export const ExamTitle = data => {
-	return http({
-		url: "/ExamTitle",
-	}, data);
-};
-/**
- * 提交试卷题目
- * @param {*} data 
- */
-export const setQuestions = (method, data) => {
-	return http({
-		url: "/questions",
-		method: method
-	}, data);
+import {questionnaireList} from './apiList'
+// api请求数据校验
+export function VerifyquestionnaireList(data){
+    if(data||!data.pagecount||!data.title){
+        return
+    }
+    data.hasOwnProperty('p')?data.p:data.p=10;
+    return new Promise((resolve,reject)=>{
+        questionnaireList('get',data).then(res=>{
+            resolve(res)
+        }).catch(err=>{
+            reject(err)
+        })
+    })
 }

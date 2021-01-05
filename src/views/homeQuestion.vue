@@ -11,15 +11,27 @@
         ></Input>
       </Col>
       <Col :lg="5" :xs="24">
-        <Select @change="examType=$event; answerList()" size="large">
+        <Select
+          @change="
+            examType = $event;
+            answerList();
+          "
+          size="large"
+        >
           <Option value="-1">全部</Option>
           <Option value="0">未发布</Option>
           <Option value="1">发布中</Option>
           <Option value="2">已完成</Option>
         </Select>
       </Col>
-      <Col :xs="5" :md="3"  style="float:right">
-        <Button type="info" @click="examType=3;answerList()">
+      <Col :xs="5" :md="3" style="float: right">
+        <Button
+          type="info"
+          @click="
+            examType = 3;
+            answerList();
+          "
+        >
           <i class="iconfont icon-huishouzhan"></i>回收站
         </Button>
       </Col>
@@ -27,58 +39,78 @@
     <template v-if="!testdata">
       <Row
         class="answer_list"
-        v-for="(item,index) in testdata"
+        v-for="(item, index) in testdata"
         :key="index"
-        :class="{'bg_yellow':item.status==0,'bg_green':item.status==1}"
+        :class="{ bg_yellow: item.status == 0, bg_green: item.status == 1 }"
       >
-        <Col :xs="6">ID:{{item.id}}[{{item.title}}]</Col>
+        <Col :xs="6">ID:{{ item.id }}[{{ item.title }}]</Col>
         <Col :xs="18" style="text-align: right">
-          <span class="st_btn green" v-if="item.status==0" @click.stop="ExamStatus(item.id,1)">
+          <span
+            class="st_btn green"
+            v-if="item.status == 0"
+            @click.stop="ExamStatus(item.id, 1)"
+          >
             <i class="iconfont icon-weibiaoti--1"></i>发布考试
           </span>
-          
+
           <router-link
             tag="span"
-            :to="{path:'/questionnaire',query:{id:item.id}}"
+            :to="{ path: '/questionnaire', query: { id: item.id } }"
             class="st_btn lightgreen"
-            v-if="item.status!=2"
-            @click.stop="ExamStatus(item.id,2)"
+            v-if="item.status != 2"
+            @click.stop="ExamStatus(item.id, 2)"
           >
             <i class="iconfont icon-weibiaoti--1"></i>编辑
           </router-link>
           <router-link
             tag="span"
-            :to="{path:'/answer_list',query:{exam_id:item.id}}"
+            :to="{ path: '/answer_list', query: { exam_id: item.id } }"
             class="st_btn green"
-            v-if="item.status!=0||examType==3"
+            v-if="item.status != 0 || examType == 3"
           >
             <i class="iconfont icon-yanjing"></i>答题情况
           </router-link>
-          <span class="st_btn lightgreen" v-if="item.status==1" @click.stop="ExamStatus(item.id,2)">
+          <span
+            class="st_btn lightgreen"
+            v-if="item.status == 1"
+            @click.stop="ExamStatus(item.id, 2)"
+          >
             <i class="iconfont icon-weibiaoti--1"></i>考试完成
           </span>
-          <span class="st_btn blue" v-if="item.status==1" @click.stop="ExamStatus(item.id,0)">
+          <span
+            class="st_btn blue"
+            v-if="item.status == 1"
+            @click.stop="ExamStatus(item.id, 0)"
+          >
             <i class="iconfont icon-weibiaoti--"></i>取消发布
           </span>
           <span
             class="st_btn blue"
-            @click.stop="ExamStatus(item.id,3)"
-            v-if="item.status!=3&item.status!=1"
+            @click.stop="ExamStatus(item.id, 3)"
+            v-if="(item.status != 3) & (item.status != 1)"
           >
             <i class="iconfont icon-huishouzhan"></i>加入回收站
           </span>
-          <span class="st_btn blue" @click.stop="deleteExam(item.id,index)" v-if="item.status==3">
+          <span
+            class="st_btn blue"
+            @click.stop="deleteExam(item.id, index)"
+            v-if="item.status == 3"
+          >
             <i class="iconfont icon-huishouzhan"></i>删除
           </span>
           <span>
             <i class="iconfont icon-shijian"></i>
-            {{item.updatedAt}}
+            {{ item.updatedAt }}
           </span>
         </Col>
       </Row>
-      <pagenation v-if="pagedata.page_total>1" :pagedata="pagedata" @page="page"></pagenation>
+      <pagenation
+        v-if="pagedata.page_total > 1"
+        :pagedata="pagedata"
+        @page="page"
+      ></pagenation>
     </template>
-    <div class="st_null" v-if="testdata==''">
+    <div class="st_null" v-if="testdata == ''">
       <i class="iconfont icon-wushuju"></i>
       <p>暂无数据</p>
     </div>
@@ -87,6 +119,7 @@
 
 <script>
 import pagenation from "@/components/pagenation";
+import { VerifyquestionnaireList } from "@/api";
 export default {
   name: "homeQuestion",
   data() {
@@ -97,18 +130,18 @@ export default {
         data_total: "",
         p: "1", //当前第几页
         page_rows: 1, //每页n条数据
-        page_total: "" //共多少数据
+        page_total: "", //共多少数据
       },
       examType: -1,
       examTypeUrl: "",
       layerdata: {
         msg: "",
-        flag: false
-      }
+        flag: false,
+      },
     };
   },
   components: {
-    pagenation
+    pagenation,
   },
   watch: {
     examType: {
@@ -116,11 +149,11 @@ export default {
         this.examTypeUrl = "/questionnaireList?status=" + this.examType;
         this.Exam(1);
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   mounted() {
-    var ls_examType = this.$route.query.examType
+    var ls_examType = this.$route.query.examType;
     if (
       ls_examType == "doing" ||
       ls_examType == "unfinish" ||
@@ -145,27 +178,27 @@ export default {
       _this.$confirm(ls_msg, {
         btn: ["确定", "取消"],
         btnFun: [
-          function() {
+          function () {
             _this
               .$http({
                 method: "patch",
                 url: "/Exam",
                 data: {
                   exam_id: exam_id,
-                  status: type
-                }
+                  status: type,
+                },
               })
-              .then(res => {
+              .then((res) => {
                 if (res.status == 200) {
                   _this.Exam(_this.pagedata.p);
                 }
                 _this.$msg(res.data.msg);
               });
           },
-          function() {
+          function () {
             _this.$hide();
-          }
-        ]
+          },
+        ],
       });
     },
     deleteExam(exam_id, index) {
@@ -173,17 +206,17 @@ export default {
       _this.$confirm("确定删除？", {
         btn: ["确定", "取消"],
         btnFun: [
-          function() {
+          function () {
             _this
               .$http({
                 method: "delete",
                 url: "/Exam",
                 data: {
                   exam_id: exam_id,
-                  status: 3
-                }
+                  status: 3,
+                },
               })
-              .then(res => {
+              .then((res) => {
                 if (res.status == 200) {
                   _this.Exam(_this.pagedata.p);
                   _this.$msg("删除成功");
@@ -192,10 +225,10 @@ export default {
                 }
               });
           },
-          function() {
+          function () {
             _this.$hide();
-          }
-        ]
+          },
+        ],
       });
     },
     page(res) {
@@ -214,28 +247,22 @@ export default {
     },
     Exam(p) {
       var _this = this;
-      _this
-        .$http({
-          method: "get",
-          url: _this.examTypeUrl,
-          params: {
-            pagecount: p,
-            page: "10",
-            title: _this.title
-          }
-        })
-        .then(res => {
-          res = res.data;
-          _this.testdata = res.data.users;
-          _this.$set(_this.pagedata, "data_total", res.data.page_total);
-          _this.$set(_this.pagedata, "p", res.data.p);
-          _this.$set(_this.pagedata, "page_rows", res.data.page_rows);
-          _this.$set(_this.pagedata, "page_total", res.data.page_total);
-        });
-    }
-  }
+      VerifyquestionnaireList({
+        pagecount: p,
+        page: "10",
+        title: _this.title,
+      }).then((res) => {
+        res = res.data;
+        _this.testdata = res.data.users;
+        _this.$set(_this.pagedata, "data_total", res.data.page_total);
+        _this.$set(_this.pagedata, "p", res.data.p);
+        _this.$set(_this.pagedata, "page_rows", res.data.page_rows);
+        _this.$set(_this.pagedata, "page_total", res.data.page_total);
+      });
+    },
+  },
 };
 </script>
 <style scoped lang="scss">
-@import '_CSS/homeAQ.scss';
+@import "_CSS/homeAQ.scss";
 </style>

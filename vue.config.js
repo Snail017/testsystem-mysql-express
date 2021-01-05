@@ -87,7 +87,7 @@ module.exports = {
             scss: {
                 // 如果 sass-loader 版本 = 8，这里使用 `prependData` 字段
                 // 如果 sass-loader 版本 < 8，这里使用 `data` 字段
-                additionalData: '@import "~@/assets/css/config.scss";'
+                additionalData: '@import "~@/assets/common/config.scss";'
             },
         },
         // 启用 CSS modules for all css / pre-processor files.

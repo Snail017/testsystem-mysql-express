@@ -75,7 +75,7 @@ class Exam {
      */
     static async getlist(req, res) {
         let params = req.query;
-        // let token = await Token.checkToken(req.headers.authorization);
+        let token = await Token.checkToken(req.headers.authorization);
         params.user_id = token.uid;
 
         let checkdata = await common.checkData(params, res);

@@ -5,7 +5,7 @@ import router from '@/router'
 //正式环境和测试环境请求不同的接口域名
 const baseURL = () => {
     if (process.env.VUE_APP_CURRENTMODE == 'production') {
-        return 'https://api.cellnetwork.io';  // 其它  -正式
+        return 'https://127.0.0.1:3000';  // 其它  -正式
     } else {
         return 'https://127.0.0.1:3000';  // 其他  -测试
     }

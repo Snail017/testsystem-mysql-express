@@ -215,7 +215,6 @@ export function formatDate(ts) {
 export function checkAccuracy1(inToken,outToken,drawerbuy,tokenSellPrice,tokenBuyPrice,leftInput,rightInput,isdircetion){
     let itoken = inToken
     let otoken = outToken
-    console.log('精度检查1',leftInput,rightInput,inToken,outToken)
     let nowPrice = fixLimitToNumber(tokenSellPrice)
     if(drawerbuy) {
         nowPrice = fixLimitToNumber(tokenBuyPrice)
@@ -229,7 +228,6 @@ export function checkAccuracy1(inToken,outToken,drawerbuy,tokenSellPrice,tokenBu
                 smallLen = leftInput.length - leftInput.indexOf('.') - 1
             }
         }
-        console.log('左边smallLen.......',smallLen,'itoken',itoken,itoken.decimals)
         let lInput = fixLimitToNumber(leftInput)
         if(smallLen > itoken.decimals) {
             if(this.$store.state.lan == 'cn') {
@@ -249,7 +247,6 @@ export function checkAccuracy1(inToken,outToken,drawerbuy,tokenSellPrice,tokenBu
             }
         }
         let rInput = fixLimitToNumber(rightInput)
-        console.log('右边smallLen.......',smallLen,'otoken',otoken,otoken.decimals)
         if(smallLen > otoken.decimals) {
             if(this.$store.state.lan == 'cn') {
                 this.$showFailMsg('小数点位数超过币种精度，自动调为'+otoken.decimals+'位');
@@ -262,19 +259,16 @@ export function checkAccuracy1(inToken,outToken,drawerbuy,tokenSellPrice,tokenBu
             leftInput = fixPrice(rInput/nowPrice,2)
         }
     }
-    console.log('精度检查',leftInput,rightInput)
     return {leftInput:leftInput,rightInput:rightInput}
 }
 // 余额检查 
 export function checkBalance1(inToken,outToken,inAmount,outAmount,drawerbuy,tokenSellPrice,tokenBuyPrice,leftInput,rightInput){
-    console.log('..余额检查......leftInput',leftInput)
     let itoken = inToken
     let otoken = outToken
     let lInput = fixLimitToNumber(leftInput)
     let rInput = fixLimitToNumber(rightInput)
     inAmount = lInput
     outAmount = rInput
-    console.log('......inAmount,............outAmount',inAmount,outAmount)
 
     if(drawerbuy){
         itoken = outToken
@@ -372,6 +366,5 @@ export function checkOverInput1(inToken,outToken,inAmount,outAmount,drawerbuy,to
             leftInput = fixPrice(unitMaxLimit/nowPrice,2)
         }
     }
-    // return this.inputErrorType.normal
     return {leftInput:leftInput,rightInput:rightInput,inAmount:inAmount,outAmount:outAmount}
 }

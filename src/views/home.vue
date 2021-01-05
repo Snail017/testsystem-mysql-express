@@ -27,21 +27,40 @@
       </Col>
     </Row>
     <div class="seach" v-if="seashShow">
-      <Input :clearable="true" placeholder="请输入试卷名进行搜索..." @input="getPledgePairList()" />
-      <span @click="searchVal='',getPledgePairList(),seashShow=false">取消</span>
+      <Input :clearable="true" placeholder="请输入试卷名进行搜索..." />
+      <span @click="(searchVal = ''), (seashShow = false)" class="st_cancel"
+        >取消</span
+      >
     </div>
-    <div class="st_tih3">
+    <div class="st_tih3" v-else>
       <span>
         {{ isActive == 0 ? "问卷列表" : "答卷列表" }}
       </span>
       <div>
-        <i class="iconfont icon-jiaru" v-if="isActive===0" @click="$router.push('/questionnaire')"></i>
-        <i class="iconfont icon-filter" @click="isHide ? (isHide = false) : (isHide = true)"></i>
+        <i
+          class="iconfont icon-jiaru"
+          v-if="isActive === 0"
+          @click="$router.push('/questionnaire')"
+        ></i>
+        <i
+          class="iconfont icon-filter"
+          @click="isHide ? (isHide = false) : (isHide = true)"
+        ></i>
         <i class="iconfont icon-sousuo" @click="seashShow = true"></i>
         <div v-show="isHide" class="s-seach">
-          <div class="clearfix"  v-for="(item,index) in stap" :key="index" @click="isNoP=index,examType=$event,$refs.myAnswer.answerList(),isHide=false">
-            <span :class="isNoP===index?'blue_color':''" >{{item}}</span>
-            <i class="iconfont icon-wancheng1" v-show="isNoP===index"></i>
+          <div
+            class="clearfix"
+            v-for="(item, index) in stap"
+            :key="index"
+            @click="
+              (isNoP = index),
+                (examType = $event),
+                $refs.myAnswer.answerList(),
+                (isHide = false)
+            "
+          >
+            <span :class="isNoP === index ? 'blue_color' : ''">{{ item }}</span>
+            <i class="iconfont icon-wancheng1" v-show="isNoP === index"></i>
           </div>
         </div>
       </div>
@@ -63,10 +82,10 @@ export default {
   data() {
     return {
       isActive: 0,
-      isHide:false,
-      seashShow:false,
-      isNoP:Number,
-      stap:['全部','未考试','已完成','回收站']
+      isHide: false,
+      seashShow: false,
+      isNoP: Number,
+      stap: ["全部", "未考试", "已完成", "回收站"],
     };
   },
   mounted() {},
@@ -80,44 +99,53 @@ export default {
   margin: rem1(20) auto 0;
   text-align: center;
 }
-.s-seach{
-    position: absolute;
-    top: rem1(60);
-    right: rem1(20);
-    width: rem1(220);
-    padding: 0 rem1(20);
-    background: #fff;       
-    box-shadow: 0px rem1(4) rem1(20) 0px rgba(219, 219, 219, 0.61);
-    border-radius: rem1(8);
-    z-index: 3;
-    font-size: rem1(26);
-    >div{
-      display: flex;;
-      align-items:center;
-      margin: rem1(10) 0;
+.seach {
+  display: flex;
+  padding: rem(5);
+  .st_cancel {
+    float: right;
+    width: rem(50);
+    @include flexCenter();
+  }
+}
+.s-seach {
+  position: absolute;
+  top: rem1(60);
+  right: rem1(20);
+  width: rem1(220);
+  padding: 0 rem1(20);
+  background: #fff;
+  box-shadow: 0px rem1(4) rem1(20) 0px rgba(219, 219, 219, 0.61);
+  border-radius: rem1(8);
+  z-index: 3;
+  font-size: rem1(26);
+  > div {
+    display: flex;
+    align-items: center;
+    margin: rem1(10) 0;
+  }
+  span {
+    width: rem1(150);
+    text-align: left;
+    @include cs(#191a27, 28);
+    &.blue_color {
+      color: #1d51e0;
     }
-    span {
-        width: rem1(150);
-        text-align: left;
-        @include cs(#191A27,28);
-        &.blue_color {
-            color: #1D51E0;
-        }
-    }
-    .iconfont.icon-wancheng1{
-        color: #1D51E0;
-        font-size: rem1(28);
-    }
+  }
+  .iconfont.icon-wancheng1 {
+    color: #1d51e0;
+    font-size: rem1(28);
+  }
 }
 .st_tih3 {
   position: relative;
-  align-items:center;
+  align-items: center;
   margin: rem1(10) 0;
-  padding:0 rem1(20);
+  padding: 0 rem1(20);
+  font-size: rem(13);
   display: none;
   > span {
     flex: 3;
-    font-size: rem1(24);
     color: #000;
     align-content: center;
     text-align: left;
@@ -156,7 +184,7 @@ export default {
   .content {
     width: 100%;
   }
-  .st_tih3{
+  .st_tih3 {
     display: flex;
   }
 }
