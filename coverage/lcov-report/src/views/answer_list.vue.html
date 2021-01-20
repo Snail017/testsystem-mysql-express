@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/views/answer_list.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/views</a> answer_list.vue
+    </h1>
+    <div class='clearfix'>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
+  &lt;div class="st_answerlist"&gt;
+      &lt;router-link to="/homeQuestion" tag="Button"&gt;&lt;i class="ivu-icon ivu-icon-ios-undo"&gt;&lt;/i&gt; 返回&lt;/router-link&gt;
+      &lt;div class="st_sear"&gt;
+        &lt;Input
+          type="text"
+          placeholder="请输入id或者用户名进行搜索..."
+          v-model="ser_id"
+          @on-enter="getanswerlist()"
+        &gt;
+          &lt;Button slot="append" icon="ios-search" @click="getanswerlist()"&gt;&lt;/Button&gt;
+        &lt;/Input&gt;
+      &lt;/div&gt;
+      &lt;table v-if="listdata.length&gt;0" border="1" cellspacing="0" cellpadding="0"&gt;
+        &lt;tr&gt;
+          &lt;th&gt;用户ID&lt;/th&gt;
+          &lt;th&gt;用户名&lt;/th&gt;
+          &lt;th&gt;最后提交答卷时间&lt;/th&gt;
+          &lt;th&gt;考卷详情&lt;/th&gt;
+          &lt;th&gt;成绩&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr v-for="item in listdata"&gt;
+          &lt;td&gt;{{item.user_id}}&lt;/td&gt;
+          &lt;td&gt;{{item.Nickname}}&lt;/td&gt;
+          &lt;td&gt;{{item.updatedAt}}&lt;/td&gt;
+          &lt;td @click="examDetail(item.user_id)"&gt;
+            &lt;router-link
+              :to="{path:'/checkpaper',query:{user_id:item.user_id,paper_id:exam_id}}"
+              class="btn btn-primary"
+            &gt;查看考卷&lt;/router-link&gt;
+          &lt;/td&gt;
+          &lt;td&gt;{{item.score_sum}}&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+      &lt;div class="st_null" v-if="listdata.length&lt;1"&gt;
+        &lt;i class="iconfont icon-wushuju"&gt;&lt;/i&gt;
+        &lt;p&gt;暂无数据&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&nbsp;
+&lt;script&gt;
+export default {
+  name: "answer_list",
+  data() {
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      listdata: [],
+      ser_id: "",
+      exam_id: this.$match(window.location.hash, "exam_id")
+    };
+  },
+  mounted() {
+<span class="cstat-no" title="statement not covered" >    this.getanswerlist();</span>
+  },
+  methods: {
+    examDetail(service_id) {
+<span class="cstat-no" title="statement not covered" >      var _this = this;</span>
+<span class="cstat-no" title="statement not covered" >      _this.$http({</span>
+        method: "get",
+        url: "/Exam/GetAnswer",
+<span class="fstat-no" title="function not covered" >        data: {</span>
+          service_id: service_id,
+          exam_id: _this.$match(window.location.hash, "exam_id")
+        }.then(res =&gt; {
+&nbsp;
+        })
+      });
+    },
+    getanswerlist() {
+<span class="cstat-no" title="statement not covered" >      var _this = this;</span>
+<span class="cstat-no" title="statement not covered" >      _this</span>
+<span class="fstat-no" title="function not covered" >        .$http({</span>
+          method: "get",
+          url: "/answerUser",
+          params: {
+            exam_id: _this.match(window.location.hash, "exam_id"),
+            content: _this.ser_id
+          }
+        })
+        .then(res =&gt; {
+<span class="cstat-no" title="statement not covered" >          if (res.status == 200) {</span>
+<span class="cstat-no" title="statement not covered" >            _this.listdata = res.data.data;</span>
+          }
+        });
+    },
+    /**
+     *   从url中正则匹配得到数据
+     **/
+    match(search, name) {
+<span class="cstat-no" title="statement not covered" >      var reg = new RegExp("[?&amp;]" + name + "=([^&amp;]*)(&amp;|$)", "i");</span>
+<span class="cstat-no" title="statement not covered" >      var r = search.match(reg);</span>
+<span class="cstat-no" title="statement not covered" >      if (r != null) return unescape(r[1]);</span>
+<span class="cstat-no" title="statement not covered" >      return null;</span>
+    }
+  }
+};
+&lt;/script&gt;
+&nbsp;
+&lt;style scoped&gt;
+table {
+  text-align: center;border: #f7f7ff;
+}
+table td,
+table th {
+  padding: 5px 10px;
+}
+table tr:nth-of-type(1){
+  background: #ddd!important;
+}
+.st_null {
+  text-align: center;
+  margin: auto;
+  font-size: 25px;
+}
+.icon-wushuju {
+  font-size: 100px;
+}
+.st_answerlist {
+  width: 1000px;
+  margin: auto;
+  padding: 20px 10px;
+  background: #fff;
+  min-height: 100%;
+}
+.st_answerlist table {
+  width: 100%;
+}
+.st_sear {
+  position: relative;
+  margin: 20px 0;
+}
+.icon-chazhao {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  margin-top: -15px;
+  font-size: 20px;
+}
+&nbsp;
+@media screen and (max-width: 1000px) {
+  .st_answerlist {
+    width: 100%;
+  }
+}
+&lt;/style&gt;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 19 2021 19:51:43 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

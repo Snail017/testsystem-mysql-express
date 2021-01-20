@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/testeditor.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/components</a> testeditor.vue
+    </h1>
+    <div class='clearfix'>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
+  &lt;quill-editor
+    ref="myQuillEditor"
+    :options="editorOption"
+    v-model="editordata.editorTxt"
+  &gt;&lt;/quill-editor&gt;
+&lt;/template&gt;
+&lt;script&gt;
+<span class="cstat-no" title="statement not covered" >import "quill/dist/quill.core.css";</span>
+<span class="cstat-no" title="statement not covered" >import "quill/dist/quill.snow.css";</span>
+<span class="cstat-no" title="statement not covered" >import "quill/dist/quill.bubble.css";</span>
+<span class="cstat-no" title="statement not covered" >import { quillEditor, Quill } from "vue-quill-editor";</span>
+<span class="cstat-no" title="statement not covered" >import { container, ImageExtend, QuillWatch } from "quill-image-extend-module";</span>
+<span class="cstat-no" title="statement not covered" >Quill.register("modules/ImageExtend", ImageExtend);</span>
+export default {
+  name: "testeditor",
+  data() {
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      // 富文本框参数设置
+      editorOption: {
+        placeholder: this.editordata.hasOwnProperty("placeholder")
+          ? this.editordata.placeholder
+          : "请在此输入",
+        modules: {
+          ImageExtend: {
+            loading: true,
+            name: "img",
+            action: "/UpLoad/Uploadpic",
+            // response 为一个函数用来获取服务器返回的具体图片地址
+            // 例如服务器返回{code: 200; data:{ url: 'baidu.com'}}
+            // 则 return res.data.url
+<span class="fstat-no" title="function not covered" >            response: (res) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >              if (res.status == 0) {</span>
+<span class="cstat-no" title="statement not covered" >                return res.data.img;</span>
+              } else {
+<span class="cstat-no" title="statement not covered" >                console.log(res);</span>
+<span class="cstat-no" title="statement not covered" >                return "";</span>
+              }
+            },
+<span class="fstat-no" title="function not covered" >            header: (xhr) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >              console.log(xhr);</span>
+            },
+            // xhr.setRequestHeader('myHeader','myValue')
+            // formData.append('token', 'myToken')
+            // 可选参数 每次选择图片触发，也可用来设置头部，但比headers多了一个参数，可设置formData
+<span class="fstat-no" title="function not covered" >            change: (xhr, formData) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >              console.log(xhr);</span>
+            },
+          },
+          // 如果不上传图片到服务器，此处不必配置
+          toolbar: {
+            container: container, //container为工具栏，此次引入了全部工具栏，也可自行配置
+            handlers: {
+<span class="fstat-no" title="function not covered" >              image: function () {</span>
+<span class="cstat-no" title="statement not covered" >                QuillWatch.emit(this.quill.id);</span>
+              },
+            },
+          },
+        },
+      },
+    };
+  },
+  components: { quillEditor },
+  props: ["editordata"],
+  mounted() {
+<span class="cstat-no" title="statement not covered" >    this.editorOption.placeholder = "12456";</span>
+  },
+};
+&lt;/script&gt;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 19 2021 19:51:43 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

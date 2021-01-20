@@ -27,6 +27,15 @@ export const setQuestions = (method, data) => {
 export function questionnaireList(method,data){
 	return http({
 		url:"/questionnaireList",
-		method:method,
+		method:'get',
+	},data)
+}
+/**
+ * 登陆
+ */
+export function login(data){
+	return http({
+		url:"/login",
+		method:'post',
 	},data)
 }

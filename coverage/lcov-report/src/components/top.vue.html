@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/top.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/components</a> top.vue
+    </h1>
+    <div class='clearfix'>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
+    &lt;div&gt;
+        &lt;div class="nav-right"&gt;
+            &lt;i class="iconfont icon-zuo"  v-if="!navShow"  @mouseenter="navShow=true" @mouseout="navShow=false"&gt;&lt;/i&gt;
+            &lt;div v-if="navShow"  @mouseenter="navShow=true" @mouseleave="navShow=false"&gt;
+               &lt;div&gt;
+                   &lt;p&gt;{{topdata.gross_score}}&lt;/p&gt;
+                   &lt;p&gt;试卷总分&lt;/p&gt;
+               &lt;/div&gt;
+               &lt;div&gt;
+                   &lt;p&gt;{{questiondata.length&gt;0?questiondata.length:0}}&lt;/p&gt;
+                   &lt;p&gt;试卷题目数&lt;/p&gt;
+               &lt;/div&gt;
+               &lt;div v-if="ispage"&gt;
+                   &lt;p&gt;{{countdown}}&lt;/p&gt;
+                   &lt;p&gt;考试倒计时&lt;/p&gt;
+               &lt;/div&gt;
+           &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="st_top_content" v-if="topCofig.topShow"&gt;
+            &lt;div class="header clearfix"&gt;
+                &lt;i class="iconfont icon-guanbi" @click="topCofig.topShow=false"&gt;&lt;/i&gt;
+                &lt;Select  placeholder="请指定考试人" v-model="topdata.designated" multiple filterable&gt;
+                    &lt;Option v-for="item in users" :value="item.id" :key="item.id"&gt;[{{item.id}}]{{item.Nickname}}&lt;/Option&gt;
+                &lt;/Select&gt;
+                &lt;Row&gt;
+                    &lt;Col span="6"&gt;
+                      &lt;label&gt;立即发布 &lt;input type="checkbox"  v-model="topdata.opentest"&gt;&lt;/label&gt;
+                    &lt;/Col&gt;
+                    &lt;Col span="8"&gt;
+                      &lt;label&gt;隐藏系统考题 &lt;input type="checkbox"  v-model="topdata.sort"&gt;&lt;/label&gt;
+                    &lt;/Col&gt;
+                    &lt;Col span="8"&gt;
+                      &lt;label&gt;答卷时间 &lt;Input type="text" style="width:80px;" v-model="topdata.testTime" placeholder="分钟"&gt;&lt;/Input&gt; &lt;/label&gt;
+                    &lt;/Col&gt;
+                &lt;/Row&gt;
+                &lt;div class="footer"&gt;
+                    &lt;div&gt;
+                        &lt;Button type="primary" @click.stop="$emit('checkdata')"&gt;完成编辑&lt;/Button&gt;
+                        &lt;router-link tag="Button" type="button"  target="_blank" :to="{path:'/paper',query:{paper_id:topdata.exam_id}}" &gt;&lt;i class="iconfont icon-yanjing"&gt;&lt;/i&gt;预览&lt;/router-link&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+&nbsp;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&nbsp;
+&lt;script&gt;
+    export default {
+          name: 'top',
+          props:['topdata','questiondata','topCofig','ispage'],
+          data () {
+<span class="cstat-no" title="statement not covered" >            return {</span>
+                users:[],
+                navShow:0,
+                countdown:0,
+            }
+          },
+          mounted(){
+<span class="cstat-no" title="statement not covered" >              this.getPerson();</span>
+          },
+          methods:{
+              getPerson(){
+<span class="cstat-no" title="statement not covered" >                  var _this=this;</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >                  this.$http({</span></span>
+                      method:"post",
+                      url:"/users",
+                      data:{
+                          type:""
+                      }
+                  }).then(res=&gt;{
+<span class="cstat-no" title="statement not covered" >                      if(res.data.code==200) _this.users=res.data.data;</span>
+                       
+                  })
+              },
+&nbsp;
+      }
+}
+&lt;/script&gt;
+&nbsp;
+&lt;!-- Add "scoped" attribute to limit CSS to this component only --&gt;
+&lt;style scoped&gt;
+    .iconfont{font-size: 12px;}
+    .ivu-btn{margin-left: 5px;}
+    .icon-guanbi{margin-right: 5px;font-size: 25px;position: absolute;right: 0;top:0;}
+    .st_top_content{position: fixed;left:0;top:0;width: 100%;height: 100%;background: #000000b8;z-index: 3;}
+    .mulselect&gt;&gt;&gt;.multiselect{position: fixed;width: 500px;font-size: 12px;}
+    .mulselect&gt;&gt;&gt;.multiselect__input, .mulselect&gt;&gt;&gt;.multiselect__single{font-size: 12px;}
+    .header{overflow: hidden;width: 600px;background: #fff;padding:20px 40px 0;margin: auto;margin-top: 10%;position: relative}
+    .header&gt;div{padding: 10px 0;}
+    .header label{vertical-align: middle;margin: 0;width: 49%;}
+    .header label:before{content:'*';color: red;padding: 0 5px;}
+    .footer:before{content:'';height: 1px;margin: 0 -40px 10px;background: #ddd;display: block;}
+    .footer{text-align: center;}
+    .footer .btn{width: 100px;margin:0 20px;}
+    .footer&gt;div{width: 300px;margin: auto;}
+    .nav-right{position: fixed;right: 50%;margin-right: -500px;color: #fff;top:30%;z-index: 3; }
+    .nav-right .icon-zuo{font-size: 35px;color: #1d6bef ;margin-top: 10px;position: absolute;right: 0px;}
+    .nav-right&gt;div{background: linear-gradient(to right, #0088ff ,blue, #1568d5);display: flex;border-radius:5px 0 0 5px;}
+    .nav-right p{padding:5px 10px;text-align: center;font-size: 14px;}
+    .nav-right p:nth-of-type(1){font-size: 25px;font-weight: bold;}
+  
+    @media screen and (max-width: 850px){
+        .header{width: 90%;margin: auto;}
+        .mulselect&gt;&gt;&gt;.multiselect{width: 300px;;}
+    }
+&lt;/style&gt;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 19 2021 19:51:43 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

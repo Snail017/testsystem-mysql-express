@@ -11,14 +11,11 @@ describe('home.vue', () => {
   // 自定义props传递给AppButton组件，判断组件有获取到props
   it('data test', async () => {
     const wrapper = mount(answerquestion, {
-      propsData:propsData,
       stubs:[
         'router-link',"Row"
       ]
     })
-    await wrapper.vm.$nextTick()
-    // 创建mock函数
-    expect(wrapper.vm._data.password).toBe('12345678')
+  
     // 每个it最后都应该销毁wrapper
     wrapper.destroy()
   })

@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/assets/common/flexible.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/assets/common</a> flexible.js
+    </h1>
+    <div class='clearfix'>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+;<span class="cstat-no" title="statement not covered" >(<span class="fstat-no" title="function not covered" >function(</span>win, lib) {</span>
+    var doc = <span class="cstat-no" title="statement not covered" >win.document;</span>
+    var docEl = <span class="cstat-no" title="statement not covered" >doc.documentElement;</span>
+    var metaEl = <span class="cstat-no" title="statement not covered" >doc.querySelector('meta[name="viewport"]');</span>
+    var flexibleEl = <span class="cstat-no" title="statement not covered" >doc.querySelector('meta[name="flexible"]');</span>
+    var dpr = <span class="cstat-no" title="statement not covered" >0;</span>
+    var scale = <span class="cstat-no" title="statement not covered" >0;</span>
+    var tid;
+    var flexible = <span class="cstat-no" title="statement not covered" >lib.flexible || (lib.flexible = {});</span>
+    
+<span class="cstat-no" title="statement not covered" >    if (metaEl) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log('将根据已有的meta标签来设置缩放比例');</span>
+        var match = <span class="cstat-no" title="statement not covered" >metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);</span>
+<span class="cstat-no" title="statement not covered" >        if (match) {</span>
+<span class="cstat-no" title="statement not covered" >            scale = parseFloat(match[1]);</span>
+<span class="cstat-no" title="statement not covered" >            dpr = parseInt(1 / scale);</span>
+        } 
+    } else <span class="cstat-no" title="statement not covered" >if (flexibleEl) {</span>
+        var content = <span class="cstat-no" title="statement not covered" >flexibleEl.getAttribute('content');</span>
+<span class="cstat-no" title="statement not covered" >        if (content) {</span>
+            var initialDpr = <span class="cstat-no" title="statement not covered" >content.match(/initial\-dpr=([\d\.]+)/);</span>
+            var maximumDpr = <span class="cstat-no" title="statement not covered" >content.match(/maximum\-dpr=([\d\.]+)/);</span>
+<span class="cstat-no" title="statement not covered" >            if (initialDpr) {</span>
+<span class="cstat-no" title="statement not covered" >                dpr = parseFloat(initialDpr[1]);</span>
+<span class="cstat-no" title="statement not covered" >                scale = parseFloat((1 / dpr).toFixed(2));    </span>
+            }
+<span class="cstat-no" title="statement not covered" >            if (maximumDpr) {</span>
+<span class="cstat-no" title="statement not covered" >                dpr = parseFloat(maximumDpr[1]);</span>
+<span class="cstat-no" title="statement not covered" >                scale = parseFloat((1 / dpr).toFixed(2));    </span>
+            }
+        }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!dpr &amp;&amp; !scale) {</span>
+        var isAndroid = <span class="cstat-no" title="statement not covered" >win.navigator.appVersion.match(/android/gi);</span>
+        var isIPhone = <span class="cstat-no" title="statement not covered" >win.navigator.appVersion.match(/iphone/gi);</span>
+        var devicePixelRatio = <span class="cstat-no" title="statement not covered" >win.devicePixelRatio;</span>
+<span class="cstat-no" title="statement not covered" >        if (isIPhone) {</span>
+            // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+<span class="cstat-no" title="statement not covered" >            if (devicePixelRatio &gt;= 3 &amp;&amp; (!dpr || dpr &gt;= 3)) {                </span>
+<span class="cstat-no" title="statement not covered" >                dpr = 3;</span>
+            } else <span class="cstat-no" title="statement not covered" >if (devicePixelRatio &gt;= 2 &amp;&amp; (!dpr || dpr &gt;= 2)){</span>
+<span class="cstat-no" title="statement not covered" >                dpr = 2;</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                dpr = 1;</span>
+            }
+        } else {
+            // 其他设备下，仍旧使用1倍的方案
+<span class="cstat-no" title="statement not covered" >            dpr = 1;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        scale = 1 / dpr;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    docEl.setAttribute('data-dpr', dpr);</span>
+<span class="cstat-no" title="statement not covered" >    if (!metaEl) {</span>
+<span class="cstat-no" title="statement not covered" >        metaEl = doc.createElement('meta');</span>
+<span class="cstat-no" title="statement not covered" >        metaEl.setAttribute('name', 'viewport');</span>
+<span class="cstat-no" title="statement not covered" >        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');</span>
+<span class="cstat-no" title="statement not covered" >        if (docEl.firstElementChild) {</span>
+<span class="cstat-no" title="statement not covered" >            docEl.firstElementChild.appendChild(metaEl);</span>
+        } else {
+            var wrap = <span class="cstat-no" title="statement not covered" >doc.createElement('div');</span>
+<span class="cstat-no" title="statement not covered" >            wrap.appendChild(metaEl);</span>
+<span class="cstat-no" title="statement not covered" >            doc.write(wrap.innerHTML);</span>
+        }
+    }
+&nbsp;
+    function <span class="fstat-no" title="function not covered" >refreshRem(){</span>
+        var width = <span class="cstat-no" title="statement not covered" >docEl.getBoundingClientRect().width;</span>
+<span class="cstat-no" title="statement not covered" >        if (width / dpr &gt; 1080) {</span>
+<span class="cstat-no" title="statement not covered" >            width = 1080 * dpr;</span>
+        }
+        var rem = <span class="cstat-no" title="statement not covered" >width / 30;</span>
+        
+<span class="cstat-no" title="statement not covered" >        docEl.style.fontSize = rem + 'px';</span>
+<span class="cstat-no" title="statement not covered" >        flexible.rem = win.rem = rem;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    win.addEventListener('resize', <span class="fstat-no" title="function not covered" >function() </span>{</span>
+<span class="cstat-no" title="statement not covered" >        clearTimeout(tid);</span>
+<span class="cstat-no" title="statement not covered" >        tid = setTimeout(refreshRem, 300);</span>
+    }, false);
+<span class="cstat-no" title="statement not covered" >    win.addEventListener('pageshow', <span class="fstat-no" title="function not covered" >function(</span>e) {</span>
+<span class="cstat-no" title="statement not covered" >        if (e.persisted) {</span>
+<span class="cstat-no" title="statement not covered" >            clearTimeout(tid);</span>
+<span class="cstat-no" title="statement not covered" >            tid = setTimeout(refreshRem, 300);</span>
+        }
+    }, false);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (doc.readyState === 'complete') {</span>
+<span class="cstat-no" title="statement not covered" >        doc.body.style.fontSize = 12 * dpr + 'px';</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >        doc.addEventListener('DOMContentLoaded', <span class="fstat-no" title="function not covered" >function(</span>e) {</span>
+<span class="cstat-no" title="statement not covered" >            doc.body.style.fontSize = 12 * dpr + 'px';</span>
+        }, false);
+    }
+    
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    refreshRem(</span>);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    flexible.dpr = win.dpr = dpr;</span>
+<span class="cstat-no" title="statement not covered" >    flexible.refreshRem = refreshRem;</span>
+<span class="cstat-no" title="statement not covered" >    flexible.rem2px = <span class="fstat-no" title="function not covered" >function(</span>d) {</span>
+        var val = <span class="cstat-no" title="statement not covered" >parseFloat(d) * this.rem;</span>
+<span class="cstat-no" title="statement not covered" >        if (typeof d === 'string' &amp;&amp; d.match(/rem$/)) {</span>
+<span class="cstat-no" title="statement not covered" >            val += 'px';</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return val;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    flexible.px2rem = <span class="fstat-no" title="function not covered" >function(</span>d) {</span>
+        var val = <span class="cstat-no" title="statement not covered" >parseFloat(d) / this.rem;</span>
+<span class="cstat-no" title="statement not covered" >        if (typeof d === 'string' &amp;&amp; d.match(/px$/)) {</span>
+<span class="cstat-no" title="statement not covered" >            val += 'rem';</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return val;</span>
+    }
+&nbsp;
+})(window, window['lib'] || (window['lib'] = {}));</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 19 2021 19:51:43 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

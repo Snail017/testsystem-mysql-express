@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/store.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">src</a> store.js
+    </h1>
+    <div class='clearfix'>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import Vue from 'vue'</span>
+<span class="cstat-no" title="statement not covered" >import Vuex from 'vuex'</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >import axios from "axios";</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >Vue.use(Vuex)</span>
+const state = <span class="cstat-no" title="statement not covered" >{</span>
+  system: ''
+}
+&nbsp;
+const getters = <span class="cstat-no" title="statement not covered" >{</span>
+&nbsp;
+}
+const mutations = <span class="cstat-no" title="statement not covered" >{</span>
+&nbsp;
+}
+&nbsp;
+var web3GetIdFlag = <span class="cstat-no" title="statement not covered" >false,</span>
+  web3GetIdPromise = <span class="cstat-no" title="statement not covered" >null;</span>
+const actions = <span class="cstat-no" title="statement not covered" >{</span>
+  system(state) {
+<span class="cstat-no" title="statement not covered" >    if (state.system) {</span>
+<span class="cstat-no" title="statement not covered" >      return resolve(state.system)</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      if (!web3GetIdFlag) {</span>
+<span class="cstat-no" title="statement not covered" >        web3GetIdFlag = true;</span>
+<span class="cstat-no" title="statement not covered" >        web3GetIdPromise = new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >          try {</span>
+              var ua = <span class="cstat-no" title="statement not covered" >navigator.userAgent.toLowerCase();</span>
+<span class="cstat-no" title="statement not covered" >              if (ua.indexOf("android") &gt; -1 || ua.indexOf("linux") &gt; -1) {</span>
+<span class="cstat-no" title="statement not covered" >                if (window.ShowFitness !== undefined) {</span>
+<span class="cstat-no" title="statement not covered" >                  store.state.system = 'android'</span>
+<span class="cstat-no" title="statement not covered" >                  return resolve('android');</span>
+                }
+              }
+              else <span class="cstat-no" title="statement not covered" >if (ua.indexOf("iphone") &gt; -1 || ua.indexOf("ios") &gt; -1) {</span>
+<span class="cstat-no" title="statement not covered" >                store.state.system = 'ios'</span>
+<span class="cstat-no" title="statement not covered" >                return resolve('ios');</span>
+              } else <span class="cstat-no" title="statement not covered" >if (ua.match(/MicroMessenger/i) == "micromessenger") {</span>
+                //在微信中打开
+<span class="cstat-no" title="statement not covered" >                store.state.system = 'weixin'</span>
+<span class="cstat-no" title="statement not covered" >                return resolve('weixin');</span>
+              }
+              else <span class="cstat-no" title="statement not covered" >if (ua.match(/WeiBo/i) == "weibo") {</span>
+                //在新浪微博客户端打开
+<span class="cstat-no" title="statement not covered" >                store.state.system = 'weibo'</span>
+<span class="cstat-no" title="statement not covered" >                return resolve('weibo');</span>
+              }
+              else <span class="cstat-no" title="statement not covered" >if (ua.match(/QQ/i) == "qq") {</span>
+                //在QQ空间打开
+<span class="cstat-no" title="statement not covered" >                store.state.system = 'qq'</span>
+<span class="cstat-no" title="statement not covered" >                return resolve('qq');</span>
+              }
+          
+          } catch (err) {
+<span class="cstat-no" title="statement not covered" >            console.log(err)</span>
+<span class="cstat-no" title="statement not covered" >            reject(err)</span>
+          }
+        })
+      }
+<span class="cstat-no" title="statement not covered" >      return web3GetIdPromise</span>
+    }
+  },
+}
+const store = <span class="cstat-no" title="statement not covered" >new Vuex.Store({</span>
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions,
+});
+&nbsp;
+export default store;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 19 2021 19:51:43 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

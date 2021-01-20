@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/mixins/index.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/mixins</a> index.js
+    </h1>
+    <div class='clearfix'>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import Vue from 'vue';</span>
+<span class="cstat-no" title="statement not covered" >import DialogWindow from './components/dialog.vue'</span>
+<span class="cstat-no" title="statement not covered" >import Message from './components/message'</span>
+<span class="cstat-no" title="statement not covered" >import BrowerOpens from './components/BrowserOpens'</span>
+// 插件安装
+// 弹框默认配置选项，传入字符串默认为无标题的简单提示，合并配置选项和构造实例
+const showDialog = (<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >options) =&gt; {</span></span>
+    // 合并配置选项
+    let config = <span class="cstat-no" title="statement not covered" >{</span>
+        successBTN:'知道了',
+        show:true
+    }
+<span class="cstat-no" title="statement not covered" >    Dialog(config, options, DialogWindow)</span>
+};
+const showSuccessMsg = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >config</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    CloseDialog(document.querySelectorAll('.dialog.message'))</span>
+    let options = <span class="cstat-no" title="statement not covered" >{</span>
+        messageData: {
+            message: '系统提示',
+            type: 1,  // -1 delete; 1 success ; 2 loading
+        },
+    };
+<span class="cstat-no" title="statement not covered" >    Dialog(config, options, Message)</span>
+<span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; </span>{</span>
+<span class="cstat-no" title="statement not covered" >        CloseDialog(document.querySelectorAll('.dialog.message'))</span>
+    }, 3000);
+};
+const showFailMsg = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >config</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    CloseDialog(document.querySelectorAll('.dialog.message'))</span>
+    let options = <span class="cstat-no" title="statement not covered" >{</span>
+        messageData: {
+            message: '系统提示',
+            type: -1,  // -1 delete; 1 success ; 2 loading
+        },
+    };
+<span class="cstat-no" title="statement not covered" >    Dialog(config, options, Message)</span>
+<span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; </span>{</span>
+<span class="cstat-no" title="statement not covered" >        CloseDialog(document.querySelectorAll('.dialog.message'))</span>
+    }, 3000);
+};
+const showTransMsg = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >config</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    CloseDialog(document.querySelectorAll('.dialog.message'))</span>
+    let options = <span class="cstat-no" title="statement not covered" >{</span>
+        messageData: {
+            message: '系统提示',
+            type: 2,  // -1 delete; 1 success ; 2 loading
+        },
+    };
+<span class="cstat-no" title="statement not covered" >    Dialog(config, options, Message)</span>
+};
+const showTipMsg = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >config</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    CloseDialog(document.querySelectorAll('.dialog.message'))</span>
+    let options = <span class="cstat-no" title="statement not covered" >{</span>
+        messageData: {
+            message: '系统提示',
+            type: 0,  // -1 delete; 1 success ; 2 loading
+        },
+    };
+<span class="cstat-no" title="statement not covered" >    Dialog(config, options, Message)</span>
+<span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; </span>{</span>
+<span class="cstat-no" title="statement not covered" >        CloseDialog(document.querySelectorAll('.dialog.message'))</span>
+    }, 3000);
+};
+const Dialog = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>onfig, options, DOM) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (config &amp;&amp; typeof config !== 'object' &amp;&amp; DOM === Message) {</span>
+<span class="cstat-no" title="statement not covered" >        options.messageData.message = config;</span>
+    }
+    // 合并配置选项
+<span class="cstat-no" title="statement not covered" >    config = { ...options, ...config };</span>
+&nbsp;
+    let Tpl = <span class="cstat-no" title="statement not covered" >Vue.extend(DOM); // 使用基础 Vue 构造器，创建一个子类</span>
+    let instance = <span class="cstat-no" title="statement not covered" >new Tpl(); // 构造实例</span>
+    // 将模板的data替换成传入的配置选项
+<span class="cstat-no" title="statement not covered" >    for (let key in config) {</span>
+<span class="cstat-no" title="statement not covered" >        if (config.hasOwnProperty(key)) <span class="cstat-no" title="statement not covered" >i</span>nstance.$data[key] = config[key];</span>
+    }
+    // 直接在body生成一个DOM树
+<span class="cstat-no" title="statement not covered" >    document.body.appendChild(instance.$mount().$el);</span>
+&nbsp;
+};
+const showBrower = (<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >config) =&gt; {</span></span>
+    // 合并配置选项
+    let options = <span class="cstat-no" title="statement not covered" >null;</span>
+<span class="cstat-no" title="statement not covered" >    Dialog(config, options, BrowerOpens)</span>
+};
+&nbsp;
+// 删除弹框DOM节点
+const CloseDialog = (<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >dialogBox) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >    if (dialogBox.length) {</span>
+<span class="cstat-no" title="statement not covered" >        for (let i = 0; i &lt; dialogBox.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            dialogBox[i].parentNode.removeChild(dialogBox[i]);</span>
+        }
+    }
+};
+export default {
+    install() {
+<span class="cstat-no" title="statement not covered" >        Vue.prototype.$showSuccessMsg = showSuccessMsg.bind(Vue);</span>
+<span class="cstat-no" title="statement not covered" >        Vue.prototype.$showTransMsg = showTransMsg.bind(Vue);</span>
+<span class="cstat-no" title="statement not covered" >        Vue.prototype.$showFailMsg = showFailMsg.bind(Vue);</span>
+<span class="cstat-no" title="statement not covered" >        Vue.prototype.$showTipMsg = showTipMsg.bind(Vue);</span>
+<span class="cstat-no" title="statement not covered" >        Vue.prototype.$showBrower = showBrower.bind(Vue);</span>
+<span class="cstat-no" title="statement not covered" >        Vue.prototype.$showDialog = showDialog.bind(Vue);</span>
+<span class="cstat-no" title="statement not covered" >        Vue.prototype.$closeDialog = CloseDialog(document.querySelectorAll('.message'));</span>
+    }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 19 2021 19:51:43 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
